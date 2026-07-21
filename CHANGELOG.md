@@ -1,5 +1,9 @@
 # Changelog
 
+## [Não lançado]
+
+- Adicionado `docs/adaptacao-por-perfil-cliente.md`: guia de calibragem do framework por porte (PME/média/enterprise) e setor (saúde, financeiro, jurídico, varejo, indústria, setor público), tornando explícito que a metodologia é agnóstica de tipo de empresa.
+
 ## [0.1.0] - 2026-07-21
 
 - Estrutura inicial do repositório com a metodologia A.C.E.S.

@@ -2,6 +2,8 @@
 
 Este playbook estrutura o **Framework de Aceleração de Gen AI** — um método replicável de 4 fases (mais uma fase de qualificação, Fase 0) para mapear, arquitetar e implantar automações agênticas corporativas em ciclos curtos de alto impacto, operado por um único FDE.
 
+O framework é **agnóstico de porte e setor de empresa** — as fases abaixo se aplicam da mesma forma a uma PME, uma média empresa ou uma corporação enterprise, e a qualquer vertical (saúde, financeiro, jurídico, varejo, indústria, setor público etc.). O que varia é a profundidade, a formalidade e a duração de cada fase — nunca a sequência ou os gates de segurança. Antes de fechar o escopo na Fase 0, consulte [`docs/adaptacao-por-perfil-cliente.md`](docs/adaptacao-por-perfil-cliente.md) para calibrar corretamente.
+
 ---
 
 ## 🏗️ Visão Geral do Framework (Metodologia A.C.E.S.)
@@ -250,3 +252,4 @@ Para manter a velocidade de execução sem a necessidade de uma equipe de desenv
 * Modelo de precificação: [`docs/modelo-precificacao.md`](docs/modelo-precificacao.md)
 * Governança e segurança (LGPD): [`docs/governanca-seguranca.md`](docs/governanca-seguranca.md)
 * Stack de referência e alternativas: [`docs/stack-referencia.md`](docs/stack-referencia.md)
+* Adaptação por porte/setor de cliente: [`docs/adaptacao-por-perfil-cliente.md`](docs/adaptacao-por-perfil-cliente.md)
