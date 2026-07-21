@@ -2,6 +2,12 @@
 
 Aplicável a partir da Fase 2 (Context) e obrigatório antes de qualquer virada para produção na Fase 3.
 
+## 0. Princípio de Permissão Herdada (sem conta de serviço separada)
+
+* O agente **nunca** deve operar com um nível de acesso maior do que o FDE (ou o usuário em nome de quem o agente age) já possui. Se o FDE não tem permissão para escrever em um sistema, o agente também não tem — não crie uma conta de serviço com privilégios ampliados "para o agente funcionar melhor".
+* Toda ação do agente deve ser atribuível a uma identidade individual na trilha de auditoria (ver seção 5) — nunca a uma conta genérica/compartilhada.
+* Perda de acesso do FDE a um sistema (fim de contrato, revogação) deve revogar automaticamente o acesso do agente ao mesmo sistema.
+
 ## 1. LGPD / Dados Pessoais
 
 * Mapear, antes da ingestão, se os documentos/dados contêm dados pessoais ou sensíveis (CPF, saúde, dados financeiros de PF, biometria).
@@ -30,6 +36,17 @@ Toda ação que um agente pode executar deve ser classificada e aprovada por esc
 | **Autônoma** | Reversível, baixo impacto, sem custo/dado sensível envolvido | Resumir um documento, classificar um ticket | Nenhuma (log apenas) |
 | **Aprovação Prévia** | Irreversível ou de impacto médio/alto | Enviar e-mail, criar registro em CRM | Humano confirma antes da execução (HITL) |
 | **Bloqueada** | Ação financeira, exclusão de dados, mudança de configuração crítica | Transferência, hard-delete, alteração de permissão | Nunca automatizada pelo agente |
+
+### Dimensão adicional: autonomia sensível a ambiente
+
+A mesma ação pode ter classe diferente dependendo do ambiente onde roda — não trate autonomia como uma constante global do sistema:
+
+| Ambiente | Regra |
+| --- | --- |
+| **Sandbox / PoC / dev** | A classe "Aprovação Prévia" pode ser relaxada para "Autônoma com log" — o dado não é real ou o impacto é isolado e reversível. |
+| **Produção** | A matriz aprovada vale exatamente como definida — nenhuma ação sobe de classe automaticamente, mesmo que o histórico em sandbox tenha sido limpo. |
+
+A promoção de sandbox para produção nunca herda a permissividade do sandbox — cada ambiente é reclassificado (ver `checklists/go-live-fase3.md`).
 
 ## 5. Trilha de Auditoria
 

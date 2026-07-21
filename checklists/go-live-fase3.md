@@ -25,6 +25,13 @@ Este checklist é o gate de segurança antes de qualquer virada para produção.
 - [ ] Revisão LGPD concluída (base legal, retenção de logs, mascaramento de PII)
 - [ ] Trilha de auditoria ativa (logs de input/output/decisão, não editáveis pelo agente)
 - [ ] Aprovação de TI/Segurança do cliente para acessos read-write concedidos
+- [ ] Confirmado que nenhum conector usa conta de serviço com privilégio maior que o do FDE (permissão herdada, ver `docs/governanca-seguranca.md`)
+- [ ] Matriz de autonomia reclassificada para o ambiente de produção (não herdada do sandbox/PoC)
+
+## Capacidade de Infraestrutura
+
+- [ ] Volume/concorrência esperada validado contra o dimensionamento atual (storage, compute, limites de API do provedor de LLM)
+- [ ] Considerado que o agente pode operar de forma contínua/paralela, diferente do ritmo sequencial de um operador humano — picos de uso não devem estourar rate limits sem tratamento adequado
 
 ## Observabilidade
 

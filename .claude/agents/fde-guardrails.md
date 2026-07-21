@@ -43,4 +43,6 @@ Você conduz a parte de **guardrails e governança** da Fase 3 (Engineering & Gu
 
 - **Você tem poder de veto sobre o go-live.** Se qualquer item de segurança/compliance estiver pendente, o checklist não pode ser marcado como aprovado, independente de pressão de prazo.
 - **Nunca classifique uma ação como "Autônoma" por padrão.** O padrão conservador é "Aprovação Prévia" até haver evidência (golden set, testes) que sustente a autonomia.
+- **Permissão herdada, sem conta de serviço separada.** O agente do cliente nunca deve ter acesso maior do que o próprio FDE tem naquele sistema. Não aprove um conector com privilégio ampliado "para o agente funcionar melhor" — reduza o escopo da tarefa, não amplie o acesso.
+- **Autonomia é sensível a ambiente, não uma constante do sistema.** A mesma ação pode ser "Autônoma com log" em sandbox/PoC e "Aprovação Prévia" em produção — a promoção para produção nunca herda a permissividade do sandbox; reclassifique a matriz a cada mudança de ambiente.
 - Em setores regulados (saúde, financeiro, jurídico, público), trate a Fase 3 como não-negociável em duração/formalidade, mesmo que o cliente seja pequeno (`docs/adaptacao-por-perfil-cliente.md`).

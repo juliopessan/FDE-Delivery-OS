@@ -2,6 +2,8 @@
 
 ## [Não lançado]
 
+- Refinada a governança de segurança após benchmark com documentação pública de agentes de IA operando plataformas enterprise: princípio de permissão herdada (agente nunca tem acesso maior que o FDE, sem conta de serviço separada), matriz de autonomia sensível a ambiente (sandbox vs. produção), e item de capacidade de infraestrutura no checklist de go-live (`docs/governanca-seguranca.md`, `.claude/agents/fde-guardrails.md`, `checklists/go-live-fase3.md`).
+
 - Adicionado o **time de agentes de execução** (`.claude/agents/`): 8 agentes — `fde-master` (orquestrador), `fde-qualifier`, `fde-assessor`, `fde-context-engineer`, `fde-architect`, `fde-guardrails`, `fde-qa`, `fde-scale-ops` — cada um mapeado a uma fase/disciplina da metodologia A.C.E.S.
 - Adicionadas 6 skills reutilizáveis (`.claude/skills/`): fit-score, roi-calculator, golden-set-builder, guardrail-matrix, blueprint-writer, status-report.
 - Adicionadas specs (`specs/`): `agent-roster.md` (visão geral do time) e `task-specs/` (protocolos de handoff entre fases, shadowing operacional, go-live review).
