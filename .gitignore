@@ -2,3 +2,8 @@
 *.log
 .env
 node_modules/
+
+# Engajamentos reais de clientes: dados confidenciais, nunca versionar
+# aqui — cada cliente vive em harness/engagements/<cliente>/, que fica
+# fora do controle de versão deste repositório de metodologia.
+harness/engagements/
