@@ -20,15 +20,21 @@ harness/engagements/<cliente>/
 ├── state.md                  # fase atual, decisões de Go/No-Go, próximos passos
 ├── 00-qualificacao/
 │   ├── fit-score.md
-│   └── one-pager-proposta.md
+│   ├── one-pager-proposta.md
+│   ├── estimativa-esforco.md     # fde-capacity-planner (WBS+PERT da Fase 1, antes de fechar a proposta)
+│   └── plano-capacidade.md       # fde-capacity-planner
 ├── 01-assessment/
 │   ├── blueprint.md
 │   ├── calculo-roi.md
+│   ├── estimativa-esforco.md     # fde-capacity-planner (WBS+PERT da Fase 2, ao fechar o Go)
+│   ├── plano-capacidade.md       # fde-capacity-planner
 │   └── handoff.md
 ├── 02-context/
 │   ├── pipeline-design.md
 │   ├── golden-set.md
 │   ├── conectores.md
+│   ├── estimativa-esforco.md     # fde-capacity-planner (WBS+PERT da Fase 3)
+│   ├── plano-capacidade.md       # fde-capacity-planner
 │   └── handoff.md
 ├── 03-engineering/
 │   ├── arquitetura.md            # fde-architect
@@ -40,8 +46,12 @@ harness/engagements/<cliente>/
 └── 04-scale/
     ├── relatorios-semanais/
     ├── relatorios-mensais-roi/
+    ├── estimativa-esforco.md     # fde-capacity-planner — reexecutada a cada mudança de escopo/retainer
+    ├── plano-capacidade.md       # fde-capacity-planner
     └── runbook-incidentes.md
 ```
+
+`estimativa-esforco.md` e `plano-capacidade.md` (templates em `templates/`) são reexecutados **sempre que o escopo mudar**, não apenas uma vez por fase — a versão mais recente é a que vale para a proposta/preço vigente.
 
 ## Cheatsheet de Comandos
 
@@ -52,6 +62,8 @@ harness/engagements/<cliente>/
 | Pular direto a um especialista | Chame o agente diretamente (ex.: `fde-context-engineer`) quando já souber exatamente o que precisa — útil para retrabalho pontual dentro de uma fase já iniciada |
 | Validar antes de avançar fase | Peça ao `fde-qa` para rodar o checklist Go/No-Go da fase corrente |
 | Fechar o mês de um retainer ativo | Peça ao `fde-scale-ops` para gerar o relatório mensal de ROI |
+| Fechar prazo/preço de uma fase (nova ou repactuação) | Peça ao `fde-capacity-planner` para rodar a estimativa (WBS+PERT) e o plano de capacidade **antes** de comprometer prazo/preço |
+| Escopo mudou no meio de uma fase | Peça ao `fde-capacity-planner` para reexecutar a estimativa — nunca reaproveite a antiga |
 
 ## Matriz de Ferramentas / MCP por Agente
 
@@ -59,6 +71,7 @@ harness/engagements/<cliente>/
 | --- | --- | --- |
 | `fde-master` | Read, Write, Edit, Bash, Grep, Glob, Agent | — |
 | `fde-qualifier` | Read, Write, Edit, WebSearch, WebFetch | CRM do FDE (se houver), LinkedIn/dados públicos da empresa |
+| `fde-capacity-planner` | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Planilha/ferramenta de gestão de projeto (se o FDE já usar uma), benchmark de taxas de mercado |
 | `fde-assessor` | Read, Write, Edit, Bash, WebSearch | Gravador de reunião/transcrição (para consolidar shadowing), planilha de dados do cliente |
 | `fde-context-engineer` | Read, Write, Edit, Bash, Grep, Glob | Conector do VectorDB escolhido, MCP dos sistemas legados do cliente (CRM/ERP) |
 | `fde-architect` | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Documentação do provedor de LLM/orquestração escolhido |

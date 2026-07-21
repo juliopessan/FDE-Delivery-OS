@@ -6,6 +6,7 @@ Visão geral de todos os agentes que operam a metodologia A.C.E.S. Definições 
 | --- | --- | --- | --- | --- | --- |
 | [`fde-master`](../.claude/agents/fde-master.md) | Todas | Orquestra, roteia, mantém estado do engajamento | Read, Write, Edit, Bash, Grep, Glob, Agent | Início/retomada de qualquer sessão | Todos os especialistas |
 | [`fde-qualifier`](../.claude/agents/fde-qualifier.md) | 0 | Fit score, pesquisa do prospect, one-pager de proposta | Read, Write, Edit, WebSearch, WebFetch | Novo prospect, sem contrato | `fde-assessor` (se GO) |
+| [`fde-capacity-planner`](../.claude/agents/fde-capacity-planner.md) | Transversal | WBS + PERT, horas por papel/fase, quantos devs, solo vs. reforço | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Antes de fechar prazo/preço de qualquer fase; a cada mudança de escopo | `fde-master` (impacto de preço) |
 | [`fde-assessor`](../.claude/agents/fde-assessor.md) | 1 | Shadowing, matriz de qualificação, ICE, blueprint, ROI estimado | Read, Write, Edit, Bash, WebSearch | Go da Fase 0 | `fde-context-engineer` (se GO) |
 | [`fde-context-engineer`](../.claude/agents/fde-context-engineer.md) | 2 | Pipeline RAG, VectorDB, conectores, golden set | Read, Write, Edit, Bash, Grep, Glob | Go da Fase 1 | `fde-architect` (se GO) |
 | [`fde-architect`](../.claude/agents/fde-architect.md) | 3 (arquitetura) | Topologia de agentes, roteamento de modelos | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Go da Fase 2 | `fde-qa` |
@@ -19,7 +20,8 @@ Visão geral de todos os agentes que operam a metodologia A.C.E.S. Definições 
 2. **`fde-qa` nunca é dono de solução.** É o único agente com poder de bloquear avanço de fase sem propor a correção ele mesmo — a correção volta ao especialista responsável.
 3. **`fde-guardrails` tem veto sobre go-live.** Nenhum outro agente pode aprovar a virada para produção sem o sinal verde explícito dele.
 4. **Todo handoff é por arquivo**, em `harness/engagements/<cliente>/<fase>/`, nunca apenas por contexto de conversa — garante retomada em outra sessão sem perda de estado.
-5. **Skills (`.claude/skills/`) são compartilhadas entre agentes** — procedimentos reutilizáveis (fit score, ROI, golden set, matriz de autonomia, blueprint, status report) que mais de um agente invoca, evitando duplicação de lógica entre as personas.
+5. **Skills (`.claude/skills/`) são compartilhadas entre agentes** — procedimentos reutilizáveis (fit score, ROI, golden set, matriz de autonomia, blueprint, status report, estimativa de esforço) que mais de um agente invoca, evitando duplicação de lógica entre as personas.
+6. **`fde-capacity-planner` é o gate de realismo antes do gate de segurança.** Enquanto `fde-guardrails` veta go-live por risco técnico/compliance, `fde-capacity-planner` veta compromisso de prazo/preço por inviabilidade de esforço — nenhuma proposta fecha sem passar por ele.
 
 ## Modelo de Invocação
 

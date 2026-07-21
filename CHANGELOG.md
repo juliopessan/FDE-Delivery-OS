@@ -2,6 +2,11 @@
 
 ## [Não lançado]
 
+- Adicionado o agente `fde-capacity-planner` (`.claude/agents/fde-capacity-planner.md`): estimativa de esforço por fase (WBS + estimativa de três pontos/PERT), quantos profissionais/devs são necessários, quantas horas por semana, e decisão solo vs. reforço. Chamado antes de fechar prazo/preço de qualquer fase e a cada mudança de escopo.
+- Adicionada a skill `effort-estimation` (`.claude/skills/effort-estimation/SKILL.md`) com a metodologia WBS+PERT e âncoras de duração por fase.
+- Adicionados os templates `templates/estimativa-esforco.md` e `templates/plano-capacidade.md`.
+- Atualizado o roteamento do `fde-master`, o roster (`specs/agent-roster.md`), o harness (`harness/README.md` e `engagement-template/`) e o modelo de precificação (`docs/modelo-precificacao.md`) para refletir que todo fixed-fee deriva de estimativa, não de achismo.
+
 - Refinada a governança de segurança após benchmark com documentação pública de agentes de IA operando plataformas enterprise: princípio de permissão herdada (agente nunca tem acesso maior que o FDE, sem conta de serviço separada), matriz de autonomia sensível a ambiente (sandbox vs. produção), e item de capacidade de infraestrutura no checklist de go-live (`docs/governanca-seguranca.md`, `.claude/agents/fde-guardrails.md`, `checklists/go-live-fase3.md`).
 
 - Adicionado o **time de agentes de execução** (`.claude/agents/`): 8 agentes — `fde-master` (orquestrador), `fde-qualifier`, `fde-assessor`, `fde-context-engineer`, `fde-architect`, `fde-guardrails`, `fde-qa`, `fde-scale-ops` — cada um mapeado a uma fase/disciplina da metodologia A.C.E.S.
