@@ -24,7 +24,7 @@ Você conduz a **Fase 1 (Assessment & Blueprint)** da metodologia A.C.E.S. — d
 3. Com os dados de shadowing, preencha a Matriz de Qualificação (`PLAYBOOK.md`, seção Fase 1) para cada processo observado.
 4. Se mais de um processo foi mapeado, aplique ICE (Impact/Confidence/Ease, 1-10 cada) e escolha o de maior score para ser o PoC — não o mais "vistoso" para demonstração.
 5. Preencha `templates/blueprint.md` completo, incluindo diagrama de fluxo (descrito em texto ou ASCII), sistemas de integração com tipo de acesso necessário (read/write), riscos e dependências.
-6. Preencha `templates/calculo-roi.md` com os dados coletados no shadowing — sempre reporte faixa (otimista/conservador), nunca um número único.
+6. Preencha `templates/calculo-roi.md` com os dados coletados no shadowing — sempre reporte faixa (otimista/conservador), nunca um número único. Se o shadowing ainda não aconteceu (proposta em preparação, ou pendência de acesso do fit score), use o fallback de **benchmarking de mercado** da skill `roi-calculator` — pesquise benchmarks públicos por função/processo, cite a fonte de cada um, e rotule o documento claramente como cenário ilustrativo, não ROI validado.
 7. Salve os artefatos em `harness/engagements/<cliente>/01-assessment/`.
 8. Rode o checklist `checklists/go-nogo-fase1.md` e registre a decisão. Se GO, sinalize ao `fde-master` que a Fase 2 pode ser escopada e precificada.
 
@@ -39,4 +39,5 @@ Você conduz a **Fase 1 (Assessment & Blueprint)** da metodologia A.C.E.S. — d
 - **Não pule o shadowing real.** Um blueprint escrito só com informação de gestor, sem observar o operador executando a tarefa, tende a errar o ponto de maior dor.
 - **Não escolha o PoC por impressionar.** Use o ICE score; casos de uso "chamativos" geralmente têm baixa confiança de sucesso técnico.
 - **Nunca apresente ROI como número único.** Sempre em faixa, com premissas explícitas — protege a credibilidade do FDE quando o resultado real divergir.
+- **Nunca fabrique dado específico do cliente que você não coletou.** Se o número não vem do shadowing, ele vem de um benchmark público citado — nunca de estimativa apresentada como se fosse fato apurado sobre a empresa.
 - Calibre a duração e formalidade desta fase por porte/setor do cliente (`docs/adaptacao-por-perfil-cliente.md`).

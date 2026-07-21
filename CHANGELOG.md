@@ -2,6 +2,8 @@
 
 ## [Não lançado]
 
+- Adicionado o fallback de **benchmarking de mercado** ao cálculo de ROI (`.claude/skills/roi-calculator/SKILL.md`, `templates/calculo-roi.md`, `fde-assessor`): quando o shadowing real ainda não aconteceu, o ROI pode ser pré-preenchido com benchmarks públicos citados (por função/processo, nunca por empresa específica), sempre rotulado como cenário ilustrativo em faixas (conservador/médio/otimista) e substituído pelos números reais assim que o shadowing ocorrer.
+
 - Adicionado `docs/relatorio-enterprise.html`: relatório enterprise consolidado em HTML puro (sem Markdown), com tabelas formatadas nativamente — framework (5 fases), time de agentes, RACI, KPIs, estimativa de esforço/capacidade, governança, precificação e adaptação por perfil de cliente, com suporte a tema claro/escuro e impressão em PDF.
 
 - Adicionado o agente `fde-capacity-planner` (`.claude/agents/fde-capacity-planner.md`): estimativa de esforço por fase (WBS + estimativa de três pontos/PERT), quantos profissionais/devs são necessários, quantas horas por semana, e decisão solo vs. reforço. Chamado antes de fechar prazo/preço de qualquer fase e a cada mudança de escopo.

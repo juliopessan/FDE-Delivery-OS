@@ -35,3 +35,23 @@ ROI (payback meses)  = Investimento total do engajamento (Fases 1-3) / Economia 
 - Esquecer o custo de infraestrutura fixo (VectorDB, observabilidade) no cálculo — isso infla artificialmente o ROI.
 - Assumir 100% de execuções autônomas sem considerar o % real de HITL definido pela matriz de autonomia (`fde-guardrails`).
 - Apresentar um número único de payback sem faixa de confiança na Fase 1.
+
+## Fallback: Benchmarking de Mercado (quando ainda não há shadowing real)
+
+Antes do shadowing acontecer — ou quando o fit score aponta pendência de acesso a dado real (`fde-qualifier`) — o ROI pode ser pré-preenchido com **benchmarks públicos de mercado** para dar ordem de grandeza à proposta, em vez de deixar o cálculo vazio ou, pior, inventar números específicos do cliente.
+
+### Como usar
+
+1. Para cada variável de entrada da fórmula (tempo por execução, custo/hora, taxa de conversão/erro), busque um benchmark público equivalente por **função/processo** (ex.: "tempo médio de elaboração de proposta comercial", "custo/hora de analista de marketing CLT", "lift de conversão de chatbot de atendimento") — não por empresa específica.
+2. Prefira benchmarks segmentados por porte/setor mais próximo do cliente (ex.: empresas < 100 funcionários, agências de marketing) a médias globais genéricas.
+3. Quando o benchmark encontrado for de um processo mais pesado/diferente do real (ex.: RFP formal como proxy de proposta comercial de agência), aplique um fator de ajuste explícito e documente a lógica do ajuste — nunca use o número bruto sem justificar a analogia.
+4. Cite a fonte de cada benchmark (nome + link) no documento de ROI — um benchmark sem fonte rastreável não é diferente de um chute.
+5. Rotule todo o cálculo como **"Cenário ilustrativo baseado em benchmark de mercado — não é dado real do cliente"**, em destaque, no topo do documento.
+6. Apresente em **cenários** (baixo/médio/alto volume ou baixo/médio/alto impacto), não em um número único — o benchmark tem mais incerteza que um dado medido, então a faixa deve ser mais larga, não mais estreita.
+7. Quando o shadowing real acontecer, **substitua** os números de benchmark pelos números reais — o documento baseado em benchmark é um placeholder de proposta, não o ROI final que entra no Go/No-Go da Fase 1.
+
+### Erros específicos deste fallback
+
+- Apresentar um cenário de benchmark como se fosse o ROI real já validado — isso quebra a confiança do cliente quando o número real divergir.
+- Usar a estatística mais otimista encontrada na pesquisa (ex.: "+391% de conversão") como cenário-base — prefira sempre o extremo mais conservador do intervalo relatado na literatura, guardando o número otimista apenas como referência de teto.
+- Não atualizar o documento quando o dado real chegar — o benchmark expira no momento em que o shadowing produz um número medido.

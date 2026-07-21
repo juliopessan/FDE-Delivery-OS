@@ -1,5 +1,7 @@
 # Template — Cálculo de ROI Estimado (Fase 1)
 
+**Fonte dos dados:** [ ] Shadowing real [ ] Benchmark de mercado (pré-shadowing) — se benchmark, preencher também a seção "Benchmarks de Mercado Utilizados" ao final e marcar claramente este documento como cenário ilustrativo, não ROI validado (ver skill `roi-calculator`, seção "Fallback: Benchmarking de Mercado").
+
 ## Dados de entrada (coletados no shadowing)
 
 | Variável | Valor |
@@ -41,3 +43,19 @@ ROI (payback meses)  = Investimento total do engajamento (Fases 1-3) / Economia 
 | Payback estimado (meses) | |
 
 > Reporte sempre a faixa (otimista/conservador), nunca um número único — protege a credibilidade do FDE quando o resultado real da Fase 4 divergir da estimativa.
+
+## Benchmarks de Mercado Utilizados (preencher apenas se a fonte dos dados for benchmark)
+
+| Variável estimada | Benchmark usado | Fonte (nome + link) | Ajuste aplicado e justificativa |
+| --- | --- | --- | --- |
+| | | | |
+
+**Cenários (baixo / médio / alto)** — obrigatório quando a fonte é benchmark, pela maior incerteza:
+
+| Cenário | Volume/Impacto assumido | Economia mensal estimada (R$) | Payback estimado (meses) |
+| --- | --- | --- | --- |
+| Conservador | | | |
+| Médio | | | |
+| Otimista | | | |
+
+⚠️ **Este cálculo baseado em benchmark é um placeholder de proposta, não o ROI validado.** Deve ser substituído pelos números reais assim que o shadowing (Fase 1) acontecer.
