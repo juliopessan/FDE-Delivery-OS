@@ -25,6 +25,7 @@ O framework é **agnóstico de porte e setor**: as fases não mudam de forma, ap
 | [`.claude/skills/`](.claude/skills) | 7 skills reutilizáveis (fit score, cálculo de ROI, golden set, matriz de guardrails, blueprint, relatório de status, estimativa de esforço) invocadas por múltiplos agentes |
 | [`specs/`](specs) | `agent-roster.md` (visão geral do time) e `task-specs/` (protocolos de handoff, shadowing, go-live review) |
 | [`harness/`](harness) | Como rodar o time de agentes na prática: convenção de pastas por engajamento, matriz de ferramentas/MCP, esqueleto reaproveitável |
+| [`docs/relatorio-enterprise.html`](docs/relatorio-enterprise.html) | Relatório enterprise em HTML — framework, agentes, RACI, KPIs, capacidade, governança e precificação consolidados, pronto para abrir no navegador ou exportar para PDF |
 
 ## O Time de Agentes (resumo)
 

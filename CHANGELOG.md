@@ -2,6 +2,8 @@
 
 ## [Não lançado]
 
+- Adicionado `docs/relatorio-enterprise.html`: relatório enterprise consolidado em HTML puro (sem Markdown), com tabelas formatadas nativamente — framework (5 fases), time de agentes, RACI, KPIs, estimativa de esforço/capacidade, governança, precificação e adaptação por perfil de cliente, com suporte a tema claro/escuro e impressão em PDF.
+
 - Adicionado o agente `fde-capacity-planner` (`.claude/agents/fde-capacity-planner.md`): estimativa de esforço por fase (WBS + estimativa de três pontos/PERT), quantos profissionais/devs são necessários, quantas horas por semana, e decisão solo vs. reforço. Chamado antes de fechar prazo/preço de qualquer fase e a cada mudança de escopo.
 - Adicionada a skill `effort-estimation` (`.claude/skills/effort-estimation/SKILL.md`) com a metodologia WBS+PERT e âncoras de duração por fase.
 - Adicionados os templates `templates/estimativa-esforco.md` e `templates/plano-capacidade.md`.
