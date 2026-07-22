@@ -1,41 +1,45 @@
-# Template — Plano de Capacidade
+# Template — Plano de Capacidade & Staffing Matrix
 
 **Cliente:** ______________________
-**Fase:** [ ] 0 [ ] 1 [ ] 2 [ ] 3 [ ] 4
+**Projeto:** ______________________
 **Data:** ______________________
-**Baseado em:** [`estimativa-esforco.md`](estimativa-esforco.md) da mesma fase
+**Modelo de Alocação:** [ ] FDE Solo [ ] Pod Fracionado [ ] Squad Dedicada
 
-## Capacidade Disponível
+## Resumo de Esforço
 
-| Item | Valor |
-| --- | --- |
-| Capacidade produtiva do FDE solo (referência: 30-35h/semana, descontado prospecção/admin) | ___ h/semana |
-| Duração-alvo da fase (`PLAYBOOK.md`) | ___ semanas |
-| **Capacidade total disponível na fase** | ___ h |
+| Papel | Horas Totais (Média PERT) | % alocação média |
+| --- | --- | --- |
+| FDE Generalista | | |
+| AI Model Specialist | | |
+| Context Engineer | | |
+| Data Engineer | | |
+| FDE Guardrails / Security | | |
+| Prompt Engineer | | |
+| **TOTAL (com buffer 20%)** | **___ h** | |
 
-## Esforço Necessário
+## Staffing Matrix (Role Plan by Week)
 
-| Item | Valor |
-| --- | --- |
-| Esforço total estimado com buffer (de `estimativa-esforco.md`) | ___ h |
-| Esforço por papel além do FDE generalista (dev integração / data eng. / segurança) | ___ h |
+| Papel | W1 | W2 | W3 | W4 | W5 | W6 | ... | W(n) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| FDE Generalista | 100%| 50% | ... | | | | | |
+| AI Model Specialist | 0% | 20% | ... | | | | | |
+| Context Engineer | 0% | 0% | ... | | | | | |
+| Data Engineer | 0% | 80% | ... | | | | | |
+| Security / Guardrails | 0% | 0% | ... | | | | | |
+| Prompt Engineer | 0% | 0% | ... | | | | | |
 
 ## Decisão de Capacidade
 
-- [ ] **Solo sustenta** — capacidade disponível ≥ esforço necessário, sem reforço
-- [ ] **Reforço necessário** — especificar:
-  - Papel: ______________________
-  - Quantidade de pessoas: ______
-  - Horas totais / duração: ______
-  - Modelo de contratação: [ ] Subcontratação pontual [ ] Parceiro fixo [ ] Freelancer especializado
-- [ ] **Extensão de prazo necessária** — nova duração proposta: ______ semanas (em vez de ______)
+- [ ] **Solo sustenta** — total < 40h/semana
+- [ ] **Reforço de Pod necessário** — especificar quais papéis entram fracionados
+- [ ] **Squad Dedicada necessária** — projeto de alta complexidade/prazo curto
 
 ## Impacto Comercial
 
-- Reforço/extensão impacta o preço fixed-fee da fase? [ ] Sim [ ] Não
-- Se sim, novo valor a negociar com o cliente antes da assinatura/continuidade: R$ ______
-- Aprovação do FDE/responsável comercial: ______________________ Data: ______
+- [ ] fixed-fee mantido conforme referencial
+- [ ] Necessária reprecificação (Upside de R$ __________)
 
-## Justificativa
+## Justificativa (Rationale)
 
 -
+

@@ -8,7 +8,7 @@ O framework é **agnóstico de porte e setor de empresa** — as fases abaixo se
 
 ## 🏗️ Visão Geral do Framework (Metodologia A.C.E.S.)
 
-O framework é dividido em uma fase de qualificação e 4 ciclos de execução (*Assessment, Context, Engineering, Scale*), cobrindo desde a prospecção até a sustentação recorrente:
+O framework é mapeado em 4 ciclos de execução operados por um **FDE Pod** (mesmo que em modo Solo, o FDE assume os diferentes papéis conforme o Playbook):
 
 ```
 [ FASE 0: QUALIFICAÇÃO ]  --> Fit Comercial & Técnico (1 semana, pré-contrato)
@@ -16,13 +16,16 @@ O framework é dividido em uma fase de qualificação e 4 ciclos de execução (
 [ FASE 1: ASSESSMENT ]    --> Diagnóstico Cognitivo & Blueprint (Sprints 1-2)
           │
 [ FASE 2: CONTEXT ]       --> Engenharia de Dados & RAG/MCP (Sprints 3-4)
+          │                   * Papel: Data Engineer (Fabric/OneLake)
           │
 [ FASE 3: ENGINEERING ]   --> Arquitetura Agêntica & Production (Sprints 5-6)
+          │                   * Papel: AI Model Specialist & Architect
           │
 [ FASE 4: SCALE ]         --> Governança, HITL & Retainer Fracionado (Contínuo)
 ```
 
-**Duração total até produção:** 8 a 10 semanas. **Regra de ouro:** nenhuma fase avança sem passar pelo checklist Go/No-Go correspondente (ver [`checklists/`](checklists)).
+**Playbooks de Execução:**
+Dependendo do desafio, o `fde-master` seleciona uma sequência otimizada de atividades (ex.: RAG Track, Agentic Track, Data-Heavy Track). Ver `specs/agent-roster.md`.
 
 ---
 
