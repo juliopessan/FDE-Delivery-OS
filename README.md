@@ -26,6 +26,7 @@ O framework é **agnóstico de porte e setor**: as fases não mudam de forma, ap
 | [`specs/`](specs) | `agent-roster.md` (visão geral do time) e `task-specs/` (protocolos de handoff, shadowing, go-live review) |
 | [`harness/`](harness) | Como rodar o time de agentes na prática: convenção de pastas por engajamento, matriz de ferramentas/MCP, esqueleto reaproveitável |
 | [`docs/relatorio-enterprise.html`](docs/relatorio-enterprise.html) | Relatório enterprise em HTML — framework, agentes, RACI, KPIs, capacidade, governança e precificação consolidados, pronto para abrir no navegador ou exportar para PDF |
+| [`docs/integracoes/manifest-praxia.md`](docs/integracoes/manifest-praxia.md) | Esqueleto de integração com o MANIFEST — como a descoberta contínua de processos substitui shadowing pontual como fonte de dado da Fase 1 |
 
 ## O Time de Agentes (resumo)
 
