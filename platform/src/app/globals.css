@@ -26,6 +26,18 @@ body {
 }
 .node-active { animation: pulseNode 1.7s ease-out infinite; }
 
+@keyframes pipelineFlow {
+  0%, 92%, 100% {
+    background-color: rgba(237,234,224,0.25);
+    box-shadow: none;
+  }
+  4% {
+    background-color: #C4F04C;
+    box-shadow: 0 0 6px 1px rgba(196,240,76,0.55);
+  }
+}
+.pipeline-dot { animation: pipelineFlow 6.6s ease-in-out infinite; }
+
 @media (prefers-reduced-motion: reduce) {
-  .rise, .node-active { animation: none; }
+  .rise, .node-active, .pipeline-dot { animation: none; }
 }

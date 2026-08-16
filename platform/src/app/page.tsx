@@ -94,7 +94,10 @@ export default function LandingPage() {
                         </div>
                       </div>
                     </div>
-                    <span className="w-1.5 h-1.5 rounded-full bg-paper2/25 shrink-0" />
+                    <span
+                      className="w-1.5 h-1.5 rounded-full pipeline-dot shrink-0"
+                      style={{ animationDelay: `${i * (6600 / AGENT_ROSTER.length)}ms` }}
+                    />
                   </li>
                 ))}
               </ul>
