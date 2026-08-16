@@ -1,0 +1,18 @@
+engagement_id: eng-invoice-demo
+customer: synthetic-demo
+phase: engineering
+status: active
+version: 1
+objective:
+  name: reduce_invoice_processing_time
+  baseline: 14
+  target: 3
+  unit: minutes
+constraints:
+  cloud: azure
+  data_residency: brazil
+  pii: true
+gates:
+  quality: pending
+  security: pending
+  production_readiness: pending

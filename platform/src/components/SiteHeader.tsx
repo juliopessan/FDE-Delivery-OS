@@ -1,0 +1,26 @@
+import Link from "next/link";
+
+export function SiteHeader({ meta = "Agentic Delivery OS / v1" }: { meta?: string }) {
+  return (
+    <header className="border-b border-ink/12">
+      <div className="max-w-[1180px] mx-auto px-6 h-16 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-3">
+          <div className="w-7 h-7 bg-ink flex items-center justify-center">
+            <span className="mono-face text-lime text-[13px] font-medium">F</span>
+          </div>
+          <span className="mono-face text-[12px] tracking-[0.24em] font-medium">
+            FDE OS
+          </span>
+        </Link>
+        <div className="flex items-center gap-6">
+          <Link href="/dashboard" className="mono-face text-[11px] tracking-[0.14em] uppercase text-ink/60 hover:text-ink transition-colors">
+            Dashboard
+          </Link>
+          <span className="mono-face text-[10px] tracking-[0.2em] text-ink/40 uppercase hidden sm:inline">
+            {meta}
+          </span>
+        </div>
+      </div>
+    </header>
+  );
+}

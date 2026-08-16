@@ -1,6 +1,6 @@
 # Template — Cálculo de ROI Estimado (Fase 1)
 
-**Fonte dos dados:** [ ] Shadowing real [ ] Descoberta contínua (MANIFEST) — ver `docs/integracoes/manifest-praxia.md` [ ] Benchmark de mercado (pré-shadowing) — se benchmark, preencher também a seção "Benchmarks de Mercado Utilizados" ao final e marcar claramente este documento como cenário ilustrativo, não ROI validado (ver skill `roi-calculator`, seção "Fallback: Benchmarking de Mercado").
+**Fonte dos dados:** [ ] Shadowing real [ ] Benchmark de mercado (pré-shadowing) — se benchmark, preencher também a seção "Benchmarks de Mercado Utilizados" ao final e marcar claramente este documento como cenário ilustrativo, não ROI validado (ver skill `roi-calculator`, seção "Fallback: Benchmarking de Mercado").
 
 ## Dados de entrada (coletados no shadowing)
 

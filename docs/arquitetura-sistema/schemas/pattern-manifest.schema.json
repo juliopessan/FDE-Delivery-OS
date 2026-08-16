@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PatternManifest",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "maturity"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "maturity": {
+      "enum": [
+        "experimental",
+        "validated",
+        "customer-tested",
+        "production-proven",
+        "preferred"
+      ]
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ReleaseManifest",
+  "type": "object",
+  "required": [
+    "release_id",
+    "engagement_id",
+    "version",
+    "gates"
+  ],
+  "properties": {
+    "release_id": {
+      "type": "string"
+    },
+    "engagement_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "gates": {
+      "type": "object"
+    },
+    "approved_by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

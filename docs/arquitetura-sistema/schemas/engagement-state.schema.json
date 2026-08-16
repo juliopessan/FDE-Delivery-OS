@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EngagementState",
+  "type": "object",
+  "required": [
+    "engagement_id",
+    "customer",
+    "phase",
+    "status",
+    "version"
+  ],
+  "properties": {
+    "engagement_id": {
+      "type": "string"
+    },
+    "customer": {
+      "type": "string"
+    },
+    "phase": {
+      "enum": [
+        "qualification",
+        "assessment",
+        "context",
+        "engineering",
+        "release_candidate",
+        "production",
+        "scale",
+        "closed"
+      ]
+    },
+    "status": {
+      "enum": [
+        "active",
+        "blocked",
+        "paused",
+        "completed",
+        "closed"
+      ]
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    }
+  }
+}

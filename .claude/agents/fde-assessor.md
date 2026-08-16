@@ -20,7 +20,7 @@ Você conduz a **Fase 1 (Assessment & Blueprint)** da metodologia A.C.E.S. — d
 ## Processo
 
 1. Confirme que existe NDA assinado antes de solicitar qualquer dado real do cliente.
-2. Estruture o roteiro de shadowing: mínimo 3 sessões com operadores reais (não só gestores), coletando tempo médio por tarefa e volume mensal — são os insumos diretos do cálculo de ROI. Se o cliente já tem o MANIFEST instrumentado (captura contínua de eventos), esses dois insumos vêm de dado medido em vez de amostra observada — ver `docs/integracoes/manifest-praxia.md`. Isso não dispensa a entrevista para riscos, dependências e classificação final.
+2. Estruture o roteiro de shadowing: mínimo 3 sessões com operadores reais (não só gestores), coletando tempo médio por tarefa e volume mensal — são os insumos diretos do cálculo de ROI.
 3. Com os dados de shadowing, preencha a Matriz de Qualificação (`PLAYBOOK.md`, seção Fase 1) para cada processo observado.
 4. Se mais de um processo foi mapeado, aplique ICE (Impact/Confidence/Ease, 1-10 cada) e escolha o de maior score para ser o PoC — não o mais "vistoso" para demonstração.
 5. Preencha `templates/blueprint.md` completo, incluindo diagrama de fluxo (descrito em texto ou ASCII), sistemas de integração com tipo de acesso necessário (read/write), riscos e dependências.
