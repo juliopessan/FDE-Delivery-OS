@@ -121,7 +121,7 @@ export default function EngagementDetailPage({ params }: { params: Promise<{ id:
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
                     <span className="mono-face text-[10px] tracking-[0.1em] uppercase text-ink/50">
-                      {status}
+                      {status === "running" ? `${agent.activeVerb}…` : status}
                     </span>
                     <span className={`w-2 h-2 rounded-full ${statusDot[status] ?? "bg-ink/15"}`} />
                   </div>
