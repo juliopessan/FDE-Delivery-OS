@@ -9,8 +9,8 @@ import { motion, useReducedMotion } from "framer-motion";
  * because a native `placeholder` attribute cannot animate.
  *
  * All prompts stay mounted and are moved in and out of the single visible
- * slot, mirroring RotatingOutcome. The caller passes the same type classes
- * the field uses, so the hint sits exactly where the caret will.
+ * slot. The caller passes the same type classes the field uses, so the hint
+ * sits exactly where the caret will.
  */
 export function RotatingPlaceholder({
   prompts,
