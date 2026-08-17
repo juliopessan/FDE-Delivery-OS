@@ -2,6 +2,8 @@
 
 **Sistema Operacional de Entrega Agêntica para Forward Deployed Engineers**
 
+![FDE OS — um engajamento entra, um Enterprise Report sai](platform/docs/screenshot-landing-page.png)
+
 FDE OS é a evolução do framework antes chamado de A.C.E.S.: uma metodologia replicável de 4 fases (Assessment → Context → Engineering → Scale) para mapear, arquitetar e implantar automações agênticas corporativas em ciclos curtos de alto impacto, desenhada para operação **solo** (um único FDE atuando como consultor técnico ponta a ponta) — **executada por um time de 9 agentes de IA especializados**, não apenas documentada. O repositório contém tanto a metodologia + agentes de execução no Claude Code quanto uma **plataforma web real** ([`platform/`](platform)) que roda esses mesmos 9 agentes contra o brief de um engajamento e devolve um Enterprise Report consolidado — ver screenshot e detalhes em [`platform/README.md`](platform/README.md).
 
 O framework é **agnóstico de porte e setor**: as fases não mudam de forma, apenas de profundidade e formalidade conforme o perfil do cliente — ver [`docs/adaptacao-por-perfil-cliente.md`](docs/adaptacao-por-perfil-cliente.md).
