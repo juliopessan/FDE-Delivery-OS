@@ -4,7 +4,14 @@ const marked = new Marked({
   renderer: {
     code({ text, lang }) {
       if (lang === "mermaid") {
-        return `<pre class="mermaid">${text}</pre>`;
+        // The agents write node labels with <br/> in them. Mermaid runs with
+        // securityLevel "strict", which sanitizes the tag out of the label
+        // before laying the node out — so "Lead FDE Track<br/>Cockpit UI"
+        // arrives as "Lead FDE TrackCockpit UI", two words fused, and the
+        // node is sized for the line count it no longer has, leaving the last
+        // line spilling out of its box. Turning the break into a space lets
+        // mermaid wrap and measure the label itself.
+        return `<pre class="mermaid">${text.replace(/<br\s*\/?>/gi, " ")}</pre>`;
       }
       const escaped = text
         .replace(/&/g, "&amp;")

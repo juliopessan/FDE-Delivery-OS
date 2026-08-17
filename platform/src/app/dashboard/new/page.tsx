@@ -193,7 +193,11 @@ export default function NewEngagementPage() {
                 type="button"
                 disabled={extracting || !(form.rawIntake ?? "").trim()}
                 onClick={() => extractBrief(form.rawIntake ?? "")}
-                className="mono-face text-[11px] tracking-[0.12em] uppercase bg-paper2 dark:bg-inksoft text-ink px-4 py-2.5 hover:bg-ink hover:text-paper transition-colors disabled:opacity-40"
+                // On cream, hover steps the chip away from the page by going
+                // dark. On the dark theme that same rule flips it to a cream
+                // slab — a full inversion mid-interaction. There it steps away
+                // by lifting off the ground instead, leaving the type put.
+                className="mono-face text-[11px] tracking-[0.12em] uppercase bg-paper2 dark:bg-inksoft text-ink px-4 py-2.5 hover:bg-ink hover:text-paper dark:hover:bg-ink/15 dark:hover:text-ink transition-colors disabled:opacity-40"
               >
                 {extracting
                   ? "Extracting brief…"
@@ -202,7 +206,10 @@ export default function NewEngagementPage() {
                   : "Extract brief from this text →"}
               </button>
               {justExtracted && (
-                <span className="text-lime bg-ink px-2 py-1 mono-face text-[10px] tracking-[0.1em] uppercase">
+                // bg-ink is the dark slab this lime sits on. In dark mode ink
+                // becomes the cream body colour, which would put lime on cream
+                // and make the confirmation the least readable thing on screen.
+                <span className="text-lime bg-ink dark:bg-inksoft px-2 py-1 mono-face text-[10px] tracking-[0.1em] uppercase">
                   Fields filled below — review before submitting
                 </span>
               )}

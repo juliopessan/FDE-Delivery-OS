@@ -241,8 +241,28 @@ export function renderConsolidatedReport({
   .prose a { color: var(--rust); }
 
   .prose table { width: 100%; border-collapse: collapse; margin: 18px 0 24px; font-size: 13.5px; }
-  .prose th, .prose td { border: 1px solid rgba(var(--ink-ch),0.16); padding: 8px 10px; text-align: left; vertical-align: top; }
+  /*
+    The cell wrap rules are what keep a wide table the same width as a narrow
+    one. A table's minimum width is the sum of its columns' longest unbreakable
+    words, so a 7-column matrix carrying sentences and identifiers like
+    BAPI_INCOMINGINVOICE_PARK computes a minimum larger than the column and
+    spills past the page margin, while a 3-column table sits neatly inside it.
+    Allowing breaks inside words drops that minimum below the available width,
+    and auto layout then divides the space in proportion to content — so the
+    numeric columns stay narrow instead of being padded out to an equal share,
+    which is what table-layout: fixed would have done.
+  */
+  .prose th, .prose td {
+    border: 1px solid rgba(var(--ink-ch),0.16); padding: 8px 10px;
+    text-align: left; vertical-align: top;
+    overflow-wrap: break-word; word-break: break-word;
+  }
   .prose th { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; background: var(--paper2); }
+  /* Six or more columns leaves each one narrow enough that body size wraps to
+     one or two words per line; a step down buys back a couple of words. */
+  .prose table:has(th:nth-child(6)) { font-size: 12px; }
+  .prose table:has(th:nth-child(6)) th,
+  .prose table:has(th:nth-child(6)) td { padding: 6px 7px; }
 
   .prose pre.code-block, .prose pre.mermaid {
     background: var(--inksoft); color: var(--paper2);
@@ -252,16 +272,34 @@ export function renderConsolidatedReport({
     background: var(--paper2); color: var(--ink);
     display: flex; justify-content: center; align-items: center;
   }
-  /* Every diagram scales to the same content width and caps its height, so a
-     26-node architecture diagram and a 4-node flowchart read at a consistent
-     visual size instead of whatever size mermaid happened to lay out. */
+  /*
+    Two bounds, and both matter. The upper one keeps a 26-node architecture
+    diagram inside the column. The lower one — --diagram-w, the diagram's own
+    layout width, stamped on by the render script — stops a 2-node flowchart
+    from being stretched to fill that same column, which blew its labels up to
+    twice the size of the surrounding headings. Without it, every diagram is
+    drawn at the column width regardless of how much is in it.
+  */
   .prose pre.mermaid svg {
-    max-width: 100% !important;
+    max-width: min(100%, var(--diagram-w, 100%)) !important;
     max-height: 560px;
     height: auto !important;
     width: auto;
     margin: 0 auto;
   }
+  /*
+    Mermaid draws node labels as HTML inside a foreignObject whose height it
+    measured before the label was placed on this page. Our own prose rules then
+    apply to that HTML — .prose p's 14px bottom margin is enough to push a
+    three-line label past the height mermaid reserved, which is why the last
+    line of a label was being clipped by its own box. Labels opt out.
+  */
+  .prose pre.mermaid foreignObject div,
+  .prose pre.mermaid foreignObject p,
+  .prose pre.mermaid foreignObject span {
+    margin: 0; padding: 0; line-height: 1.5;
+  }
+
   .prose .diagram-fallback { width: 100%; }
   .prose .diagram-fallback-label {
     font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em;
@@ -322,6 +360,14 @@ export function renderConsolidatedReport({
       try {
         const { svg } = await mermaid.render(id, code);
         node.innerHTML = svg;
+
+        // Record the width mermaid actually laid the diagram out at, so the
+        // stylesheet can cap it there instead of scaling it up to the column.
+        const el = node.querySelector("svg");
+        const box = el && el.viewBox && el.viewBox.baseVal;
+        if (box && box.width) {
+          node.style.setProperty("--diagram-w", Math.ceil(box.width) + "px");
+        }
       } catch (err) {
         console.error("Mermaid diagram failed to render:", err);
         const escaped = code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
