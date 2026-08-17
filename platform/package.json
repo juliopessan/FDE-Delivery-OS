@@ -2,14 +2,19 @@
   "name": "fde-delivery-os",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=18.18.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "db:migrate": "tsx src/lib/db/migrate.ts",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "test:report": "tsx scripts/test-latex-strip.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",

@@ -87,17 +87,78 @@ Full detail in [`specs/agent-roster.md`](specs/agent-roster.md). The broader tar
 
 Client engagements live in `harness/engagements/<client>/`, which is gitignored on purpose: client material never reaches the repository. Full command cheatsheet and folder convention in [`harness/README.md`](harness/README.md).
 
-## Running the platform
+## Installation
+
+### Prerequisites
+
+- **Node.js 18.18 or newer** (`node --version`). Install from [nodejs.org](https://nodejs.org) or via `nvm install 20`.
+- **An API key for at least one model provider.** The pipeline calls Gemini first and falls back to Claude automatically, so either one alone is a working setup:
+  - Gemini — free tier available at [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
+  - Claude — [console.anthropic.com](https://console.anthropic.com/settings/keys)
+
+No database to install: local development uses a SQLite file created for you.
+
+> **Do not clone into a cloud-synced folder** (iCloud Drive's Desktop & Documents, Dropbox, OneDrive). The sync daemon intercepts file access, and on a tree with `node_modules` and `.git` that surfaces as a dev server hanging at 0% CPU, renames reverting on their own, and duplicate "folder 2" copies — symptoms that look like disk failure and are not.
+
+### 1. Clone and install
 
 ```bash
-cd platform
-cp .env.example .env.local     # add GEMINI_API_KEY and/or ANTHROPIC_API_KEY
+git clone https://github.com/juliopessan/FDE-Delivery-OS.git
+cd FDE-Delivery-OS/platform
 npm install
-npx tsx src/lib/db/migrate.ts  # creates local.db with the schema
+```
+
+### 2. Add your API key
+
+```bash
+cp .env.example .env.local
+```
+
+Open `.env.local` and fill in `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`, or both. Leave `DATABASE_URL` as `file:./local.db` — that is the local default. `.env.local` is gitignored.
+
+### 3. Create the database
+
+```bash
+npm run db:migrate
+```
+
+Creates `local.db` with the three tables (`engagements`, `phase_runs`, `reports`). Safe to re-run.
+
+### 4. Start it
+
+```bash
 npm run dev
 ```
 
-Then create an engagement at `/dashboard/new` and run its pipeline. See [`platform/README.md`](platform/README.md) for architecture, model routing and deployment.
+Open **http://localhost:3000**.
+
+### 5. Run your first engagement
+
+1. Go to **Start an engagement** (`/dashboard/new`).
+2. Paste a client discovery document into the intake box — or upload a `.txt`, `.md`, `.pdf` or `.docx` — and press **Extract brief from this text**. The six fields below fill themselves in; review and correct them, since the agents treat this as the source of truth.
+3. Press **Run agent pipeline** on the engagement page. Nine agents run in sequence, each reading everything the previous ones produced.
+
+   Budget **3–5 minutes** and **roughly 200k tokens** per full run (measured: ~160k in, ~40k out). The input side dominates because context accumulates — the first agent sees a 1.5k-token prompt and the ninth sees 39k, since it reads all eight artifacts before it. Worth knowing before you point this at a free tier.
+4. When it finishes, open **View enterprise report**, and use **Export PDF** in the report header to hand it to a sponsor.
+
+### Verifying your setup
+
+```bash
+npm run build        # type-check and production build
+npm run test:report  # report sanitiser test suite
+```
+
+### Common problems
+
+| Symptom | Cause and fix |
+| --- | --- |
+| `Neither GEMINI_API_KEY nor ANTHROPIC_API_KEY is set` | `.env.local` is missing or empty. Confirm it sits in `platform/`, not the repository root, and restart the dev server — env files are read at boot. |
+| Pipeline fails partway with a timeout | Each model call is capped at 90 seconds. Usually provider rate limiting: wait and press Run again. Completed phases are already persisted. |
+| `__webpack_modules__[moduleId] is not a function` | Stale build cache, typically after installing a dependency. `rm -rf .next node_modules/.cache` and restart. |
+| Port 3000 already taken | `npm run dev -- --port 3001`. |
+| Dev server hangs without logging anything | Almost always the cloud-sync issue described above. Move the checkout outside the synced folder. |
+
+See [`platform/README.md`](platform/README.md) for architecture, model routing, the maintenance scripts and deploying to Vercel.
 
 ## Licence
 
