@@ -68,6 +68,10 @@ async function main() {
       : "";
 
     process.stdout.write(`Re-running ${agent.key}… `);
+    // Stamp the new start too. Updating only completedAt leaves the original
+    // run's start in place, and the phase then reports the gap between the two
+    // sessions as its duration — an hours-long phase in the report.
+    const startedAt = new Date().toISOString();
     const result = await generateText({
       system: agent.systemPrompt,
       prompt: `${brief}${priorContext}\n\nProduce your artifact now.`,
@@ -83,6 +87,7 @@ async function main() {
         promptTokens: result.promptTokens,
         completionTokens: result.completionTokens,
         errorMessage: null,
+        startedAt,
         completedAt: new Date().toISOString(),
       })
       .where(eq(phaseRuns.id, run.id));

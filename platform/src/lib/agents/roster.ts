@@ -28,8 +28,13 @@ export interface AgentDefinition {
   systemPrompt: string;
   /** Informational only — actual routing/fallback lives in lib/agents/llm-client.ts */
   model: string;
-  /** Present-continuous verb shown in the UI while this agent's phase run is active. */
-  activeVerb: string;
+  /**
+   * Present-continuous verbs shown while this agent's phase run is active.
+   * Several per agent, cycled in the UI, so a long-running phase reads as
+   * work in progress rather than a stuck label. Drawn from the vocabulary of
+   * the discipline the agent actually practises.
+   */
+  activeVerbs: string[];
 }
 
 /**
@@ -45,7 +50,7 @@ export const AGENT_ROSTER: AgentDefinition[] = [
     phaseKey: "qualification",
     phaseLabel: "Qualification",
     mission: "Fit score, prospect research, GO/NO-GO recommendation",
-    activeVerb: "Qualifying",
+    activeVerbs: ["Qualifying", "Scoring fit", "Probing sponsorship", "Sizing the pain", "Testing access", "Weighing risk"],
     systemPrompt: QUALIFIER_PROMPT,
     model: "gemini-3.7-flash (fallback: claude-haiku-4-5)",
   },
@@ -55,7 +60,7 @@ export const AGENT_ROSTER: AgentDefinition[] = [
     phaseKey: "qualification",
     phaseLabel: "Qualification",
     mission: "WBS + PERT effort estimate, solo-vs-reinforcement call",
-    activeVerb: "Estimating",
+    activeVerbs: ["Estimating", "Breaking down work", "Running PERT", "Tracing critical path", "Sizing the crew", "Costing the weeks"],
     systemPrompt: CAPACITY_PLANNER_PROMPT,
     model: "gemini-3.7-flash (fallback: claude-haiku-4-5)",
   },
@@ -65,7 +70,7 @@ export const AGENT_ROSTER: AgentDefinition[] = [
     phaseKey: "assessment",
     phaseLabel: "Assessment",
     mission: "Process classification, AI architecture blueprint, estimated ROI",
-    activeVerb: "Assessing",
+    activeVerbs: ["Assessing", "Shadowing the process", "Quantifying effort", "Modelling value", "Testing feasibility", "Baselining volumes"],
     systemPrompt: ASSESSOR_PROMPT,
     model: "gemini-3.7-flash (fallback: claude-haiku-4-5)",
   },
@@ -75,7 +80,7 @@ export const AGENT_ROSTER: AgentDefinition[] = [
     phaseKey: "context",
     phaseLabel: "Context Engineering",
     mission: "Ingestion, RAG/vector design, connector map, golden set",
-    activeVerb: "Ingesting",
+    activeVerbs: ["Ingesting", "Mapping sources", "Designing retrieval", "Chunking context", "Curating the golden set", "Wiring connectors"],
     systemPrompt: CONTEXT_ENGINEER_PROMPT,
     model: "gemini-3.7-flash (fallback: claude-haiku-4-5)",
   },
@@ -85,7 +90,7 @@ export const AGENT_ROSTER: AgentDefinition[] = [
     phaseKey: "engineering",
     phaseLabel: "Engineering",
     mission: "Orchestration pattern, model routing, system architecture, ADR",
-    activeVerb: "Architecting",
+    activeVerbs: ["Architecting", "Choosing the pattern", "Placing the seams", "Weighing determinism", "Drafting the ADR", "Rejecting swarms"],
     systemPrompt: ARCHITECT_PROMPT,
     model: "gemini-3.7-flash (fallback: claude-haiku-4-5)",
   },
@@ -95,7 +100,7 @@ export const AGENT_ROSTER: AgentDefinition[] = [
     phaseKey: "engineering",
     phaseLabel: "Engineering",
     mission: "Autonomy matrix, guardrails, audit trail, go-live veto",
-    activeVerb: "Hardening",
+    activeVerbs: ["Hardening", "Drawing boundaries", "Scoping permissions", "Auditing residency", "Blocking autonomy", "Writing the veto"],
     systemPrompt: GUARDRAILS_PROMPT,
     model: "gemini-3.7-flash (fallback: claude-haiku-4-5)",
   },
@@ -105,7 +110,7 @@ export const AGENT_ROSTER: AgentDefinition[] = [
     phaseKey: "engineering",
     phaseLabel: "Engineering",
     mission: "Independent Go/No-Go quality gate",
-    activeVerb: "Validating",
+    activeVerbs: ["Validating", "Challenging assumptions", "Cross-checking artifacts", "Setting acceptance", "Building the punch list", "Hunting contradictions"],
     systemPrompt: QA_PROMPT,
     model: "gemini-3.7-flash (fallback: claude-haiku-4-5)",
   },
@@ -115,7 +120,7 @@ export const AGENT_ROSTER: AgentDefinition[] = [
     phaseKey: "scale",
     phaseLabel: "Scale",
     mission: "Observability plan, realized ROI, runbook, retainer case",
-    activeVerb: "Operating",
+    activeVerbs: ["Operating", "Wiring observability", "Realising value", "Costing the run", "Drafting the runbook", "Structuring the retainer"],
     systemPrompt: SCALE_OPS_PROMPT,
     model: "gemini-3.7-flash (fallback: claude-haiku-4-5)",
   },
@@ -125,7 +130,7 @@ export const AGENT_ROSTER: AgentDefinition[] = [
     phaseKey: "scale",
     phaseLabel: "Scale",
     mission: "Company IQ extraction, cross-stack governance, pattern reuse, continuous improvement loop",
-    activeVerb: "Compounding",
+    activeVerbs: ["Compounding", "Extracting patterns", "Naming the rules", "Partitioning IP", "Banking the learning", "Building Company IQ"],
     systemPrompt: COMPOUND_INTELLIGENCE_PROMPT,
     model: "gemini-3.7-flash (fallback: claude-haiku-4-5)",
   },

@@ -1,8 +1,12 @@
 import { markdownToHtml } from "./markdown";
+import { formatElapsed, formatTotalElapsed, formatTimestamp } from "@/lib/format-elapsed";
 import type { Engagement } from "@/lib/db/schema";
 
-interface PhaseReport {
+export interface PhaseReport {
   agentName: string;
+  /** Optional so a report can still be rendered from artifacts with no timing. */
+  startedAt?: string | null;
+  completedAt?: string | null;
   phaseLabel: string;
   output: string;
 }
@@ -11,6 +15,19 @@ interface RenderArgs {
   engagement: Engagement;
   executiveSummary: string;
   phaseReports: PhaseReport[];
+}
+
+/**
+ * The run stamp under a phase heading: when it ran and how long it took.
+ * Rendered only when the artifact carries timing — reports regenerated from
+ * older runs may not.
+ */
+function phaseStamp(p: PhaseReport): string {
+  const ran = formatTimestamp(p.startedAt);
+  const took = formatElapsed(p.startedAt, p.completedAt);
+  if (!ran && !took) return "";
+  const parts = [ran, took ? `${took} elapsed` : null].filter(Boolean);
+  return `<div class="phase-stamp mono">${parts.join(" &middot; ")}</div>`;
 }
 
 function slug(s: string) {
@@ -47,6 +64,7 @@ export function renderConsolidatedReport({
             <h2 class="agent-title">${p.agentName}</h2>
           </div>
         </div>
+        ${phaseStamp(p)}
         <div class="prose">${markdownToHtml(p.output)}</div>
       </section>`
     )
@@ -58,6 +76,11 @@ export function renderConsolidatedReport({
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${engagement.customerName} — FDE OS Enterprise Report</title>
+<!-- Inlined as a data URI so the report stays a single self-contained file:
+     it is opened from disk and emailed around, where a linked icon would 404. -->
+<link rel="icon" href="data:image/svg+xml,${encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="#14150F"/><path fill="#C4F04C" d="M10 8h13v4H14v4h8v4h-8v8h-4z"/></svg>'
+)}">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -167,6 +190,11 @@ export function renderConsolidatedReport({
   .phase-heading { display: flex; gap: 20px; align-items: baseline; margin-bottom: 24px; }
   .phase-index { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--rust); }
   .agent-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 0; }
+  .phase-stamp {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(20,21,15,0.38); margin: -14px 0 22px 40px;
+    font-variant-numeric: tabular-nums;
+  }
 
   .prose h1 { font-size: 1.7rem; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.01em; }
   .prose h2 { font-size: 1.25rem; font-weight: 700; margin: 32px 0 12px; }
@@ -297,6 +325,13 @@ export function renderConsolidatedReport({
       <div class="meta-item"><div class="label">Company size</div><div class="value">${engagement.companySize ?? "—"}</div></div>
       <div class="meta-item"><div class="label">Generated</div><div class="value">${generatedAt}</div></div>
       <div class="meta-item"><div class="label">Phases run</div><div class="value">${phaseReports.length}</div></div>
+      ${
+        formatTotalElapsed(phaseReports)
+          ? `<div class="meta-item"><div class="label">Agent runtime</div><div class="value">${formatTotalElapsed(
+              phaseReports
+            )}</div></div>`
+          : ""
+      }
     </div>
 
     <div class="exec-summary">

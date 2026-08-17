@@ -5,7 +5,7 @@ import { engagements, phaseRuns, reports } from "@/lib/db/schema";
 import { AGENT_ROSTER, type AgentDefinition } from "./roster";
 import { MASTER_SYNTHESIS_PROMPT } from "./prompts/master";
 import { generateText } from "./llm-client";
-import { renderConsolidatedReport } from "@/lib/report/render";
+import { renderConsolidatedReport, type PhaseReport } from "@/lib/report/render";
 
 function engagementBrief(engagement: typeof engagements.$inferSelect) {
   const summary = `## Engagement Brief
@@ -40,7 +40,7 @@ const SYNTHESIS_MAX_TOKENS = 8000;
 async function runAgent(
   agent: AgentDefinition,
   brief: string,
-  priorOutputs: { agentName: string; phaseLabel: string; output: string }[]
+  priorOutputs: PhaseReport[]
 ) {
   const priorContext = priorOutputs.length
     ? `\n\n## Prior phase outputs in this engagement (for context)\n\n${priorOutputs
@@ -72,7 +72,7 @@ export async function runEngagementPipeline(engagementId: string) {
   if (!engagement) throw new Error(`Engagement not found: ${engagementId}`);
 
   const brief = engagementBrief(engagement);
-  const priorOutputs: { agentName: string; phaseLabel: string; output: string }[] = [];
+  const priorOutputs: PhaseReport[] = [];
 
   for (const agent of AGENT_ROSTER) {
     await db
@@ -101,6 +101,8 @@ export async function runEngagementPipeline(engagementId: string) {
         priorOutputs
       );
 
+      const completedAt = new Date().toISOString();
+
       await db
         .update(phaseRuns)
         .set({
@@ -109,11 +111,17 @@ export async function runEngagementPipeline(engagementId: string) {
           outputMarkdown: text,
           promptTokens,
           completionTokens,
-          completedAt: new Date().toISOString(),
+          completedAt,
         })
         .where(eq(phaseRuns.id, runId));
 
-      priorOutputs.push({ agentName: agent.name, phaseLabel: agent.phaseLabel, output: text });
+      priorOutputs.push({
+        agentName: agent.name,
+        phaseLabel: agent.phaseLabel,
+        output: text,
+        startedAt,
+        completedAt,
+      });
     } catch (err) {
       await db
         .update(phaseRuns)
@@ -139,7 +147,7 @@ export async function runEngagementPipeline(engagementId: string) {
 
 async function synthesizeAndRender(
   engagement: typeof engagements.$inferSelect,
-  phaseReports: { agentName: string; phaseLabel: string; output: string }[],
+  phaseReports: PhaseReport[],
   version: number
 ) {
   const brief = engagementBrief(engagement);
@@ -203,7 +211,13 @@ export async function regenerateReport(engagementId: string) {
     if (!run || !run.outputMarkdown) {
       throw new Error(`Missing completed output for agent ${agent.key}`);
     }
-    return { agentName: agent.name, phaseLabel: agent.phaseLabel, output: run.outputMarkdown };
+    return {
+      agentName: agent.name,
+      phaseLabel: agent.phaseLabel,
+      output: run.outputMarkdown,
+      startedAt: run.startedAt,
+      completedAt: run.completedAt,
+    };
   });
 
   const existingReports = await db

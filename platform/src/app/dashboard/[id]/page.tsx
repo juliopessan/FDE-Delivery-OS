@@ -4,6 +4,8 @@ import { useEffect, useCallback, useState, use } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Eyebrow } from "@/components/Eyebrow";
 import { AGENT_ROSTER } from "@/lib/agents/roster";
+import { ActiveVerb } from "@/components/ActiveVerb";
+import { formatElapsed, formatTotalElapsed } from "@/lib/format-elapsed";
 import type { Engagement, PhaseRun, Report } from "@/lib/db/schema";
 
 interface EngagementData {
@@ -64,6 +66,7 @@ export default function EngagementDetailPage({ params }: { params: Promise<{ id:
   const { engagement, runs, report } = data;
   const runByAgent = new Map(runs.map((r) => [r.agentKey, r]));
   const pipelineDone = engagement.status === "completed" && report;
+  const totalElapsed = formatTotalElapsed(runs);
 
   return (
     <div className="min-h-screen bg-paper text-ink">
@@ -101,11 +104,19 @@ export default function EngagementDetailPage({ params }: { params: Promise<{ id:
         {error && <p className="mt-4 text-rust text-sm">{error}</p>}
 
         <div className="mt-14">
-          <Eyebrow>Pipeline status</Eyebrow>
+          <div className="flex items-baseline justify-between gap-4">
+            <Eyebrow>Pipeline status</Eyebrow>
+            {totalElapsed ? (
+              <span className="mono-face text-[10px] tracking-[0.14em] uppercase text-ink/40 tabular-nums">
+                {totalElapsed} agent runtime
+              </span>
+            ) : null}
+          </div>
           <div className="mt-6 divide-y divide-ink/12 border-t border-b border-ink/12">
             {AGENT_ROSTER.map((agent, i) => {
               const run = runByAgent.get(agent.key);
               const status = run?.status ?? "pending";
+              const elapsed = formatElapsed(run?.startedAt, run?.completedAt);
               return (
                 <div key={agent.key} className="flex items-center justify-between gap-4 py-4">
                   <div className="flex items-center gap-4 min-w-0">
@@ -119,9 +130,18 @@ export default function EngagementDetailPage({ params }: { params: Promise<{ id:
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="flex items-center gap-3 shrink-0">
+                    {elapsed ? (
+                      <span className="mono-face text-[10px] tracking-[0.1em] text-ink/35 tabular-nums">
+                        {elapsed}
+                      </span>
+                    ) : null}
                     <span className="mono-face text-[10px] tracking-[0.1em] uppercase text-ink/50">
-                      {status === "running" ? `${agent.activeVerb}…` : status}
+                      {status === "running" ? (
+                        <ActiveVerb verbs={agent.activeVerbs} seed={i} />
+                      ) : (
+                        status
+                      )}
                     </span>
                     <span className={`w-2 h-2 rounded-full ${statusDot[status] ?? "bg-ink/15"}`} />
                   </div>
