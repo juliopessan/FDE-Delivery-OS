@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 const statusStyle: Record<string, string> = {
   active: "bg-amber text-ink",
-  completed: "bg-lime text-ink",
+  completed: "bg-lime text-ink dark:text-paper",
   failed: "bg-rust text-paper2",
 };
 
@@ -49,7 +49,7 @@ export default async function DashboardPage() {
               <Link
                 key={e.id}
                 href={`/dashboard/${e.id}`}
-                className="flex items-center justify-between gap-6 py-6 hover:bg-paper2 transition-colors px-2 -mx-2"
+                className="flex items-center justify-between gap-6 py-6 hover:bg-paper2 dark:bg-inksoft transition-colors px-2 -mx-2"
               >
                 <div className="min-w-0">
                   <div className="font-medium text-[16px] truncate">{e.customerName}</div>
@@ -63,7 +63,7 @@ export default async function DashboardPage() {
                   </span>
                   <span
                     className={`mono-face text-[10px] tracking-[0.1em] uppercase px-2.5 py-1 ${
-                      statusStyle[e.status] ?? "bg-paper2 text-ink/60"
+                      statusStyle[e.status] ?? "bg-paper2 dark:bg-inksoft text-ink/60"
                     }`}
                   >
                     {e.status}

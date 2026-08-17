@@ -4,10 +4,47 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
 
+/*
+  One palette, two themes. Dark mode does not introduce a single new colour —
+  it swaps which of the existing ones carries the ground and which carries the
+  type. The named tokens keep their meaning in the markup ("paper" is the page,
+  "ink" is what is written on it); only the values behind them move.
+*/
+:root {
+  --c-ink: 20 21 15;        /* #14150F */
+  --c-inksoft: 28 31 24;    /* #1C1F18 */
+  --c-paper: 242 240 234;   /* #F2F0EA */
+  --c-paper2: 237 234 224;  /* #EDEAE0 */
+  --c-lime: 196 240 76;     /* #C4F04C */
+  --c-amber: 232 184 75;    /* #E8B84B */
+  --c-rust: 217 119 87;     /* #D97757 */
+  --c-peach: 232 145 110;   /* #E8916E */
+}
+
+.dark {
+  /* Ground and body type trade places... */
+  --c-paper: 20 21 15;
+  --c-ink: 237 234 224;
+
+  /* ...but these two do not, because they never meant "light" and "dark" —
+     they meant "type sitting on a contrast surface" and "the contrast surface
+     itself". Inverting them turned every dark section into a white slab. On a
+     near-black ground the surface only needs to lift slightly off it. */
+  --c-paper2: 237 234 224;
+  --c-inksoft: 28 31 24;
+
+  /* Lime and amber are bright enough on cream but glare on near-black, so
+     they step down; rust comes up, having too little contrast on dark. */
+  --c-lime: 176 216 68;
+  --c-amber: 214 170 70;
+  --c-rust: 232 136 104;
+  --c-peach: 240 163 130;
+}
+
 body {
   margin: 0;
-  background: #F2F0EA;
-  color: #14150F;
+  background: rgb(var(--c-paper));
+  color: rgb(var(--c-ink));
 }
 
 .display-face { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }

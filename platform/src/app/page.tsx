@@ -218,7 +218,7 @@ export default function LandingPage() {
 
             <div className="rise" style={{ animationDelay: "120ms" }}>
               <Eyebrow>Agent pipeline</Eyebrow>
-              <div className="mt-4 bg-ink text-paper2">
+              <div className="mt-4 bg-ink dark:bg-inksoft text-paper2">
                 <div className="px-6 sm:px-8 py-6 border-b border-paper2/12 flex items-center justify-between">
                   <div>
                     <div className="mono-face text-[10px] tracking-[0.2em] uppercase text-paper2/50">
@@ -264,7 +264,7 @@ export default function LandingPage() {
         </section>
 
         {/* ─── The problem ──────────────────────────────────────────────── */}
-        <section className="bg-ink text-paper2">
+        <section className="bg-ink dark:bg-inksoft text-paper2">
           <div className="max-w-[1180px] mx-auto px-6 py-24 sm:py-28">
             <Eyebrow dark>The gap</Eyebrow>
             <h2 className="display-face mt-5 text-[clamp(1.9rem,4vw,3rem)] font-bold tracking-[-0.02em] leading-[1.05] max-w-[22ch]">
@@ -282,7 +282,7 @@ export default function LandingPage() {
                 "The business case sits in a spreadsheet.",
                 "Delivery estimates are built from memory.",
               ].map((line, i) => (
-                <div key={line} className="bg-ink p-6">
+                <div key={line} className="bg-ink dark:bg-inksoft p-6">
                   <div className="mono-face text-[11px] text-rust">
                     {String(i + 1).padStart(2, "0")}
                   </div>
@@ -344,7 +344,7 @@ export default function LandingPage() {
         </section>
 
         {/* ─── Target operating model ───────────────────────────────────── */}
-        <section className="bg-paper2/60 border-y border-ink/10">
+        <section className="bg-paper2/60 dark:bg-inksoft/50 border-y border-ink/10">
           <div className="max-w-[1180px] mx-auto px-6 py-24 sm:py-28">
             <Eyebrow>Target operating model</Eyebrow>
             <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.6rem)] font-bold tracking-[-0.02em] max-w-[22ch]">
@@ -396,7 +396,7 @@ export default function LandingPage() {
         </section>
 
         {/* ─── Agentic, not autonomous ──────────────────────────────────── */}
-        <section className="bg-ink text-paper2">
+        <section className="bg-ink dark:bg-inksoft text-paper2">
           <div className="max-w-[1180px] mx-auto px-6 py-24 sm:py-28">
             <Eyebrow dark>The design principle</Eyebrow>
             <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.6rem)] font-bold tracking-[-0.02em] leading-[1.1] max-w-[26ch]">
@@ -455,7 +455,7 @@ export default function LandingPage() {
         </section>
 
         {/* ─── Worked example ───────────────────────────────────────────── */}
-        <section className="bg-paper2/60 border-y border-ink/10">
+        <section className="bg-paper2/60 dark:bg-inksoft/50 border-y border-ink/10">
           <div className="max-w-[1180px] mx-auto px-6 py-24 sm:py-28">
             <Eyebrow>Worked example</Eyebrow>
             <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.4rem)] font-bold tracking-[-0.02em]">
@@ -513,7 +513,7 @@ export default function LandingPage() {
         </section>
 
         {/* ─── Compounding ──────────────────────────────────────────────── */}
-        <section className="bg-ink text-paper2">
+        <section className="bg-ink dark:bg-inksoft text-paper2">
           <div className="max-w-[1180px] mx-auto px-6 py-24 sm:py-28">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12 lg:gap-16">
               <div>

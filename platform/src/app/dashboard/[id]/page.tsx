@@ -94,7 +94,7 @@ export default function EngagementDetailPage({ params }: { params: Promise<{ id:
               href={`/api/engagements/${id}/report`}
               target="_blank"
               rel="noreferrer"
-              className="mono-face text-[12px] tracking-[0.12em] uppercase bg-lime text-ink px-6 py-4 hover:opacity-80 transition-opacity"
+              className="mono-face text-[12px] tracking-[0.12em] uppercase bg-lime text-ink dark:text-paper px-6 py-4 hover:opacity-80 transition-opacity"
             >
               View enterprise report →
             </a>

@@ -85,6 +85,9 @@ export function renderConsolidatedReport({
   @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
 
   :root {
+    --ink-ch: 20,21,15;
+    --paper-ch: 242,240,234;
+
     --ink: #14150F;
     --inksoft: #1C1F18;
     --paper: #F2F0EA;
@@ -93,6 +96,38 @@ export function renderConsolidatedReport({
     --amber: #E8B84B;
     --rust: #D97757;
     --peach: #E8916E;
+
+    /* The contrast surface (executive summary) and the type that sits on it.
+       Named separately from ink/paper because in dark mode they do not simply
+       swap: the surface only lifts off a near-black ground, and its type stays
+       light in both themes. */
+    --contrast: var(--ink);
+    --on-contrast: var(--paper2);
+    --on-contrast-ch: 237,234,224;
+  }
+
+  /*
+    Screen only. The report's whole purpose is to be exported as a PDF, and a
+    print stylesheet that inherited dark mode would hand the sponsor black
+    pages — print-color-adjust: exact would faithfully render every one.
+  */
+  @media screen and (prefers-color-scheme: dark) {
+    :root {
+      --ink-ch: 237,234,224;
+      --paper-ch: 20,21,15;
+
+      --ink: #EDEAE0;
+      --paper: #14150F;
+      --paper2: #EDEAE0;
+      --contrast: #1C1F18;
+      --on-contrast: #EDEAE0;
+      --on-contrast-ch: 237,234,224;
+
+      --lime: #B0D844;
+      --amber: #D6AA46;
+      --rust: #E88868;
+      --peach: #F0A382;
+    }
   }
   * { box-sizing: border-box; }
   body {
@@ -106,7 +141,7 @@ export function renderConsolidatedReport({
   .serif-italic { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; }
 
   header.masthead {
-    border-bottom: 1px solid rgba(20,21,15,0.12);
+    border-bottom: 1px solid rgba(var(--ink-ch),0.12);
     padding: 20px 6vw;
     display: flex;
     align-items: center;
@@ -114,18 +149,18 @@ export function renderConsolidatedReport({
   }
   .brand { display: flex; align-items: center; gap: 12px; }
   .brand-badge {
-    width: 28px; height: 28px; background: var(--ink);
+    width: 28px; height: 28px; background: #14150F;
     display: flex; align-items: center; justify-content: center;
-    color: var(--lime); font-size: 13px; font-weight: 500;
+    color: #C4F04C; font-size: 13px; font-weight: 500;
   }
   .brand-name { font-size: 12px; letter-spacing: 0.24em; font-weight: 500; }
   .masthead-right { display: flex; align-items: center; gap: 20px; }
-  .masthead-meta { font-size: 10px; letter-spacing: 0.2em; color: rgba(20,21,15,0.4); text-transform: uppercase; }
+  .masthead-meta { font-size: 10px; letter-spacing: 0.2em; color: rgba(var(--ink-ch),0.4); text-transform: uppercase; }
 
   .export-btn {
     font-family: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
     font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-    background: var(--ink); color: var(--paper);
+    background: var(--contrast); color: var(--on-contrast);
     border: none; padding: 10px 16px; cursor: pointer;
     transition: background 140ms ease;
   }
@@ -137,9 +172,9 @@ export function renderConsolidatedReport({
   .eyebrow {
     display: inline-flex; align-items: center; gap: 10px;
     font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em;
-    text-transform: uppercase; color: rgba(20,21,15,0.45);
+    text-transform: uppercase; color: rgba(var(--ink-ch),0.45);
   }
-  .eyebrow::before { content: ""; width: 20px; height: 1px; background: rgba(20,21,15,0.3); display: inline-block; }
+  .eyebrow::before { content: ""; width: 20px; height: 1px; background: rgba(var(--ink-ch),0.3); display: inline-block; }
 
   h1.report-title {
     font-size: clamp(2.2rem, 5vw, 3.4rem);
@@ -151,48 +186,48 @@ export function renderConsolidatedReport({
   .report-objective {
     font-size: clamp(1.05rem, 1.6vw, 1.25rem);
     line-height: 1.5;
-    color: rgba(20,21,15,0.75);
+    color: rgba(var(--ink-ch),0.75);
     max-width: 62ch;
     margin: 0 0 20px;
   }
-  .report-sub { color: rgba(20,21,15,0.65); font-size: 15px; max-width: 62ch; line-height: 1.6; }
+  .report-sub { color: rgba(var(--ink-ch),0.65); font-size: 15px; max-width: 62ch; line-height: 1.6; }
 
-  .meta-row { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 36px; padding-top: 24px; border-top: 1px solid rgba(20,21,15,0.12); }
-  .meta-item .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(20,21,15,0.4); margin-bottom: 4px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 36px; padding-top: 24px; border-top: 1px solid rgba(var(--ink-ch),0.12); }
+  .meta-item .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(var(--ink-ch),0.4); margin-bottom: 4px; }
   .meta-item .value { font-size: 14px; font-weight: 500; }
 
   .exec-summary {
-    margin-top: 48px; background: var(--ink); color: var(--paper2);
+    margin-top: 48px; background: var(--contrast); color: var(--on-contrast);
     padding: 40px clamp(20px, 4vw, 48px);
   }
-  .exec-summary .eyebrow { color: rgba(242,240,234,0.5); }
-  .exec-summary .eyebrow::before { background: rgba(242,240,234,0.3); }
-  .exec-summary .prose { color: var(--paper2); }
-  .exec-summary .prose h1 { color: var(--paper); }
-  .exec-summary .prose h2, .exec-summary .prose h3 { color: var(--paper); }
-  .exec-summary .prose table { border-color: rgba(242,240,234,0.18); }
-  .exec-summary .prose th, .exec-summary .prose td { border-color: rgba(242,240,234,0.18); }
-  .exec-summary .prose th { background: rgba(242,240,234,0.1); color: var(--paper); }
-  .exec-summary .prose td { color: var(--paper2); }
-  .exec-summary .prose code { background: rgba(242,240,234,0.12); color: var(--paper); }
+  .exec-summary .eyebrow { color: rgba(var(--on-contrast-ch),0.5); }
+  .exec-summary .eyebrow::before { background: rgba(var(--on-contrast-ch),0.3); }
+  .exec-summary .prose { color: var(--on-contrast); }
+  .exec-summary .prose h1 { color: var(--on-contrast); }
+  .exec-summary .prose h2, .exec-summary .prose h3 { color: var(--on-contrast); }
+  .exec-summary .prose table { border-color: rgba(var(--on-contrast-ch),0.18); }
+  .exec-summary .prose th, .exec-summary .prose td { border-color: rgba(var(--on-contrast-ch),0.18); }
+  .exec-summary .prose th { background: rgba(var(--on-contrast-ch),0.1); color: var(--on-contrast); }
+  .exec-summary .prose td { color: var(--on-contrast); }
+  .exec-summary .prose code { background: rgba(var(--on-contrast-ch),0.12); color: var(--on-contrast); }
   .exec-summary .prose a { color: var(--peach); }
 
   .toc { margin-top: 56px; }
   .toc-link {
     display: grid; grid-template-columns: 32px 1fr auto; gap: 16px; align-items: baseline;
-    padding: 16px 0; border-bottom: 1px solid rgba(20,21,15,0.12);
+    padding: 16px 0; border-bottom: 1px solid rgba(var(--ink-ch),0.12);
     text-decoration: none; color: var(--ink);
   }
   .toc-index { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--rust); }
-  .toc-agent { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: rgba(20,21,15,0.4); text-transform: uppercase; }
+  .toc-agent { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: rgba(var(--ink-ch),0.4); text-transform: uppercase; }
 
-  .phase-section { margin-top: 72px; padding-top: 40px; border-top: 1px solid rgba(20,21,15,0.14); }
+  .phase-section { margin-top: 72px; padding-top: 40px; border-top: 1px solid rgba(var(--ink-ch),0.14); }
   .phase-heading { display: flex; gap: 20px; align-items: baseline; margin-bottom: 24px; }
   .phase-index { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--rust); }
   .agent-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 0; }
   .phase-stamp {
     font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: rgba(20,21,15,0.38); margin: -14px 0 22px 40px;
+    color: rgba(var(--ink-ch),0.38); margin: -14px 0 22px 40px;
     font-variant-numeric: tabular-nums;
   }
 
@@ -206,7 +241,7 @@ export function renderConsolidatedReport({
   .prose a { color: var(--rust); }
 
   .prose table { width: 100%; border-collapse: collapse; margin: 18px 0 24px; font-size: 13.5px; }
-  .prose th, .prose td { border: 1px solid rgba(20,21,15,0.16); padding: 8px 10px; text-align: left; vertical-align: top; }
+  .prose th, .prose td { border: 1px solid rgba(var(--ink-ch),0.16); padding: 8px 10px; text-align: left; vertical-align: top; }
   .prose th { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; background: var(--paper2); }
 
   .prose pre.code-block, .prose pre.mermaid {
@@ -232,10 +267,10 @@ export function renderConsolidatedReport({
     font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--rust); margin-bottom: 8px;
   }
-  .prose code { font-family: 'JetBrains Mono', monospace; background: rgba(20,21,15,0.06); padding: 1px 5px; font-size: 0.9em; }
+  .prose code { font-family: 'JetBrains Mono', monospace; background: rgba(var(--ink-ch),0.06); padding: 1px 5px; font-size: 0.9em; }
 
-  footer.report-footer { border-top: 1px solid rgba(20,21,15,0.12); padding: 32px 6vw; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-  footer.report-footer .mono { font-size: 10px; letter-spacing: 0.14em; color: rgba(20,21,15,0.4); text-transform: uppercase; }
+  footer.report-footer { border-top: 1px solid rgba(var(--ink-ch),0.12); padding: 32px 6vw; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  footer.report-footer .mono { font-size: 10px; letter-spacing: 0.14em; color: rgba(var(--ink-ch),0.4); text-transform: uppercase; }
 
   @media print {
     /*
@@ -249,7 +284,7 @@ export function renderConsolidatedReport({
 
     html, body { background: #fff; }
     .export-btn { display: none; }
-    header.masthead { padding: 0 0 14px; border-bottom: 1px solid rgba(20,21,15,0.2); }
+    header.masthead { padding: 0 0 14px; border-bottom: 1px solid rgba(var(--ink-ch),0.2); }
     main { max-width: none; padding: 20px 0 0; }
 
     .exec-summary { break-inside: avoid; }

@@ -193,7 +193,7 @@ export default function NewEngagementPage() {
                 type="button"
                 disabled={extracting || !(form.rawIntake ?? "").trim()}
                 onClick={() => extractBrief(form.rawIntake ?? "")}
-                className="mono-face text-[11px] tracking-[0.12em] uppercase bg-paper2 text-ink px-4 py-2.5 hover:bg-ink hover:text-paper transition-colors disabled:opacity-40"
+                className="mono-face text-[11px] tracking-[0.12em] uppercase bg-paper2 dark:bg-inksoft text-ink px-4 py-2.5 hover:bg-ink hover:text-paper transition-colors disabled:opacity-40"
               >
                 {extracting
                   ? "Extracting brief…"
