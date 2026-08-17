@@ -17,15 +17,13 @@ export default function LandingPage() {
             <Eyebrow>Agentic delivery operating system</Eyebrow>
 
             <h1 className="display-face mt-7 text-[clamp(2.6rem,6vw,4.4rem)] leading-[0.95] tracking-[-0.03em] font-bold">
-              One engagement enters.
+              One client problem enters.
               <RotatingOutcome
                 className="serif-face italic font-normal tracking-[-0.01em]"
                 phrases={[
-                  "an enterprise report leaves.",
-                  "a qualified fit score leaves.",
-                  "an architecture blueprint leaves.",
-                  "a guardrails verdict leaves.",
-                  "a realised value case leaves.",
+                  "A governed delivery decision leaves.",
+                  "A costed, guardrailed plan leaves.",
+                  "A decision a sponsor can sign leaves.",
                 ]}
               />
             </h1>

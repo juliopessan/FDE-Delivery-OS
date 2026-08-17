@@ -92,7 +92,15 @@ export function stripInlineLatex(markdown: string): string {
     out = out.replace(pattern, replacement);
   }
 
-  // 3. Set real amounts aside. Doing this before pairing is what makes a line
+  // 3. Display math ($$…$$) has to go before inline, or the inline pass reads
+  //    the doubled delimiters as an empty span and leaves both pairs behind.
+  //    Agents use it for the headline calculations — the effort reduction, the
+  //    ROI — so it lands as its own paragraph rather than inline.
+  out = out.replace(/\$\$([\s\S]{1,300}?)\$\$/g, (whole, inner: string) =>
+    /\\/.test(inner) || !inner.trim() ? whole : inner.trim()
+  );
+
+  // 4. Set real amounts aside. Doing this before pairing is what makes a line
   //    like "costs $18,500 at $≥ 85%$ accuracy" resolve correctly — otherwise
   //    the amount's sign pairs with the formula's opening one and strands the
   //    closing delimiter in the output.
@@ -105,13 +113,13 @@ export function stripInlineLatex(markdown: string): string {
     return `${AMOUNT_OPEN}${amounts.length - 1}${AMOUNT_CLOSE}`;
   });
 
-  // 4. Every `$` still standing opens or closes a formula. Drop the pair and
+  // 5. Every `$` still standing opens or closes a formula. Drop the pair and
   //    keep the value, unless the span carries markup we could not translate.
   out = out.replace(/\$([^$\n]{0,80}?)\$/g, (whole, inner: string) =>
     /\\/.test(inner) || !inner.trim() ? whole : inner.trim()
   );
 
-  // 5. Put the amounts and literal signs back.
+  // 6. Put the amounts and literal signs back.
   out = out.replace(
     new RegExp(`${AMOUNT_OPEN}(\\d+)${AMOUNT_CLOSE}`, "g"),
     (_, index: string) => amounts[Number(index)]

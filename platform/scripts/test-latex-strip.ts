@@ -41,6 +41,14 @@ const cases: [string, string][] = [
   ["check: $\\sum Line \\ne Total$ fails", "check: Σ Line ≠ Total fails"],
   ["($Gross \\ne Net + Tax$)", "(Gross ≠ Net + Tax)"],
 
+  // Display math. Agents use it for headline calculations, and the doubled
+  // delimiters slip past an inline-only pass.
+  [
+    "$$\\text{Manual Effort Reduction} = \\frac{1,820}{2,800} = \\mathbf{65.0\\%}$$",
+    "Manual Effort Reduction = 1,820 / 2,800 = 65.0%",
+  ],
+  ["$$ROI = 61,906 / 5,000$$", "ROI = 61,906 / 5,000"],
+
   // Approximations. Two loose tildes in a paragraph make GFM strike out
   // everything between them, so an estimate must not stay a bare tilde.
   ["~12,000 invoices at ~14 minutes each", "≈12,000 invoices at ≈14 minutes each"],
