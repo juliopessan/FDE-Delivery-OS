@@ -207,7 +207,13 @@ export async function regenerateReport(engagementId: string) {
   const runs = await db.select().from(phaseRuns).where(eq(phaseRuns.engagementId, engagementId));
 
   const phaseReports = AGENT_ROSTER.map((agent) => {
-    const run = runs.find((r) => r.agentKey === agent.key);
+    // An engagement re-run — or a repair of a truncated phase — leaves several
+    // rows per agent. Taking the first match would rebuild the report from
+    // whichever attempt the database happened to return first, including the
+    // truncated one that prompted the repair. Take the newest completed one.
+    const run = runs
+      .filter((r) => r.agentKey === agent.key && r.outputMarkdown && r.completedAt)
+      .sort((a, b) => (a.completedAt! < b.completedAt! ? 1 : -1))[0];
     if (!run || !run.outputMarkdown) {
       throw new Error(`Missing completed output for agent ${agent.key}`);
     }
