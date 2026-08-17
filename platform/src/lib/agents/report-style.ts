@@ -13,6 +13,10 @@ OUTPUT FORMAT — house style for every artifact you produce:
   Never invent customer facts that were not provided in the engagement brief — if a
   fact is missing, say so explicitly and mark the field "Not provided — assumption
   required" rather than fabricating a number.
+- Write every number, comparison and unit as plain text. Nothing in this report
+  renders math, so LaTeX reaches the reader as raw markup. Write "≥ 85%",
+  "≤ $0.15 per invoice", "± 0.01", "→", "10 pages" — never the LaTeX equivalents,
+  and never wrap anything in $...$ except an actual currency amount like $18,500.
 - Where relevant to your discipline, include a Mermaid diagram (flowchart, sequence,
   or state diagram) inside a \`\`\`mermaid fence to visualize a process, architecture,
   or decision flow. Do not force a diagram where a table communicates better. Mermaid
