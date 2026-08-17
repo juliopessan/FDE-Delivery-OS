@@ -30,7 +30,7 @@ const LATEX_COMMANDS: [RegExp, string][] = [
   [/\\cdot\b/g, "·"],
   [/\\div\b/g, "÷"],
   [/\\infty\b/g, "∞"],
-  [/\\sim\b/g, "~"],
+  [/\\sim\b/g, "≈"],
   [/\\text\{([^}]*)\}/g, "$1"],
   [/\\mathrm\{([^}]*)\}/g, "$1"],
   [/\\mathbf\{([^}]*)\}/g, "$1"],
@@ -68,9 +68,24 @@ function linearizeFractions(text: string): string {
   );
 }
 
+/**
+ * Agents write "~12,000 invoices" for an approximate figure. GitHub-flavoured
+ * Markdown pairs up loose tildes into strikethrough, so two approximations in
+ * one paragraph render everything between them as struck-out text — which in
+ * a client report reads as "withdrawn". Since the intent is always
+ * "approximately", promote it to the symbol that says so.
+ *
+ * A doubled tilde is deliberate strikethrough and is left alone.
+ */
+function approximationTildesToSymbol(text: string): string {
+  return text.replace(/(?<!~)~(?=\s?[\d$])/g, "≈");
+}
+
 export function stripInlineLatex(markdown: string): string {
   // 1. An escaped `\$` is a literal dollar sign, not a delimiter.
-  let out = linearizeFractions(markdown.replace(/\\\$/g, LITERAL_DOLLAR));
+  let out = approximationTildesToSymbol(
+    linearizeFractions(markdown.replace(/\\\$/g, LITERAL_DOLLAR))
+  );
 
   // 2. Translate the commands, leaving plain text plus bare delimiters.
   for (const [pattern, replacement] of LATEX_COMMANDS) {

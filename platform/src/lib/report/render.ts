@@ -96,7 +96,18 @@ export function renderConsolidatedReport({
     color: var(--lime); font-size: 13px; font-weight: 500;
   }
   .brand-name { font-size: 12px; letter-spacing: 0.24em; font-weight: 500; }
+  .masthead-right { display: flex; align-items: center; gap: 20px; }
   .masthead-meta { font-size: 10px; letter-spacing: 0.2em; color: rgba(20,21,15,0.4); text-transform: uppercase; }
+
+  .export-btn {
+    font-family: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    background: var(--ink); color: var(--paper);
+    border: none; padding: 10px 16px; cursor: pointer;
+    transition: background 140ms ease;
+  }
+  .export-btn:hover { background: var(--rust); }
+  .export-btn:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
 
   main { max-width: 900px; margin: 0 auto; padding: 64px 6vw 96px; }
 
@@ -199,8 +210,29 @@ export function renderConsolidatedReport({
   footer.report-footer .mono { font-size: 10px; letter-spacing: 0.14em; color: rgba(20,21,15,0.4); text-transform: uppercase; }
 
   @media print {
+    /*
+      Browsers drop backgrounds when printing. The executive summary is a dark
+      card with light text on it, so without this it prints cream-on-white and
+      the most important page in the document disappears.
+    */
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    @page { margin: 16mm 14mm; }
+
+    html, body { background: #fff; }
+    .export-btn { display: none; }
+    header.masthead { padding: 0 0 14px; border-bottom: 1px solid rgba(20,21,15,0.2); }
+    main { max-width: none; padding: 20px 0 0; }
+
     .exec-summary { break-inside: avoid; }
-    .phase-section { break-before: page; }
+    .phase-section { break-before: page; padding-top: 0; border-top: none; margin-top: 0; }
+
+    /* Nothing legible should be split across a page boundary. */
+    .prose table, .prose pre, .prose blockquote,
+    pre.mermaid, pre.code-block, .diagram-fallback { break-inside: avoid; }
+    .prose tr, .prose li { break-inside: avoid; }
+    .prose h1, .prose h2, .prose h3 { break-after: avoid; }
+    .prose img, .prose svg { max-width: 100% !important; height: auto !important; }
   }
 </style>
 <script type="module">
@@ -247,7 +279,10 @@ export function renderConsolidatedReport({
       <div class="brand-badge">F</div>
       <span class="brand-name mono">FDE OS</span>
     </div>
-    <span class="masthead-meta">Enterprise Report / v1</span>
+    <div class="masthead-right">
+      <span class="masthead-meta">Enterprise Report / v1</span>
+      <button type="button" class="export-btn" onclick="window.print()">Export PDF</button>
+    </div>
   </header>
 
   <main>

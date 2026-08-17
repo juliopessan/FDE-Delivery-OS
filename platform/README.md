@@ -57,6 +57,13 @@ compounds instead of resetting to zero on the next engagement.
    rendered independently so one malformed diagram degrades to its raw
    source instead of blanking the page. Served at
    `/api/engagements/:id/report`.
+7. "Export PDF" in the report's header hands the sponsor a PDF. It goes
+   through the browser's own print pipeline rather than a headless renderer
+   on the server — no extra dependency, and nothing that would need a
+   different answer once this is running on serverless. The print stylesheet
+   forces `print-color-adjust: exact`, without which browsers drop
+   backgrounds and the dark executive-summary card prints cream-on-white,
+   losing the one page a sponsor is guaranteed to read.
 
 ## How it's built
 

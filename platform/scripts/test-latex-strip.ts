@@ -41,6 +41,15 @@ const cases: [string, string][] = [
   ["check: $\\sum Line \\ne Total$ fails", "check: Σ Line ≠ Total fails"],
   ["($Gross \\ne Net + Tax$)", "(Gross ≠ Net + Tax)"],
 
+  // Approximations. Two loose tildes in a paragraph make GFM strike out
+  // everything between them, so an estimate must not stay a bare tilde.
+  ["~12,000 invoices at ~14 minutes each", "≈12,000 invoices at ≈14 minutes each"],
+  ["(~16-18 FTE) processing ~2,800 hours", "(≈16-18 FTE) processing ≈2,800 hours"],
+  ["cost of ~$1,794 per month", "cost of ≈$1,794 per month"],
+  ["~ 6.0% error rate", "≈ 6.0% error rate"],
+  // Deliberate strikethrough survives.
+  ["the ~~old baseline~~ is superseded", "the ~~old baseline~~ is superseded"],
+
   // Amounts sitting next to each other, as they do in report tables. Adjacent
   // placeholders must not share a boundary character, or restoring the first
   // eats the second and the marker reaches the reader.
