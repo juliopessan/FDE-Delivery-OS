@@ -2,7 +2,7 @@ import Link from "next/link";
 import { StatusStrip } from "@/components/StatusStrip";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Eyebrow } from "@/components/Eyebrow";
-import { WordReveal } from "@/components/WordReveal";
+import { RotatingLine } from "@/components/RotatingLine";
 import { AGENT_ROSTER } from "@/lib/agents/roster";
 
 /**
@@ -181,11 +181,14 @@ export default function LandingPage() {
               <Eyebrow>Agentic delivery operating system</Eyebrow>
 
               <h1 className="display-face mt-7 text-[clamp(2.6rem,6vw,4.4rem)] leading-[0.95] tracking-[-0.03em] font-bold">
-                <WordReveal text="One client problem enters." />
-                <WordReveal
-                  className="serif-face italic font-normal tracking-[-0.01em] block"
-                  text="A governed delivery decision leaves."
-                  delay={0.34}
+                One client problem enters.
+                <RotatingLine
+                  className="serif-face italic font-normal tracking-[-0.01em]"
+                  phrases={[
+                    "A governed delivery decision leaves.",
+                    "A costed, guardrailed plan leaves.",
+                    "A decision a sponsor can sign leaves.",
+                  ]}
                 />
               </h1>
 
