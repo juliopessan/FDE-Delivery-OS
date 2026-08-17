@@ -15,6 +15,8 @@ export interface GenerateResult {
   model: string;
   promptTokens?: number;
   completionTokens?: number;
+  /** True when the model hit the output ceiling and the text is cut off mid-thought. */
+  truncated?: boolean;
 }
 
 const CALL_TIMEOUT_MS = 90_000;
@@ -98,7 +100,12 @@ async function generateWithGemini(
 
   const text = result.response.text();
   if (!text.trim()) {
-    throw new Error("Gemini returned an empty response.");
+    // Gemini 3.x spends part of maxOutputTokens on internal reasoning
+    // ("thoughts"). A tight budget can be consumed entirely by thinking,
+    // leaving no visible answer at all.
+    throw new Error(
+      `Gemini returned an empty response (maxTokens=${maxTokens} may have been consumed by reasoning tokens).`
+    );
   }
 
   const usage = result.response.usageMetadata;
@@ -107,6 +114,7 @@ async function generateWithGemini(
     model: GEMINI_MODEL,
     promptTokens: usage?.promptTokenCount,
     completionTokens: usage?.candidatesTokenCount,
+    truncated: result.response.candidates?.[0]?.finishReason === "MAX_TOKENS",
   };
 }
 
@@ -131,5 +139,6 @@ async function generateWithHaiku(
     model: HAIKU_MODEL,
     promptTokens: message.usage.input_tokens,
     completionTokens: message.usage.output_tokens,
+    truncated: message.stop_reason === "max_tokens",
   };
 }

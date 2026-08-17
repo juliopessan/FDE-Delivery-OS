@@ -25,6 +25,18 @@ function engagementBrief(engagement: typeof engagements.$inferSelect) {
 provided, say so explicitly rather than inventing it.`;
 }
 
+/**
+ * Output ceiling per agent artifact. Generous on purpose: Gemini 3.x bills
+ * its internal reasoning ("thoughts") against this same budget, and on real
+ * engagements reasoning alone has run to ~1.3k tokens while the visible
+ * artifact ran past 7.9k — enough to clip a late-pipeline agent mid-sentence
+ * at the previous 8k ceiling.
+ */
+const AGENT_MAX_TOKENS = 24000;
+
+/** The executive summary is a synthesis, not a full artifact — it stays short by design. */
+const SYNTHESIS_MAX_TOKENS = 8000;
+
 async function runAgent(
   agent: AgentDefinition,
   brief: string,
@@ -39,8 +51,14 @@ async function runAgent(
   const result = await generateText({
     system: agent.systemPrompt,
     prompt: `${brief}${priorContext}\n\nProduce your artifact now.`,
-    maxTokens: 8000,
+    maxTokens: AGENT_MAX_TOKENS,
   });
+
+  if (result.truncated) {
+    console.warn(
+      `[run-pipeline] Agent "${agent.key}" hit the ${AGENT_MAX_TOKENS}-token output ceiling — its artifact is cut off mid-thought.`
+    );
+  }
 
   return result;
 }
@@ -134,8 +152,14 @@ async function synthesizeAndRender(
     prompt: `${brief}\n\n## Completed phase reports\n\n${phaseReports
       .map((p) => `### ${p.phaseLabel} — ${p.agentName}\n\n${p.output}`)
       .join("\n\n---\n\n")}`,
-    maxTokens: 3000,
+    maxTokens: SYNTHESIS_MAX_TOKENS,
   });
+
+  if (synthesis.truncated) {
+    console.warn(
+      `[synthesizeAndRender] Executive summary hit the ${SYNTHESIS_MAX_TOKENS}-token ceiling and is cut off.`
+    );
+  }
 
   console.log(`[synthesizeAndRender] engagement=${engagement.id} version=${version} synthesis done (model=${synthesis.model}), rendering HTML...`);
 
