@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Eyebrow } from "@/components/Eyebrow";
+import { RotatingPlaceholder } from "@/components/RotatingPlaceholder";
 
 const fields: {
   name: string;
@@ -163,17 +164,30 @@ export default function NewEngagementPage() {
               .txt/.md/.pdf/.docx file. The agents treat this as the primary source of
               truth and the fields below as a condensed excerpt of it.
             </p>
-            <textarea
-              value={form.rawIntake ?? ""}
-              placeholder="Paste the full client problem intake here…"
-              rows={14}
-              className="w-full bg-transparent border-b border-ink/25 pb-3 text-[15px] leading-relaxed placeholder-ink/28 focus:outline-none focus:border-ink transition-colors resize-y font-mono"
-              onChange={(e) => {
-                setUploadedFileName(null);
-                setJustExtracted(false);
-                setForm((s) => ({ ...s, rawIntake: e.target.value }));
-              }}
-            />
+            <div className="relative">
+              <textarea
+                value={form.rawIntake ?? ""}
+                rows={14}
+                className="w-full bg-transparent border-b border-ink/25 pb-3 text-[15px] leading-relaxed placeholder-ink/28 focus:outline-none focus:border-ink transition-colors resize-y font-mono"
+                onChange={(e) => {
+                  setUploadedFileName(null);
+                  setJustExtracted(false);
+                  setForm((s) => ({ ...s, rawIntake: e.target.value }));
+                }}
+              />
+              <RotatingPlaceholder
+                visible={!(form.rawIntake ?? "")}
+                className="text-[15px] leading-relaxed text-ink/28 font-mono"
+                prompts={[
+                  "Paste the full client problem intake here…",
+                  "Who they are — industry, size, the team that owns the process…",
+                  "What it costs today — volumes, handling time, error rate…",
+                  "What they want — and whether anyone has validated it…",
+                  "Constraints — data residency, ERP, what security will not allow…",
+                  "Or upload the discovery document with the link above…",
+                ]}
+              />
+            </div>
             <div className="mt-3 flex items-center gap-4">
               <button
                 type="button"

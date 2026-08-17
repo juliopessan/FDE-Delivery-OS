@@ -2,6 +2,7 @@ import Link from "next/link";
 import { StatusStrip } from "@/components/StatusStrip";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Eyebrow } from "@/components/Eyebrow";
+import { RotatingOutcome } from "@/components/RotatingOutcome";
 import { AGENT_ROSTER, PHASES } from "@/lib/agents/roster";
 
 export default function LandingPage() {
@@ -17,10 +18,16 @@ export default function LandingPage() {
 
             <h1 className="display-face mt-7 text-[clamp(2.6rem,6vw,4.4rem)] leading-[0.95] tracking-[-0.03em] font-bold">
               One engagement enters.
-              <br />
-              <span className="serif-face italic font-normal tracking-[-0.01em]">
-                an enterprise report leaves.
-              </span>
+              <RotatingOutcome
+                className="serif-face italic font-normal tracking-[-0.01em]"
+                phrases={[
+                  "an enterprise report leaves.",
+                  "a qualified fit score leaves.",
+                  "an architecture blueprint leaves.",
+                  "a guardrails verdict leaves.",
+                  "a realised value case leaves.",
+                ]}
+              />
             </h1>
 
             <p className="mt-7 text-[17px] leading-relaxed text-ink/70 max-w-[50ch]">
