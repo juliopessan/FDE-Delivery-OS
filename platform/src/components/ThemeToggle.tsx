@@ -54,13 +54,45 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      // Reserves its own width so the header does not shift on mount or on
-      // toggle, and stays out of the tab order's way until it means something.
-      className="mono-face text-[10px] tracking-[0.14em] uppercase text-ink/45 hover:text-ink transition-colors w-[52px] text-right"
+      // Reserves its own square so the header does not shift on mount or on
+      // toggle. The glyph is drawn at the same weight as the mono labels next
+      // to it, so it reads as part of the same row rather than as an app icon.
+      className="text-ink/45 hover:text-ink transition-colors w-5 h-5 flex items-center justify-center shrink-0"
       aria-label={theme ? `Switch to ${theme === "dark" ? "light" : "dark"} theme` : "Switch theme"}
+      title={theme === "dark" ? "Light theme" : "Dark theme"}
       suppressHydrationWarning
     >
-      {theme === undefined ? "" : theme === "dark" ? "Light" : "Dark"}
+      {theme === undefined ? null : theme === "dark" ? <SunIcon /> : <MoonIcon />}
     </button>
+  );
+}
+
+/* Stroked at 1.25 to sit at the same optical weight as JetBrains Mono at 10px. */
+const iconProps = {
+  width: 15,
+  height: 15,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.25,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  "aria-hidden": true,
+};
+
+function SunIcon() {
+  return (
+    <svg {...iconProps}>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+    </svg>
+  );
+}
+
+function MoonIcon() {
+  return (
+    <svg {...iconProps}>
+      <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2Z" />
+    </svg>
   );
 }
