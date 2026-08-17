@@ -102,6 +102,13 @@ Helvetica Neue for display type, italic Instrument Serif for accents,
 JetBrains Mono for uppercase micro-labels, on a cream-paper/ink palette with
 lime, amber, and rust accents.
 
+Motion is used sparingly and never carries meaning on its own: the idle agent
+roster pulses down its nine status dots so the pipeline reads as a sequence
+rather than a list, the hero's second line cycles through the artifacts the
+pipeline returns, and the empty intake box cycles hints for what belongs in a
+discovery document. All three resolve to a static first state under
+`prefers-reduced-motion` and never start a timer.
+
 **Model routing.** `src/lib/agents/llm-client.ts` centralizes every LLM call
 behind one `generateText()` function: Gemini 3.7 Flash first, falling back to
 Claude Haiku 4.5 automatically if the Gemini call errors or `GEMINI_API_KEY`
@@ -109,7 +116,21 @@ isn't set. Nine sequential agent calls plus a synthesis call is enough volume
 per engagement that a fast/cheap primary model matters; the fallback means a
 missing or rate-limited Gemini key degrades the pipeline instead of breaking
 it. Every phase run records which model actually answered, for the audit
-trail.
+trail. Each call carries a 90-second timeout — without one, a hung request
+has no way to fail, and a stalled pipeline looks identical to a slow one.
+
+**Reasoning tokens are billed against the output budget.** Gemini 3.x spends
+part of `maxOutputTokens` thinking before it writes anything. Measured on a
+real agent prompt: 1,315 reasoning tokens against 1,464 visible ones, so
+roughly half the ceiling was gone before the artifact started. On the first
+full engagement this clipped the Scale & Value agent at 7,996 completion
+tokens against an 8,000 ceiling — its artifact ended mid-heading, was stored
+as if complete, and rendered into the report with no error raised anywhere.
+The agent budget is now 24k, and `generateText()` returns a `truncated` flag
+(Gemini `finishReason: MAX_TOKENS`, Anthropic `stop_reason: max_tokens`) so
+the pipeline warns instead of persisting a half-written artifact silently. A
+budget too tight to fit any answer is also why an empty Gemini response is
+worth naming explicitly rather than treating as a generic failure.
 
 **Mermaid diagrams are a known sharp edge.** Early testing produced diagrams
 that silently failed to render — unquoted node labels containing a literal
@@ -124,6 +145,23 @@ report blank past that point. Every diagram is also capped to the same
 max-width/max-height in CSS, so a 20-node architecture diagram and a 4-node
 flowchart read at a consistent size instead of whatever mermaid happened to
 lay out.
+
+**LaTeX gets the same belt-and-braces treatment.** Agents reach for it when
+writing thresholds and units, and nothing here renders maths, so the markup
+arrives verbatim — one engagement produced 144 spans of it, including
+"Processing $\ge 65\%$" in a table meant for a business sponsor. The house
+style guide discourages it and `stripInlineLatex()` in
+`src/lib/report/markdown.ts` translates what still slips through into plain
+Unicode (≥, ≤, →, ±, Σ, ≠, linearized fractions).
+
+The delicate half is the inverse mistake: a dollar sign usually means money,
+and turning "$18,500" into "18,500" would quietly corrupt the commercials in
+a client deliverable. Amounts are therefore lifted out *before* any delimiter
+pairing — pairing first mis-associates the signs on a line that mixes both
+("costs $18,500 at $\ge 85\%$ accuracy") and strands a delimiter in the
+output. `scripts/test-latex-strip.ts` pins the behaviour with 21 cases
+covering maths, money, both on one line, adjacent amounts, and the PERT and
+reconciliation formulae the estimation and QA agents actually emit.
 
 ## One honest limitation
 
@@ -146,6 +184,10 @@ in [`../docs/arquitetura-sistema/15-roadmap.md`](../docs/arquitetura-sistema/15-
   `.pdf` and `.docx` discovery documents.
 - **Tailwind CSS** — the `content-machine`-derived visual language described
   above.
+- **Framer Motion** — the three motion treatments above, and nothing else.
+  shadcn is deliberately not installed: its components ship their own tokens
+  (`bg-primary`, `text-muted-foreground`, `font-display`), which would put a
+  second, conflicting palette next to the one this project already has.
 
 ## Local development
 
@@ -162,10 +204,26 @@ Open http://localhost:3000, create an engagement at `/dashboard/new`, then
 run its pipeline from the engagement detail page. The consolidated report is
 served at `/api/engagements/:id/report`.
 
-If you edit a phase's prompt or the report template after an engagement has
-already completed, `npx tsx scripts/regenerate-report.ts <engagementId>`
-re-synthesizes the executive summary and re-renders the HTML report from the
-already-stored phase outputs, without re-running the full (billed) pipeline.
+Keep the checkout outside any cloud-synced folder (iCloud Drive's Desktop &
+Documents, Dropbox, OneDrive). The sync daemon intercepts file access, and on
+a tree with `node_modules` and `.git` in it that shows up as `next dev`
+hanging with zero CPU, renames silently reverting, and stray "folder 2"
+copies appearing — symptoms that look like disk corruption and are not.
+
+### Working on an engagement that already ran
+
+- `npx tsx scripts/regenerate-report.ts <engagementId>` re-synthesizes the
+  executive summary and re-renders the HTML from the already-stored phase
+  outputs — use it after editing the report template or a stored artifact,
+  and skip re-running the full billed pipeline. `POST
+  /api/engagements/:id/regenerate-report` does the same thing over HTTP.
+- `npx tsx scripts/repair-truncated.ts <engagementId> <agentKey>` re-runs one
+  agent and everything downstream of it, rebuilding the context chain exactly
+  as the pipeline would. For when a single artifact is bad — truncated, say —
+  and the agents after it consumed that bad text as context.
+- `npx tsx scripts/test-latex-strip.ts` checks the report sanitiser. Worth
+  running after touching `stripInlineLatex()`, since its failure mode is
+  silent corruption of figures rather than an error.
 
 ## Deploying to Vercel
 
