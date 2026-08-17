@@ -218,7 +218,7 @@ export default function LandingPage() {
                     <div className="mono-face text-[10px] tracking-[0.2em] uppercase text-paper2/50">
                       Execution roster
                     </div>
-                    <div className="mt-1 text-lg font-semibold">FDE-01 / v1</div>
+                    <div className="mt-1 text-lg font-semibold">FDE OS</div>
                   </div>
                   <span className="mono-face text-[10px] tracking-[0.14em] uppercase bg-paper2/10 text-paper2/70 px-3 py-1.5">
                     Idle
