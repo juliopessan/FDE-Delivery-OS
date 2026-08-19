@@ -96,6 +96,9 @@ export function renderConsolidatedReport({
     --amber: #E8B84B;
     --rust: #D97757;
     --peach: #E8916E;
+    /* Rust as body-size type on cream is 2.74:1. Links take a darkened cut of
+       the same hue; fills and rules keep --rust. */
+    --rustink: #9E4226;
 
     /* The contrast surface (executive summary) and the type that sits on it.
        Named separately from ink/paper because in dark mode they do not simply
@@ -127,6 +130,8 @@ export function renderConsolidatedReport({
       --amber: #D6AA46;
       --rust: #E88868;
       --peach: #F0A382;
+      /* Already 7.13:1 on near-black — no darkening needed here. */
+      --rustink: #E88868;
     }
   }
   * { box-sizing: border-box; }
@@ -155,11 +160,11 @@ export function renderConsolidatedReport({
   }
   .brand-name { font-size: 12px; letter-spacing: 0.24em; font-weight: 500; }
   .masthead-right { display: flex; align-items: center; gap: 20px; }
-  .masthead-meta { font-size: 10px; letter-spacing: 0.2em; color: rgba(var(--ink-ch),0.4); text-transform: uppercase; }
+  .masthead-meta { font-size: 11px; letter-spacing: 0.2em; color: rgba(var(--ink-ch),0.62); text-transform: uppercase; }
 
   .export-btn {
     font-family: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
-    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
     background: var(--contrast); color: var(--on-contrast);
     border: none; padding: 10px 16px; cursor: pointer;
     transition: background 140ms ease;
@@ -171,8 +176,8 @@ export function renderConsolidatedReport({
 
   .eyebrow {
     display: inline-flex; align-items: center; gap: 10px;
-    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.2em;
-    text-transform: uppercase; color: rgba(var(--ink-ch),0.45);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(var(--ink-ch),0.62);
   }
   .eyebrow::before { content: ""; width: 20px; height: 1px; background: rgba(var(--ink-ch),0.3); display: inline-block; }
 
@@ -193,14 +198,14 @@ export function renderConsolidatedReport({
   .report-sub { color: rgba(var(--ink-ch),0.65); font-size: 15px; max-width: 62ch; line-height: 1.6; }
 
   .meta-row { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 36px; padding-top: 24px; border-top: 1px solid rgba(var(--ink-ch),0.12); }
-  .meta-item .label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(var(--ink-ch),0.4); margin-bottom: 4px; }
+  .meta-item .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(var(--ink-ch),0.62); margin-bottom: 4px; }
   .meta-item .value { font-size: 14px; font-weight: 500; }
 
   .exec-summary {
     margin-top: 48px; background: var(--contrast); color: var(--on-contrast);
     padding: 40px clamp(20px, 4vw, 48px);
   }
-  .exec-summary .eyebrow { color: rgba(var(--on-contrast-ch),0.5); }
+  .exec-summary .eyebrow { color: rgba(var(--on-contrast-ch),0.7); }
   .exec-summary .eyebrow::before { background: rgba(var(--on-contrast-ch),0.3); }
   .exec-summary .prose { color: var(--on-contrast); }
   .exec-summary .prose h1 { color: var(--on-contrast); }
@@ -218,16 +223,16 @@ export function renderConsolidatedReport({
     padding: 16px 0; border-bottom: 1px solid rgba(var(--ink-ch),0.12);
     text-decoration: none; color: var(--ink);
   }
-  .toc-index { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--rust); }
-  .toc-agent { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: rgba(var(--ink-ch),0.4); text-transform: uppercase; }
+  .toc-index { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--rustink); }
+  .toc-agent { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: rgba(var(--ink-ch),0.62); text-transform: uppercase; }
 
   .phase-section { margin-top: 72px; padding-top: 40px; border-top: 1px solid rgba(var(--ink-ch),0.14); }
   .phase-heading { display: flex; gap: 20px; align-items: baseline; margin-bottom: 24px; }
-  .phase-index { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--rust); }
+  .phase-index { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--rustink); }
   .agent-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 0; }
   .phase-stamp {
-    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: rgba(var(--ink-ch),0.38); margin: -14px 0 22px 40px;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(var(--ink-ch),0.62); margin: -14px 0 22px 40px;
     font-variant-numeric: tabular-nums;
   }
 
@@ -238,7 +243,7 @@ export function renderConsolidatedReport({
   .prose ul, .prose ol { line-height: 1.7; margin: 0 0 14px; padding-left: 22px; }
   .prose li { margin-bottom: 6px; }
   .prose strong { font-weight: 700; }
-  .prose a { color: var(--rust); }
+  .prose a { color: var(--rustink); }
 
   .prose table { width: 100%; border-collapse: collapse; margin: 18px 0 24px; font-size: 13.5px; }
   /*
@@ -302,13 +307,13 @@ export function renderConsolidatedReport({
 
   .prose .diagram-fallback { width: 100%; }
   .prose .diagram-fallback-label {
-    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--rust); margin-bottom: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--rustink); margin-bottom: 8px;
   }
   .prose code { font-family: 'JetBrains Mono', monospace; background: rgba(var(--ink-ch),0.06); padding: 1px 5px; font-size: 0.9em; }
 
   footer.report-footer { border-top: 1px solid rgba(var(--ink-ch),0.12); padding: 32px 6vw; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-  footer.report-footer .mono { font-size: 10px; letter-spacing: 0.14em; color: rgba(var(--ink-ch),0.4); text-transform: uppercase; }
+  footer.report-footer .mono { font-size: 11px; letter-spacing: 0.14em; color: rgba(var(--ink-ch),0.62); text-transform: uppercase; }
 
   @media print {
     /*

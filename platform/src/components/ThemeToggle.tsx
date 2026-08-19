@@ -54,10 +54,12 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      // Reserves its own square so the header does not shift on mount or on
-      // toggle. The glyph is drawn at the same weight as the mono labels next
-      // to it, so it reads as part of the same row rather than as an app icon.
-      className="text-ink/45 hover:text-ink transition-colors w-5 h-5 flex items-center justify-center shrink-0"
+      // The glyph is drawn at the weight of the mono labels beside it, so it
+      // reads as part of that row rather than as an app icon. The button is
+      // 44px for the touch target minimum while the negative margin keeps the
+      // header row the height it was, and reserves its own square so nothing
+      // shifts on mount or on toggle.
+      className="text-ink/60 hover:text-ink transition-colors w-11 h-11 -my-3 -mr-3 flex items-center justify-center shrink-0"
       aria-label={theme ? `Switch to ${theme === "dark" ? "light" : "dark"} theme` : "Switch theme"}
       title={theme === "dark" ? "Light theme" : "Dark theme"}
       suppressHydrationWarning

@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
-
 /*
   One palette, two themes. Dark mode does not introduce a single new colour —
   it swaps which of the existing ones carries the ground and which carries the
@@ -17,8 +15,13 @@
   --c-paper2: 237 234 224;  /* #EDEAE0 */
   --c-lime: 196 240 76;     /* #C4F04C */
   --c-amber: 232 184 75;    /* #E8B84B */
-  --c-rust: 217 119 87;     /* #D97757 */
-  --c-peach: 232 145 110;   /* #E8916E */
+  --c-rust: 217 119 87;     /* #D97757 — on ink, and as a fill */
+  --c-peach: 232 145 110;   /* #E8916E — hover/active for rust */
+
+  /* Rust as small type on cream measures 2.74:1. This is the same hue taken
+     down until it clears AA on paper, for links, errors and required-field
+     marks; the fill colour above is untouched. */
+  --c-rustink: 158 66 38;   /* #9E4226 */
 }
 
 .dark {
@@ -39,17 +42,40 @@
   --c-amber: 214 170 70;
   --c-rust: 232 136 104;
   --c-peach: 240 163 130;
+  /* On near-black the ordinary rust already measures 7.13:1, so the text
+     variant simply follows it rather than darkening into the ground. */
+  --c-rustink: 232 136 104;
 }
 
 body {
   margin: 0;
   background: rgb(var(--c-paper));
   color: rgb(var(--c-ink));
+  /* The base step, so anything without an explicit size lands on the scale
+     rather than on the browser's 16px default — which was showing up on 92
+     elements of the landing page alone. */
+  font-size: 15px;
+  line-height: 1.65;
 }
 
-.display-face { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
-.serif-face { font-family: 'Instrument Serif', Georgia, serif; }
-.mono-face { font-family: 'JetBrains Mono', ui-monospace, 'Courier New', monospace; }
+/*
+  The stacks resolve through the variables next/font sets on <html>. Keeping
+  Helvetica Neue first preserves the face the product was designed in on Apple
+  hardware; Inter is the self-hosted fallback everywhere else.
+*/
+.display-face { font-family: 'Helvetica Neue', var(--font-sans-fallback), Helvetica, Arial, sans-serif; }
+.serif-face { font-family: var(--font-serif), 'Instrument Serif', Georgia, serif; }
+.mono-face { font-family: var(--font-mono), 'JetBrains Mono', ui-monospace, monospace; }
+
+/*
+  Keyboard focus was falling through to the browser's own ring — the one part
+  of the interface nobody had drawn. Rust reads on both grounds at this weight.
+*/
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid rgb(var(--c-rust));
+  outline-offset: 3px;
+  border-radius: 1px;
+}
 
 @keyframes rise {
   from { opacity: 0; transform: translateY(14px); }

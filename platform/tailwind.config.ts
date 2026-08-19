@@ -30,11 +30,30 @@ const config: Config = {
         amber: withOpacity("--c-amber"),
         rust: withOpacity("--c-rust"),
         peach: withOpacity("--c-peach"),
+        rustink: withOpacity("--c-rustink"),
       },
+      /*
+       * `sans` is overridden, not extended: Tailwind's preflight sets it on
+       * <html>, so leaving the default meant every element without an explicit
+       * face class rendered in the system UI font — 193 of them on the landing
+       * page alone. Body copy now inherits the product's own stack.
+       */
       fontFamily: {
-        display: ["'Helvetica Neue'", "Helvetica", "Arial", "sans-serif"],
-        serif: ["'Instrument Serif'", "Georgia", "serif"],
-        mono: ["'JetBrains Mono'", "ui-monospace", "'Courier New'", "monospace"],
+        sans: ["'Helvetica Neue'", "var(--font-sans-fallback)", "Helvetica", "Arial", "sans-serif"],
+        display: ["'Helvetica Neue'", "var(--font-sans-fallback)", "Helvetica", "Arial", "sans-serif"],
+        serif: ["var(--font-serif)", "'Instrument Serif'", "Georgia", "serif"],
+        mono: ["var(--font-mono)", "'JetBrains Mono'", "ui-monospace", "monospace"],
+      },
+      /*
+       * Five steps replace sixteen accumulated sizes. Anything smaller than
+       * `label` fell below AA at every opacity the design uses, so 11px is the
+       * floor rather than a choice.
+       */
+      fontSize: {
+        label: ["11px", { lineHeight: "1.45" }],
+        small: ["13px", { lineHeight: "1.55" }],
+        body: ["15px", { lineHeight: "1.65" }],
+        lead: ["17px", { lineHeight: "1.6" }],
       },
     },
   },

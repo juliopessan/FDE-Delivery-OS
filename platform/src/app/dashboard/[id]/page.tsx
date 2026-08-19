@@ -58,7 +58,7 @@ export default function EngagementDetailPage({ params }: { params: Promise<{ id:
     return (
       <div className="min-h-screen bg-paper text-ink">
         <SiteHeader meta="Engagement" />
-        <main className="max-w-[900px] mx-auto px-6 py-24 text-ink/50 mono-face text-sm">Loading…</main>
+        <main className="max-w-[900px] mx-auto px-6 py-24 text-ink/60 mono-face text-small">Loading…</main>
       </div>
     );
   }
@@ -74,17 +74,17 @@ export default function EngagementDetailPage({ params }: { params: Promise<{ id:
 
       <main className="max-w-[900px] mx-auto px-6 py-14">
         <Eyebrow>{engagement.phase}</Eyebrow>
-        <h1 className="display-face mt-4 text-[clamp(1.8rem,3.4vw,2.6rem)] font-bold tracking-[-0.02em]">
+        <h1 className="display-face mt-4 text-[clamp(1.8rem,3.4vw,2.5rem)] font-bold tracking-[-0.02em]">
           {engagement.customerName}
         </h1>
-        <p className="mt-3 text-ink/65 text-[15px] max-w-[60ch]">{engagement.objective}</p>
+        <p className="mt-3 text-ink/70 text-body max-w-[60ch]">{engagement.objective}</p>
 
         <div className="mt-10 flex flex-wrap gap-4">
           {!pipelineDone && (
             <button
               onClick={handleRun}
               disabled={running || engagement.status === "completed"}
-              className="mono-face text-[12px] tracking-[0.12em] uppercase bg-ink text-paper px-6 py-4 hover:bg-rust transition-colors disabled:opacity-50"
+              className="mono-face text-label tracking-[0.12em] uppercase bg-ink text-paper px-6 py-4 hover:bg-rust transition-colors disabled:opacity-50"
             >
               {running ? "Running pipeline…" : "Run agent pipeline →"}
             </button>
@@ -94,20 +94,20 @@ export default function EngagementDetailPage({ params }: { params: Promise<{ id:
               href={`/api/engagements/${id}/report`}
               target="_blank"
               rel="noreferrer"
-              className="mono-face text-[12px] tracking-[0.12em] uppercase bg-lime text-ink dark:text-paper px-6 py-4 hover:opacity-80 transition-opacity"
+              className="mono-face text-label tracking-[0.12em] uppercase bg-lime text-ink dark:text-paper px-6 py-4 hover:opacity-80 transition-opacity"
             >
               View enterprise report →
             </a>
           )}
         </div>
 
-        {error && <p className="mt-4 text-rust text-sm">{error}</p>}
+        {error && <p className="mt-4 text-rustink text-small">{error}</p>}
 
         <div className="mt-14">
           <div className="flex items-baseline justify-between gap-4">
             <Eyebrow>Pipeline status</Eyebrow>
             {totalElapsed ? (
-              <span className="mono-face text-[10px] tracking-[0.14em] uppercase text-ink/40 tabular-nums">
+              <span className="mono-face text-label tracking-[0.14em] uppercase text-ink/60 tabular-nums">
                 {totalElapsed} agent runtime
               </span>
             ) : null}
@@ -120,23 +120,23 @@ export default function EngagementDetailPage({ params }: { params: Promise<{ id:
               return (
                 <div key={agent.key} className="flex items-center justify-between gap-4 py-4">
                   <div className="flex items-center gap-4 min-w-0">
-                    <span className="mono-face text-[11px] text-rust shrink-0">
+                    <span className="mono-face text-label text-rustink shrink-0">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div className="min-w-0">
-                      <div className="text-[14px] font-medium truncate">{agent.name}</div>
-                      <div className="mono-face text-[10px] tracking-[0.1em] uppercase text-ink/45 truncate">
+                      <div className="text-small font-medium truncate">{agent.name}</div>
+                      <div className="mono-face text-label tracking-[0.1em] uppercase text-ink/60 truncate">
                         {agent.phaseLabel}
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 shrink-0">
                     {elapsed ? (
-                      <span className="mono-face text-[10px] tracking-[0.1em] text-ink/35 tabular-nums">
+                      <span className="mono-face text-label tracking-[0.1em] text-ink/60 tabular-nums">
                         {elapsed}
                       </span>
                     ) : null}
-                    <span className="mono-face text-[10px] tracking-[0.1em] uppercase text-ink/50">
+                    <span className="mono-face text-label tracking-[0.1em] uppercase text-ink/60">
                       {status === "running" ? (
                         <ActiveVerb verbs={agent.activeVerbs} seed={i} />
                       ) : (

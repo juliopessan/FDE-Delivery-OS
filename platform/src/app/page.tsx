@@ -151,13 +151,13 @@ function TickList({ items, dark = false }: { items: string[]; dark?: boolean }) 
       {items.map((item) => (
         <li key={item} className="flex gap-3 items-baseline">
           <span
-            className={`mono-face text-[10px] shrink-0 ${dark ? "text-lime" : "text-rust"}`}
+            className={`mono-face text-label shrink-0 ${dark ? "text-lime" : "text-rustink"}`}
             aria-hidden="true"
           >
             —
           </span>
           <span
-            className={`text-[15px] leading-relaxed ${dark ? "text-paper2/80" : "text-ink/70"}`}
+            className={`text-body leading-relaxed ${dark ? "text-paper2/80" : "text-ink/70"}`}
           >
             {item}
           </span>
@@ -192,7 +192,7 @@ export default function LandingPage() {
                 />
               </h1>
 
-              <p className="mt-7 text-[17px] leading-relaxed text-ink/70 max-w-[52ch]">
+              <p className="mt-7 text-lead leading-relaxed text-ink/70 max-w-[52ch]">
                 FDE OS compresses enterprise AI discovery from weeks into a
                 decision-ready delivery path in days. Qualification, assessment,
                 architecture, security, value realization, capacity planning, and
@@ -203,13 +203,13 @@ export default function LandingPage() {
               <div className="mt-10 flex flex-wrap gap-4">
                 <Link
                   href="/dashboard/new"
-                  className="mono-face text-[12px] tracking-[0.12em] uppercase bg-ink text-paper px-6 py-4 hover:bg-rust transition-colors"
+                  className="mono-face text-label tracking-[0.12em] uppercase bg-ink text-paper px-6 py-4 hover:bg-rust transition-colors"
                 >
                   Start an engagement →
                 </Link>
                 <a
                   href="#delivery-model"
-                  className="mono-face text-[12px] tracking-[0.12em] uppercase border border-ink/25 px-6 py-4 hover:border-ink transition-colors"
+                  className="mono-face text-label tracking-[0.12em] uppercase border border-ink/25 px-6 py-4 hover:border-ink transition-colors"
                 >
                   View the delivery model
                 </a>
@@ -221,12 +221,12 @@ export default function LandingPage() {
               <div className="mt-4 bg-ink dark:bg-inksoft text-paper2">
                 <div className="px-6 sm:px-8 py-6 border-b border-paper2/12 flex items-center justify-between">
                   <div>
-                    <div className="mono-face text-[10px] tracking-[0.2em] uppercase text-paper2/50">
+                    <div className="mono-face text-label tracking-[0.2em] uppercase text-paper2/70">
                       Execution roster
                     </div>
-                    <div className="mt-1 text-lg font-semibold">FDE OS</div>
+                    <div className="mt-1 text-lead font-semibold">FDE OS</div>
                   </div>
-                  <span className="mono-face text-[10px] tracking-[0.14em] uppercase bg-paper2/10 text-paper2/70 px-3 py-1.5">
+                  <span className="mono-face text-label tracking-[0.14em] uppercase bg-paper2/10 text-paper2/70 px-3 py-1.5">
                     Idle
                   </span>
                 </div>
@@ -237,14 +237,14 @@ export default function LandingPage() {
                       className="flex items-center justify-between gap-4 py-4 border-b border-paper2/10 last:border-b-0"
                     >
                       <div className="flex items-center gap-4 min-w-0">
-                        <span className="mono-face text-[11px] text-rust shrink-0">
+                        <span className="mono-face text-label text-rust shrink-0">
                           {String(i + 1).padStart(2, "0")}
                         </span>
                         <div className="min-w-0">
-                          <div className="text-[14px] font-medium truncate">
+                          <div className="text-small font-medium truncate">
                             {agent.name}
                           </div>
-                          <div className="mono-face text-[10px] tracking-[0.1em] uppercase text-paper2/45 truncate">
+                          <div className="mono-face text-label tracking-[0.1em] uppercase text-paper2/70 truncate">
                             {agent.phaseLabel}
                           </div>
                         </div>
@@ -267,9 +267,9 @@ export default function LandingPage() {
         <section className="bg-ink dark:bg-inksoft text-paper2">
           <div className="max-w-[1180px] mx-auto px-6 py-24 sm:py-28">
             <Eyebrow dark>The gap</Eyebrow>
-            <h2 className="display-face mt-5 text-[clamp(1.9rem,4vw,3rem)] font-bold tracking-[-0.02em] leading-[1.05] max-w-[22ch]">
+            <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.5rem)] font-bold tracking-[-0.02em] leading-[1.05] max-w-[22ch]">
               The problem is not a lack of AI ideas.
-              <span className="serif-face italic font-normal block mt-2 text-paper2/75">
+              <span className="serif-face italic font-normal block mt-2 text-paper2/80">
                 It is the time between the idea and the first serious decision.
               </span>
             </h2>
@@ -283,21 +283,21 @@ export default function LandingPage() {
                 "Delivery estimates are built from memory.",
               ].map((line, i) => (
                 <div key={line} className="bg-ink dark:bg-inksoft p-6">
-                  <div className="mono-face text-[11px] text-rust">
+                  <div className="mono-face text-label text-rust">
                     {String(i + 1).padStart(2, "0")}
                   </div>
-                  <p className="mt-3 text-[15px] leading-relaxed text-paper2/80">
+                  <p className="mt-3 text-body leading-relaxed text-paper2/80">
                     {line}
                   </p>
                 </div>
               ))}
             </div>
 
-            <p className="mt-12 text-[17px] leading-relaxed text-paper2/70 max-w-[62ch]">
+            <p className="mt-12 text-lead leading-relaxed text-paper2/70 max-w-[62ch]">
               By the time the sponsor sees the full picture, the opportunity has
               already slowed down.
             </p>
-            <p className="display-face mt-8 text-[clamp(1.3rem,2.4vw,1.75rem)] font-semibold leading-snug max-w-[30ch]">
+            <p className="display-face mt-8 text-[clamp(1.2rem,2.2vw,1.6rem)] font-semibold leading-snug max-w-[30ch]">
               The report was never the product.
               <span className="serif-face italic font-normal block text-lime">
                 The product was a governed path forward.
@@ -309,20 +309,20 @@ export default function LandingPage() {
         {/* ─── From problem to decision ─────────────────────────────────── */}
         <section id="delivery-model" className="max-w-[1180px] mx-auto px-6 py-24 sm:py-28 scroll-mt-8">
           <Eyebrow>How it works</Eyebrow>
-          <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.6rem)] font-bold tracking-[-0.02em] max-w-[24ch]">
+          <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.5rem)] font-bold tracking-[-0.02em] max-w-[24ch]">
             From client problem to delivery decision
           </h2>
 
           <div className="mt-10 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-16">
             <div>
-              <p className="text-[17px] leading-relaxed text-ink/70">
+              <p className="text-lead leading-relaxed text-ink/70">
                 FDE OS turns the messy front end of enterprise AI delivery into a
                 structured operating system. It receives an ambiguous client
                 problem and coordinates a sequence of specialist stages that
                 transform uncertainty into an actionable engagement package.
               </p>
               <div className="mt-10 pt-8 border-t border-ink/12">
-                <p className="display-face text-[clamp(1.2rem,2vw,1.5rem)] font-semibold leading-snug">
+                <p className="display-face text-[clamp(1.2rem,2.2vw,1.6rem)] font-semibold leading-snug">
                   No disconnected documents.
                   <br />
                   No hidden reasoning.
@@ -335,7 +335,7 @@ export default function LandingPage() {
             </div>
 
             <div>
-              <div className="mono-face text-[10px] tracking-[0.2em] uppercase text-ink/45 mb-5">
+              <div className="mono-face text-label tracking-[0.2em] uppercase text-ink/60 mb-5">
                 Every recommendation is connected to
               </div>
               <TickList items={TRACEABLE_TO} />
@@ -347,25 +347,25 @@ export default function LandingPage() {
         <section className="bg-paper2/60 dark:bg-inksoft/50 border-y border-ink/10">
           <div className="max-w-[1180px] mx-auto px-6 py-24 sm:py-28">
             <Eyebrow>Target operating model</Eyebrow>
-            <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.6rem)] font-bold tracking-[-0.02em] max-w-[22ch]">
+            <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.5rem)] font-bold tracking-[-0.02em] max-w-[22ch]">
               Designed to move in days, not weeks
             </h2>
 
             <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
               {OPERATING_MODEL.map((item) => (
                 <div key={item.figure}>
-                  <div className="display-face text-[clamp(1.5rem,2.6vw,2rem)] font-bold tracking-[-0.02em] leading-tight">
+                  <div className="display-face text-[clamp(1.8rem,3.4vw,2.5rem)] font-bold tracking-[-0.02em] leading-tight">
                     {item.figure}
                   </div>
                   <div className="mt-3 h-px w-10 bg-rust" />
-                  <p className="mt-4 text-[14px] leading-relaxed text-ink/65">
+                  <p className="mt-4 text-small leading-relaxed text-ink/70">
                     {item.label}
                   </p>
                 </div>
               ))}
             </div>
 
-            <p className="mt-14 text-[13px] leading-relaxed text-ink/50 max-w-[70ch]">
+            <p className="mt-14 text-small leading-relaxed text-ink/60 max-w-[70ch]">
               Actual timing depends on data access, client approvals, and
               validation scope. FDE OS accelerates the reasoning and coordination
               layer; it does not bypass the evidence required for production.
@@ -376,18 +376,18 @@ export default function LandingPage() {
         {/* ─── Nine stages ──────────────────────────────────────────────── */}
         <section className="max-w-[1180px] mx-auto px-6 py-24 sm:py-28">
           <Eyebrow>The sequence</Eyebrow>
-          <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.6rem)] font-bold tracking-[-0.02em]">
+          <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.5rem)] font-bold tracking-[-0.02em]">
             Nine governed delivery stages
           </h2>
 
           <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-ink/12">
             {STAGES.map((stage) => (
               <div key={stage.n} className="bg-paper p-7">
-                <div className="mono-face text-[11px] text-rust">{stage.n}</div>
-                <h3 className="mt-3 font-semibold text-[16px] tracking-[-0.01em]">
+                <div className="mono-face text-label text-rustink">{stage.n}</div>
+                <h3 className="mt-3 font-semibold text-body tracking-[-0.01em]">
                   {stage.title}
                 </h3>
-                <p className="mt-2.5 text-[14px] leading-relaxed text-ink/65">
+                <p className="mt-2.5 text-small leading-relaxed text-ink/70">
                   {stage.body}
                 </p>
               </div>
@@ -399,25 +399,25 @@ export default function LandingPage() {
         <section className="bg-ink dark:bg-inksoft text-paper2">
           <div className="max-w-[1180px] mx-auto px-6 py-24 sm:py-28">
             <Eyebrow dark>The design principle</Eyebrow>
-            <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.6rem)] font-bold tracking-[-0.02em] leading-[1.1] max-w-[26ch]">
+            <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.5rem)] font-bold tracking-[-0.02em] leading-[1.1] max-w-[26ch]">
               Intelligence where ambiguity lives.
               <span className="serif-face italic font-normal block text-lime">
                 Deterministic control where consequences live.
               </span>
             </h2>
-            <p className="mt-7 text-[17px] leading-relaxed text-paper2/70 max-w-[54ch]">
+            <p className="mt-7 text-lead leading-relaxed text-paper2/70 max-w-[54ch]">
               FDE OS is agentic by design, not autonomous by default.
             </p>
 
             <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
               <div>
-                <div className="mono-face text-[10px] tracking-[0.2em] uppercase text-paper2/50 pb-4 mb-6 border-b border-paper2/15">
+                <div className="mono-face text-label tracking-[0.2em] uppercase text-paper2/70 pb-4 mb-6 border-b border-paper2/15">
                   Language models are used for
                 </div>
                 <TickList items={MODEL_WORK} dark />
               </div>
               <div>
-                <div className="mono-face text-[10px] tracking-[0.2em] uppercase text-paper2/50 pb-4 mb-6 border-b border-paper2/15">
+                <div className="mono-face text-label tracking-[0.2em] uppercase text-paper2/70 pb-4 mb-6 border-b border-paper2/15">
                   Deterministic systems remain responsible for
                 </div>
                 <TickList items={DETERMINISTIC_WORK} dark />
@@ -435,13 +435,13 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-16">
             <div>
               <Eyebrow>The output</Eyebrow>
-              <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.6rem)] font-bold tracking-[-0.02em] max-w-[18ch]">
+              <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.5rem)] font-bold tracking-[-0.02em] max-w-[18ch]">
                 Every engagement leaves with something that can move
               </h2>
-              <p className="mt-7 text-[16px] leading-relaxed text-ink/70 max-w-[46ch]">
+              <p className="mt-7 text-body leading-relaxed text-ink/70 max-w-[46ch]">
                 FDE OS produces a consolidated, evidence-linked delivery package.
               </p>
-              <p className="display-face mt-10 text-[clamp(1.2rem,2vw,1.5rem)] font-semibold leading-snug">
+              <p className="display-face mt-10 text-[clamp(1.2rem,2.2vw,1.6rem)] font-semibold leading-snug">
                 The output is not just a report.
                 <span className="serif-face italic font-normal block">
                   It is the next move.
@@ -458,24 +458,24 @@ export default function LandingPage() {
         <section className="bg-paper2/60 dark:bg-inksoft/50 border-y border-ink/10">
           <div className="max-w-[1180px] mx-auto px-6 py-24 sm:py-28">
             <Eyebrow>Worked example</Eyebrow>
-            <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.4rem)] font-bold tracking-[-0.02em]">
+            <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.5rem)] font-bold tracking-[-0.02em]">
               Accounts Payable automation
             </h2>
 
             <div className="mt-10 grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-16">
               <div>
-                <p className="text-[16px] leading-relaxed text-ink/70">
+                <p className="text-body leading-relaxed text-ink/70">
                   A finance organization processes approximately 12,000 supplier
                   invoices every month through fragmented mailboxes, SharePoint
                   folders, manual verification, and SAP. The business wants to
                   reduce manual effort without increasing financial, operational,
                   or security risk.
                 </p>
-                <p className="mt-6 text-[16px] leading-relaxed text-ink/70">
+                <p className="mt-6 text-body leading-relaxed text-ink/70">
                   FDE OS does not immediately recommend an autonomous agent. It
                   produces a governed delivery decision.
                 </p>
-                <p className="display-face mt-10 text-[clamp(1.1rem,1.9vw,1.4rem)] font-semibold leading-snug max-w-[32ch]">
+                <p className="display-face mt-10 text-[clamp(1.2rem,2.2vw,1.6rem)] font-semibold leading-snug max-w-[32ch]">
                   A credible Phase 1 path
                   <span className="serif-face italic font-normal block">
                     instead of an attractive but unsafe AI experiment.
@@ -483,7 +483,7 @@ export default function LandingPage() {
                 </p>
               </div>
               <div>
-                <div className="mono-face text-[10px] tracking-[0.2em] uppercase text-ink/45 mb-5">
+                <div className="mono-face text-label tracking-[0.2em] uppercase text-ink/60 mb-5">
                   The decision it produces
                 </div>
                 <TickList items={AP_DECISION} />
@@ -497,10 +497,10 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12 lg:gap-16">
             <div>
               <Eyebrow>Who it is for</Eyebrow>
-              <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.4rem)] font-bold tracking-[-0.02em] max-w-[20ch]">
+              <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.5rem)] font-bold tracking-[-0.02em] max-w-[20ch]">
                 Built for teams that deliver AI in the real world
               </h2>
-              <p className="mt-8 text-[16px] leading-relaxed text-ink/70 max-w-[44ch]">
+              <p className="mt-8 text-body leading-relaxed text-ink/70 max-w-[44ch]">
                 Because the hard part of enterprise AI is rarely the model. It is
                 aligning the problem, the people, the systems, the controls, and
                 the economics.
@@ -518,14 +518,14 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12 lg:gap-16">
               <div>
                 <Eyebrow dark>Compound intelligence</Eyebrow>
-                <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.6rem)] font-bold tracking-[-0.02em] max-w-[16ch]">
+                <h2 className="display-face mt-5 text-[clamp(1.8rem,3.4vw,2.5rem)] font-bold tracking-[-0.02em] max-w-[16ch]">
                   Make every engagement compound
                 </h2>
-                <p className="mt-7 text-[16px] leading-relaxed text-paper2/70 max-w-[44ch]">
+                <p className="mt-7 text-body leading-relaxed text-paper2/70 max-w-[44ch]">
                   One engagement should not disappear when the project ends. FDE
                   OS captures the validated patterns behind the work.
                 </p>
-                <p className="display-face mt-10 text-[clamp(1.2rem,2vw,1.5rem)] font-semibold leading-snug max-w-[26ch]">
+                <p className="display-face mt-10 text-[clamp(1.2rem,2.2vw,1.6rem)] font-semibold leading-snug max-w-[26ch]">
                   The organization becomes more capable with every engagement.
                   <span className="serif-face italic font-normal block text-lime">
                     Not just more automated.
@@ -541,26 +541,26 @@ export default function LandingPage() {
 
         {/* ─── Closing CTA ──────────────────────────────────────────────── */}
         <section className="max-w-[1180px] mx-auto px-6 py-24 sm:py-32">
-          <h2 className="display-face text-[clamp(1.9rem,4vw,3rem)] font-bold tracking-[-0.02em] leading-[1.05] max-w-[24ch]">
+          <h2 className="display-face text-[clamp(1.8rem,3.4vw,2.5rem)] font-bold tracking-[-0.02em] leading-[1.05] max-w-[24ch]">
             Stop producing disconnected assessments.
             <span className="serif-face italic font-normal block">
               Start producing governed delivery paths.
             </span>
           </h2>
-          <p className="mt-7 text-[17px] leading-relaxed text-ink/70 max-w-[58ch]">
+          <p className="mt-7 text-lead leading-relaxed text-ink/70 max-w-[58ch]">
             Turn the next ambiguous client problem into a clear technical
             decision, a defensible business case, and an executable next step.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
               href="/dashboard/new"
-              className="mono-face text-[12px] tracking-[0.12em] uppercase bg-ink text-paper px-6 py-4 hover:bg-rust transition-colors"
+              className="mono-face text-label tracking-[0.12em] uppercase bg-ink text-paper px-6 py-4 hover:bg-rust transition-colors"
             >
               Start an engagement →
             </Link>
             <Link
               href="/dashboard"
-              className="mono-face text-[12px] tracking-[0.12em] uppercase border border-ink/25 px-6 py-4 hover:border-ink transition-colors"
+              className="mono-face text-label tracking-[0.12em] uppercase border border-ink/25 px-6 py-4 hover:border-ink transition-colors"
             >
               Request a walkthrough →
             </Link>
@@ -571,14 +571,14 @@ export default function LandingPage() {
       <footer className="border-t border-ink/12 px-6 py-12">
         <div className="max-w-[1180px] mx-auto flex flex-wrap items-end justify-between gap-6">
           <div>
-            <div className="mono-face text-[12px] tracking-[0.24em] font-medium">
+            <div className="mono-face text-label tracking-[0.24em] font-medium">
               FDE OS
             </div>
-            <div className="mono-face text-[10px] tracking-[0.14em] uppercase text-ink/40 mt-1.5">
+            <div className="mono-face text-label tracking-[0.14em] uppercase text-ink/60 mt-1.5">
               Agentic Delivery Operating System
             </div>
           </div>
-          <div className="mono-face text-[10px] tracking-[0.14em] uppercase text-ink/40 flex flex-wrap gap-x-3 gap-y-1">
+          <div className="mono-face text-label tracking-[0.14em] uppercase text-ink/60 flex flex-wrap gap-x-3 gap-y-1">
             <span>Model-agnostic.</span>
             <span>Evidence-led.</span>
             <span>Production-gated.</span>
