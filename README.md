@@ -10,6 +10,8 @@ FDE OS is a repeatable 4-phase delivery method (Assessment → Context → Engin
 
 The framework is **agnostic to company size and sector**: the phases keep their shape and vary only in depth and formality according to the client profile — see [`docs/client-profile-adaptation.md`](docs/client-profile-adaptation.md).
 
+Everything in this repository — documentation, agent prompts, templates and the platform — is in English.
+
 ## Core principle
 
 > Automate the repetitive work of delivery, not engineering judgment. Keep the PoC architecture simple enough to prove value quickly, and add agentic complexity only where the business process genuinely demands it.
@@ -21,7 +23,7 @@ The framework is **agnostic to company size and sector**: the phases keep their 
 | **1. Methodology (reference)** | The "what" and the "why" — playbook, templates, checklists, supporting docs | In use | [`PLAYBOOK.md`](PLAYBOOK.md), [`templates/`](templates), [`checklists/`](checklists), [`docs/`](docs) |
 | **2. Agent team (execution in Claude Code)** | The "who" and the "how" — 9 AI agents, reusable skills, task specs and the operating harness that runs them in Claude Code | In use | [`.claude/agents/`](.claude/agents), [`.claude/skills/`](.claude/skills), [`specs/`](specs), [`harness/`](harness) |
 | **3. System architecture (vision)** | The "where to" — a specification for a Delivery OS with persisted state, a pattern library, an evaluation engine and a production control plane | Aspirational — partly implemented (see layer 4) | [`docs/system-architecture/`](docs/system-architecture) |
-| **4. Platform (real implementation)** | The same 9 agents running as an actual Next.js app: engagement form with automatic brief extraction (paste or upload .txt/.md/.pdf/.docx), sequential pipeline on Gemini 3.7 Flash with Claude Haiku 4.5 fallback, state in SQLite (Turso/libSQL), and a consolidated Enterprise Report in HTML with PDF export | In use (local dev; deployment in progress) | [`platform/`](platform) — see [`platform/README.md`](platform/README.md) |
+| **4. Platform (real implementation)** | The same 9 agents running as an actual Next.js app: engagement form with automatic brief extraction (paste or upload .txt/.md/.pdf/.docx), sequential pipeline on Gemini 3.7 Flash with Claude Haiku 4.5 fallback, state in SQLite (Turso/libSQL), light and dark themes, and a consolidated Enterprise Report in HTML with PDF export | In use — runs locally end to end; hosted deployment pending a database token | [`platform/`](platform) — see [`platform/README.md`](platform/README.md) |
 
 Layer 3 remains largely target-architecture documentation — see the notice in [`docs/system-architecture/README.md`](docs/system-architecture/README.md). Layer 4 is where that vision becomes real code, starting with the "solo FDE" slice (no multi-tenancy, no RBAC yet).
 
@@ -50,6 +52,7 @@ Client ambiguity → Discovery → Opportunity scoring → Architecture → Prot
 | [`PLAYBOOK.md`](PLAYBOOK.md) | The full methodology playbook — the 4 phases (plus Phase 0), roles, RACI, KPIs and toolkit |
 | [`docs/`](docs) | Operational deep dives: pricing model, governance and security, reference stack, adaptation by client profile |
 | [`docs/system-architecture/`](docs/system-architecture) | FDE OS architecture vision: 20 system documents, 4 ADRs, JSON Schemas for the data contracts, templates and a reference use case |
+| [`docs/integrations/`](docs/integrations) | Feeding Phase 1 from instrumented process discovery instead of manual shadowing alone |
 | [`platform/`](platform) | The working Next.js app: 9 agents running on Gemini/Haiku, SQLite state, intake form with automatic extraction, rendered Enterprise Report |
 | [`templates/`](templates) | Field-ready templates (qualification, blueprint, ROI, SOW, status report) |
 | [`checklists/`](checklists) | Per-phase quality checklists (Go/No-Go, go-live) |
@@ -103,8 +106,8 @@ No database to install: local development uses a SQLite file created for you.
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/juliopessan/FDE-Delivery-OS.git
-cd FDE-Delivery-OS/platform
+git clone https://github.com/juliopessan/FDE-OS.git
+cd FDE-OS/platform
 npm install
 ```
 
