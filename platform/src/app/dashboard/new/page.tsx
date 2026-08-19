@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Eyebrow } from "@/components/Eyebrow";
 import { RotatingPlaceholder } from "@/components/RotatingPlaceholder";
+import { AlertIcon, CheckIcon, FileIcon, SpinnerIcon, UploadIcon } from "@/components/Icon";
 
 const fields: {
   name: string;
@@ -149,8 +150,9 @@ export default function NewEngagementPage() {
               <label className="mono-face text-label tracking-[0.2em] uppercase text-ink/60">
                 Full discovery intake <span className="normal-case tracking-normal">(optional)</span>
               </label>
-              <label className="mono-face text-label tracking-[0.14em] uppercase text-rustink cursor-pointer hover:text-peach transition-colors shrink-0">
-                Upload .txt / .md / .pdf / .docx →
+              <label className="mono-face text-label tracking-[0.14em] uppercase text-rustink cursor-pointer hover:text-peach transition-colors shrink-0 inline-flex items-center gap-2 min-h-[44px]">
+                <UploadIcon />
+                Upload document
                 <input
                   type="file"
                   accept=".txt,.md,.pdf,.docx,text/plain,text/markdown,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -188,7 +190,10 @@ export default function NewEngagementPage() {
                 ]}
               />
             </div>
-            <div className="mt-3 flex items-center gap-4">
+            {/* Wraps rather than squeezing: when the confirmation chip appears
+                beside it, the button was being narrowed until its label broke
+                across two lines. */}
+            <div className="mt-3 flex flex-wrap items-center gap-4">
               <button
                 type="button"
                 disabled={extracting || !(form.rawIntake ?? "").trim()}
@@ -197,24 +202,33 @@ export default function NewEngagementPage() {
                 // dark. On the dark theme that same rule flips it to a cream
                 // slab — a full inversion mid-interaction. There it steps away
                 // by lifting off the ground instead, leaving the type put.
-                className="mono-face text-label tracking-[0.12em] uppercase bg-paper2 dark:bg-inksoft text-ink px-4 py-2.5 hover:bg-ink hover:text-paper dark:hover:bg-ink/15 dark:hover:text-ink transition-colors disabled:opacity-40"
+                className="mono-face text-label tracking-[0.12em] uppercase bg-paper2 dark:bg-inksoft text-ink px-4 py-2.5 shrink-0 hover:bg-ink hover:text-paper dark:hover:bg-ink/15 dark:hover:text-ink transition-colors disabled:opacity-40"
               >
-                {extracting
-                  ? "Extracting brief…"
-                  : uploadedFileName
-                  ? `Re-extract from ${uploadedFileName} →`
-                  : "Extract brief from this text →"}
+                <span className="inline-flex items-center gap-2">
+                  {extracting ? <SpinnerIcon /> : uploadedFileName ? <FileIcon /> : null}
+                  {extracting
+                    ? "Extracting brief…"
+                    : uploadedFileName
+                    ? `Re-extract from ${uploadedFileName} →`
+                    : "Extract brief from this text →"}
+                </span>
               </button>
               {justExtracted && (
                 // bg-ink is the dark slab this lime sits on. In dark mode ink
                 // becomes the cream body colour, which would put lime on cream
                 // and make the confirmation the least readable thing on screen.
-                <span className="text-lime bg-ink dark:bg-inksoft px-2 py-1 mono-face text-label tracking-[0.1em] uppercase">
+                <span className="text-lime bg-ink dark:bg-inksoft px-2 py-1 mono-face text-label tracking-[0.1em] uppercase inline-flex items-center gap-2">
+                  <CheckIcon />
                   Fields filled below — review before submitting
                 </span>
               )}
             </div>
-            {extractError && <p className="text-rustink text-small mt-2">{extractError}</p>}
+            {extractError && (
+              <p className="text-rustink text-small mt-2 flex items-start gap-2">
+                <AlertIcon className="mt-[3px] shrink-0" />
+                {extractError}
+              </p>
+            )}
           </div>
 
           {fields.map((f) => (
@@ -244,7 +258,12 @@ export default function NewEngagementPage() {
             </div>
           ))}
 
-          {error && <p className="text-rustink text-small">{error}</p>}
+          {error && (
+            <p className="text-rustink text-small flex items-start gap-2">
+              <AlertIcon className="mt-[3px] shrink-0" />
+              {error}
+            </p>
+          )}
 
           <button
             type="submit"

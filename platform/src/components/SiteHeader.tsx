@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
-export function SiteHeader({ meta = "Agentic Delivery OS / v1" }: { meta?: string }) {
+export function SiteHeader({ meta = "Agentic Delivery OS" }: { meta?: string }) {
   return (
     <header className="border-b border-ink/12">
       <div className="max-w-[1180px] mx-auto px-6 h-16 flex items-center justify-between">

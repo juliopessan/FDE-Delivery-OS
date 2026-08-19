@@ -101,6 +101,9 @@ body {
 }
 .pipeline-dot { animation: pipelineFlow 6.6s ease-in-out infinite; }
 
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 900ms linear infinite; transform-origin: 50% 50%; }
+
 @media (prefers-reduced-motion: reduce) {
-  .rise, .node-active, .pipeline-dot { animation: none; }
+  .rise, .node-active, .pipeline-dot, .spin { animation: none; }
 }

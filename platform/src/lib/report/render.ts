@@ -394,7 +394,7 @@ export function renderConsolidatedReport({
       <span class="brand-name mono">FDE OS</span>
     </div>
     <div class="masthead-right">
-      <span class="masthead-meta">Enterprise Report / v1</span>
+      <span class="masthead-meta">Enterprise Report</span>
       <button type="button" class="export-btn" onclick="window.print()">Export PDF</button>
     </div>
   </header>
