@@ -1,255 +1,255 @@
-# PLAYBOOK DE ACELERAÇÃO: FORWARD DEPLOYED ENGINEER (FDE) SOLO
+# ACCELERATION PLAYBOOK: SOLO FORWARD DEPLOYED ENGINEER (FDE)
 
-Este playbook estrutura o kernel metodológico do **FDE Delivery OS** — um método replicável de 4 fases (mais uma fase de qualificação, Fase 0) para mapear, arquitetar e implantar automações agênticas corporativas em ciclos curtos de alto impacto, operado por um único FDE.
+This playbook holds the methodological kernel of **FDE Delivery OS** — a repeatable 4-phase method (plus a qualification phase, Phase 0) for mapping, architecting and deploying enterprise agentic automation in short, high-impact cycles, run by a single FDE.
 
-O framework é **agnóstico de porte e setor de empresa** — as fases abaixo se aplicam da mesma forma a uma PME, uma média empresa ou uma corporação enterprise, e a qualquer vertical (saúde, financeiro, jurídico, varejo, indústria, setor público etc.). O que varia é a profundidade, a formalidade e a duração de cada fase — nunca a sequência ou os gates de segurança. Antes de fechar o escopo na Fase 0, consulte [`docs/adaptacao-por-perfil-cliente.md`](docs/adaptacao-por-perfil-cliente.md) para calibrar corretamente.
+The framework is **agnostic to company size and sector** — the phases below apply the same way to a small business, a mid-market company or an enterprise, and to any vertical (healthcare, financial, legal, retail, industrial, public sector and so on). What varies is the depth, formality and duration of each phase — never the sequence or the security gates. Before closing scope in Phase 0, read [`docs/client-profile-adaptation.md`](docs/client-profile-adaptation.md) to calibrate correctly.
 
 ---
 
-## 🏗️ Visão Geral do Framework (Metodologia A.C.E.S.)
+## 🏗️ Framework Overview (A.C.E.S. Methodology)
 
-O framework é dividido em uma fase de qualificação e 4 ciclos de execução (*Assessment, Context, Engineering, Scale*), cobrindo desde a prospecção até a sustentação recorrente:
+The framework splits into one qualification phase and 4 execution cycles (*Assessment, Context, Engineering, Scale*), covering everything from prospecting to recurring support:
 
 ```
-[ FASE 0: QUALIFICAÇÃO ]  --> Fit Comercial & Técnico (1 semana, pré-contrato)
+[ PHASE 0: QUALIFICATION ] --> Commercial & technical fit (1 week, pre-contract)
           │
-[ FASE 1: ASSESSMENT ]    --> Diagnóstico Cognitivo & Blueprint (Sprints 1-2)
+[ PHASE 1: ASSESSMENT ]    --> Cognitive diagnosis & blueprint (Sprints 1-2)
           │
-[ FASE 2: CONTEXT ]       --> Engenharia de Dados & RAG/MCP (Sprints 3-4)
+[ PHASE 2: CONTEXT ]       --> Data engineering & RAG/MCP (Sprints 3-4)
           │
-[ FASE 3: ENGINEERING ]   --> Arquitetura Agêntica & Production (Sprints 5-6)
+[ PHASE 3: ENGINEERING ]   --> Agentic architecture & production (Sprints 5-6)
           │
-[ FASE 4: SCALE ]         --> Governança, HITL & Retainer Fracionado (Contínuo)
+[ PHASE 4: SCALE ]         --> Governance, HITL & fractional retainer (continuous)
 ```
 
-**Duração total até produção:** 8 a 10 semanas. **Regra de ouro:** nenhuma fase avança sem passar pelo checklist Go/No-Go correspondente (ver [`checklists/`](checklists)).
+**Total duration to production:** 8 to 10 weeks. **Golden rule:** no phase advances without clearing its Go/No-Go checklist (see [`checklists/`](checklists)).
 
 ---
 
-## 🎯 FASE 0: Qualificação (Pré-contrato)
+## 🎯 PHASE 0: Qualification (Pre-contract)
 
-**Duração:** 3 a 5 dias úteis
-**Objetivo:** Evitar engajamentos de baixo ROI ou tecnicamente inviáveis antes de comprometer semanas de trabalho solo.
+**Duration:** 3 to 5 business days
+**Objective:** Avoid low-ROI or technically unworkable engagements before committing weeks of solo work.
 
-### 1. Critérios de Fit (score 0-5 cada)
+### 1. Fit Criteria (score 0-5 each)
 
-| Critério | Pergunta-chave | Peso |
+| Criterion | Key question | Weight |
 | --- | --- | --- |
-| Dor mensurável | Existe custo/tempo hoje que dá para quantificar em R$ ou horas? | Alto |
-| Patrocínio executivo | Há um decisor com orçamento e autoridade engajado, não só um "curioso"? | Alto |
-| Acesso a dados | O cliente consegue liberar amostras de dados reais em até 5 dias? | Alto |
-| Maturidade de processo | O processo já é entendido e documentável, ou ainda está sendo inventado? | Médio |
-| Tolerância a risco | O cliente aceita um ciclo iterativo (PoC → produção) ou exige "big bang"? | Médio |
+| Measurable pain | Is there a cost or time today that can be quantified in money or hours? | High |
+| Executive sponsorship | Is there an engaged decision-maker with budget and authority, not just someone curious? | High |
+| Data access | Can the client release real data samples within 5 days? | High |
+| Process maturity | Is the process already understood and documentable, or still being invented? | Medium |
+| Risk tolerance | Will the client accept an iterative cycle (PoC → production), or do they demand a big bang? | Medium |
 
-**Regra de decisão:** score total ≥ 15/25 → prosseguir para Fase 1. Entre 10-14 → propor apenas um diagnóstico pago isolado (Fase 1 standalone). Abaixo de 10 → declinar ou recomendar consultoria de processos tradicional.
+**Decision rule:** total score ≥ 15/25 → proceed to Phase 1. Between 10-14 → offer a paid standalone diagnostic only (Phase 1 on its own). Below 10 → decline, or recommend traditional process consulting.
 
-### 2. Saídas da Fase 0
+### 2. Phase 0 Outputs
 
-* **One-pager de proposta** com escopo da Fase 1 (Assessment) e preço fixo.
-* **NDA / termo de confidencialidade** assinado antes de qualquer acesso a dados.
-* Ver template: [`templates/qualificacao-fit-score.md`](templates/qualificacao-fit-score.md)
+* **Proposal one-pager** with Phase 1 (Assessment) scope and a fixed price.
+* **Signed NDA** before any access to data.
+* See the template: [`templates/fit-score-qualification.md`](templates/fit-score-qualification.md)
 
 ---
 
-## 📋 FASE 1: Assessment & Blueprint (Discovery & PoC)
+## 📋 PHASE 1: Assessment & Blueprint (Discovery & PoC)
 
-**Duração:** 2 a 3 semanas (Sprints 1-2)
-**Objetivo:** Identificar gargalos cognitivos, validar a viabilidade técnica e entregar um protótipo funcional (*Proof of Concept*).
+**Duration:** 2 to 3 weeks (Sprints 1-2)
+**Objective:** Identify cognitive bottlenecks, validate technical feasibility and deliver a working prototype (*proof of concept*).
 
-### 1. Imersão Operacional (*Shadowing*)
+### 1. Operational Immersion (*Shadowing*)
 
-* Acompanhar o fluxo de trabalho do time do cliente em tempo real (mín. 3 sessões de 1h com operadores reais, não só gestores).
-* Identificar interações com documentos não estruturados (PDFs, e-mails, relatórios, áudios).
-* Mapear pontos de tomada de decisão e validação manual.
-* Registrar o **tempo médio por tarefa** e o **volume mensal** — é a base do cálculo de ROI da Fase 4.
+* Follow the client team's workflow in real time (minimum 3 one-hour sessions with actual operators, not only managers).
+* Identify interactions with unstructured documents (PDFs, emails, reports, audio).
+* Map decision points and manual validation steps.
+* Record the **average time per task** and the **monthly volume** — this is the basis of the Phase 4 ROI calculation.
 
-### 2. Matriz de Qualificação de Automação
+### 2. Automation Qualification Matrix
 
-Classificar o processo dentro do quadrante de viabilidade:
+Place the process within the feasibility quadrant:
 
-| Tipo de Processo | Lógica | Tipo de Solução Recomendada |
+| Process type | Logic | Recommended solution type |
 | --- | --- | --- |
-| **Rígido e Repetitivo** | Regras fixas / Dados estruturados | RPA / Webhooks simples |
-| **Cognitivo / Contextual** | Interpretação / Síntese / Extração | **Arquitetura de Gen AI (RAG / LLM)** |
-| **Decisório / Multi-etapas** | Ações em múltiplos sistemas | **Agentes Autônomos / MCP** |
+| **Rigid and repetitive** | Fixed rules / structured data | Simple RPA / webhooks |
+| **Cognitive / Contextual** | Interpretation / synthesis / extraction | **Gen AI architecture (RAG / LLM)** |
+| **Decision-making / Multi-step** | Actions across several systems | **Autonomous agents / MCP** |
 
-### 3. Matriz de Priorização (ICE) dos casos de uso mapeados
+### 3. Prioritisation Matrix (ICE) for the mapped use cases
 
-Quando o shadowing revela mais de um caso de uso candidato, priorize com ICE antes de escolher o PoC:
+When shadowing reveals more than one candidate use case, prioritise with ICE before choosing the PoC:
 
-| Caso de Uso | Impact (1-10) | Confidence (1-10) | Ease (1-10) | Score (média) |
+| Use case | Impact (1-10) | Confidence (1-10) | Ease (1-10) | Score (mean) |
 | --- | --- | --- | --- | --- |
 | ... | ... | ... | ... | ... |
 
-Escolha o PoC pelo maior score, não pelo mais "impressionante" para demonstrar.
+Choose the PoC by highest score, not by which one demos best.
 
-### 4. Entregáveis da Fase 1
+### 4. Phase 1 Deliverables
 
-* **AI Architecture Blueprint:** diagrama de fluxo de contexto e integração de sistemas legados.
-* **PoC Funcional:** protótipo rodando em ambiente controlado (*Sandbox*) com dados reais do cliente.
-* **Cálculo de ROI Estimado:** projeção de redução de tempo operacional vs. custo estimado de infraestrutura/tokens.
-* **Go/No-Go do cliente** para a Fase 2, com escopo e preço fechados.
+* **AI Architecture Blueprint:** context flow diagram and legacy system integration.
+* **Working PoC:** prototype running in a controlled environment (*sandbox*) against real client data.
+* **Estimated ROI calculation:** projected reduction in operational time vs. estimated infrastructure and token cost.
+* **Client Go/No-Go** for Phase 2, with scope and price agreed.
 
-Templates: [`templates/blueprint.md`](templates/blueprint.md) · [`templates/calculo-roi.md`](templates/calculo-roi.md)
-
----
-
-## ⚙️ FASE 2: Context & Integration (Engenharia do Conhecimento)
-
-**Duração:** 2 a 3 semanas (Sprints 3-4)
-**Objetivo:** Estruturar a base de dados corporativa e as conexões do ambiente.
-
-### 1. Pipeline de Dados e RAG (*Retrieval-Augmented Generation*)
-
-* **Ingestão:** estruturar parsers para extração de dados não estruturados (PDF, DOCX, e-mail, áudio via ASR).
-* **Chunking & Embedding:** definir a estratégia de divisão de texto e vetorização adequada ao domínio da empresa (semântico vs. fixo, overlap, metadados de origem para citação).
-* **VectorDB:** configurar o banco vetorial (Qdrant, Pinecone, pgvector ou equivalente gerenciado do cliente).
-* **Estratégia de atualização:** definir cadência de reindexação (batch noturno vs. incremental por webhook) — decisão que evita "conhecimento congelado".
-
-### 2. Protocolos de Integração e Ferramentas (MCP / APIs)
-
-* Mapear APIs e webhooks de sistemas legados (CRM, ERP, bancos de dados).
-* Estruturar conectores via **Model Context Protocol (MCP)** ou chamadas de ferramentas (*Tool Calling*) para permitir que a IA leia e escreva em sistemas externos.
-* Definir explicitamente **escopo de permissão por conector** (read-only vs. read-write) — todo conector de escrita nasce read-only até a Fase 3 aprovar guardrails.
-
-### 3. Qualidade de Dados como Gate
-
-Nenhum pipeline avança para a Fase 3 sem:
-
-* Amostra de 20-30 perguntas de validação (*golden set*) com resposta esperada.
-* Taxa de recall aceitável no retrieval (defina o limiar por domínio; comece exigindo ≥ 85%).
-* Revisão de PII/dados sensíveis antes da vetorização (ver [`docs/governanca-seguranca.md`](docs/governanca-seguranca.md)).
+Templates: [`templates/blueprint.md`](templates/blueprint.md) · [`templates/roi-calculation.md`](templates/roi-calculation.md)
 
 ---
 
-## 🤖 FASE 3: Engineering & Guardrails (Orquestração Agêntica)
+## ⚙️ PHASE 2: Context & Integration (Knowledge Engineering)
 
-**Duração:** 3 a 4 semanas (Sprints 5-6)
-**Objetivo:** Construir o sistema agêntico pronto para produção com foco em resiliência e segurança.
+**Duration:** 2 to 3 weeks (Sprints 3-4)
+**Objective:** Structure the corporate knowledge base and the environment's connections.
 
-### 1. Orquestração da Topologia de Modelos
+### 1. Data Pipeline and RAG (*Retrieval-Augmented Generation*)
 
-* Estratégia de roteamento: usar modelos menores/rápidos para triagem e classificação, reservando modelos de raciocínio avançado apenas para tarefas complexas — otimiza custo sem sacrificar qualidade nas etapas críticas.
-* Configuração de agentes especialistas (Pesquisador, Analista, Revisor/Crítico) com responsabilidades e prompts isolados — evita "agente faz-tudo" difícil de depurar.
-* Defina explicitamente o **padrão de orquestração**: single-agent com tools, multi-agent supervisor/worker, ou pipeline determinístico com LLM em etapas pontuais. Escolha o mais simples que resolve o processo (ver Regra de Ouro).
+* **Ingestion:** build parsers to extract unstructured data (PDF, DOCX, email, audio via ASR).
+* **Chunking & embedding:** define the text splitting and vectorisation strategy suited to the company's domain (semantic vs. fixed, overlap, source metadata for citation).
+* **VectorDB:** configure the vector store (Qdrant, Pinecone, pgvector, or the client's managed equivalent).
+* **Refresh strategy:** define the reindexing cadence (nightly batch vs. incremental via webhook) — the decision that prevents frozen knowledge.
 
-### 2. Implementação de Guardrails & Segurança
+### 2. Integration Protocols and Tools (MCP / APIs)
 
-* **Input Guardrails:** filtros para prevenção de *Prompt Injection* e mascaramento de dados sensíveis (LGPD).
-* **Output Guardrails:** validação de schemas (JSON rígido) e checagem de alucinações antes do envio da resposta.
-* **Rate limiting & circuit breakers** por conector externo, para conter custo e blast radius de falhas em cascata.
-* **Trilha de auditoria:** todo input, output e decisão de ferramenta deve ser logado com timestamp e ator — obrigatório para setores regulados.
+* Map the APIs and webhooks of legacy systems (CRM, ERP, databases).
+* Build connectors via **Model Context Protocol (MCP)** or tool calling so the AI can read from and write to external systems.
+* Define the **permission scope per connector** explicitly (read-only vs. read-write) — every write connector starts read-only until Phase 3 approves guardrails.
 
-### 3. Desenho do Fluxo *Human-in-the-Loop* (HITL)
+### 3. Data Quality as a Gate
 
-* Definir regras de transbordo: quando a confiança da resposta do agente estiver abaixo do limiar (ex.: < 85%), ou a ação for irreversível/de alto impacto (envio de e-mail, transação financeira, alteração de cadastro), o caso é roteado para aprovação humana antes da execução final.
-* Classificar toda ação do agente em **Autônoma / Aprovação Prévia / Bloqueada** — essa matriz deve ser aprovada por escrito pelo patrocinador do cliente antes de ir para produção.
+No pipeline advances to Phase 3 without:
 
-### 4. Testes Antes da Virada para Produção
-
-* Teste de carga básico (concorrência esperada de uso).
-* Teste de *red-teaming* leve: tentativas de prompt injection e extração de system prompt.
-* Teste de regressão no *golden set* da Fase 2 após qualquer mudança de prompt ou modelo.
+* A sample of 20-30 validation questions (*golden set*) with expected answers.
+* An acceptable retrieval recall rate (set the threshold by domain; start by requiring ≥ 85%).
+* A PII and sensitive-data review before vectorisation (see [`docs/security-governance.md`](docs/security-governance.md)).
 
 ---
 
-## 🚀 FASE 4: Scale, Governance & Retainer (Operação Contínua)
+## 🤖 PHASE 3: Engineering & Guardrails (Agentic Orchestration)
 
-**Duração:** Contínua (recorrência mensal)
-**Objetivo:** Monitorar a performance, otimizar custos e expandir o modelo para novos processos.
+**Duration:** 3 to 4 weeks (Sprints 5-6)
+**Objective:** Build the production-ready agentic system, with resilience and security as the focus.
 
-### 1. Observabilidade e AI Ops
+### 1. Model Topology Orchestration
 
-* Implementar plataforma de monitoramento/tracing de LLM (ex.: Langfuse, Arize Phoenix, ou equivalente já usado pelo cliente).
-* Acompanhar métricas de SLA: latência por requisição, custo acumulado de tokens, taxa de erro/alucinação e volume de intervenções humanas.
-* Publicar um **relatório mensal de valor entregue** (ROI realizado vs. estimado na Fase 1) — é o principal argumento de renovação do retainer.
+* Routing strategy: use smaller, faster models for triage and classification, reserving advanced reasoning models for complex tasks — it optimises cost without sacrificing quality where it matters.
+* Configure specialist agents (Researcher, Analyst, Reviewer/Critic) with isolated responsibilities and prompts — this avoids a do-everything agent that is hard to debug.
+* State the **orchestration pattern** explicitly: single agent with tools, multi-agent supervisor/worker, or a deterministic pipeline with an LLM at specific steps. Pick the simplest one that solves the process (see the Golden Rule).
 
-### 2. Modelo de Passagem de Bastão (Handoff)
+### 2. Guardrails & Security Implementation
 
-* Treinamento do time técnico interno (se houver) para manutenção básica.
-* Documentação detalhada das instruções de sistema (*system prompts*), arquitetura e endpoints de API.
-* Runbook de incidentes: o que fazer quando o agente alucina, quando um conector cai, quando o custo de tokens dispara.
+* **Input guardrails:** filters against *prompt injection*, and masking of sensitive data.
+* **Output guardrails:** schema validation (strict JSON) and hallucination checks before the answer is sent.
+* **Rate limiting & circuit breakers** per external connector, to contain cost and the blast radius of cascading failures.
+* **Audit trail:** every input, output and tool decision is logged with a timestamp and an actor — mandatory in regulated sectors.
 
-### 3. Transição para Fractional FDE (Retainer)
+### 3. Designing the *Human-in-the-Loop* (HITL) Flow
 
-* Migrar o contrato para o modelo recorrente (10h a 15h semanais) focado em:
-  * Refinamento contínuo de *prompts* e bases de conhecimento.
-  * Gestão e otimização do orçamento de infraestrutura cloud e tokens.
-  * Mapeamento de novos casos de uso na empresa (reinicia o funil a partir da Fase 0/1, agora com confiança já estabelecida).
+* Define escalation rules: when the agent's answer confidence falls below the threshold (for example < 85%), or the action is irreversible or high-impact (sending an email, a financial transaction, a record change), the case routes to human approval before final execution.
+* Classify every agent action as **Autonomous / Prior Approval / Blocked** — this matrix must be approved in writing by the client's sponsor before going to production.
 
-Detalhes de modelo de precificação por fase: [`docs/modelo-precificacao.md`](docs/modelo-precificacao.md).
+### 4. Testing Before the Move to Production
+
+* Basic load test (expected concurrency in use).
+* Light *red-teaming*: prompt injection attempts and system-prompt extraction attempts.
+* Regression test against the Phase 2 *golden set* after any prompt or model change.
 
 ---
 
-## 📐 RACI por Fase (operação solo + stakeholders do cliente)
+## 🚀 PHASE 4: Scale, Governance & Retainer (Continuous Operation)
 
-| Fase | FDE (você) | Patrocinador executivo | Time operacional do cliente | TI/Segurança do cliente |
+**Duration:** Continuous (monthly recurrence)
+**Objective:** Monitor performance, optimise cost and extend the model to new processes.
+
+### 1. Observability and AI Ops
+
+* Deploy an LLM monitoring and tracing platform (for example Langfuse, Arize Phoenix, or whatever the client already uses).
+* Track SLA metrics: latency per request, cumulative token cost, error and hallucination rate, and volume of human interventions.
+* Publish a **monthly delivered-value report** (realized vs. Phase 1 estimated ROI) — it is the main argument for retainer renewal.
+
+### 2. Handoff Model
+
+* Training for the internal technical team (where one exists) on basic maintenance.
+* Detailed documentation of *system prompts*, architecture and API endpoints.
+* Incident runbook: what to do when the agent hallucinates, when a connector fails, when token cost spikes.
+
+### 3. Transition to Fractional FDE (Retainer)
+
+* Move the contract to the recurring model (10 to 15 hours per week) focused on:
+  * Continuous refinement of *prompts* and knowledge bases.
+  * Managing and optimising the cloud infrastructure and token budget.
+  * Mapping new use cases in the company (restarting the funnel at Phase 0/1, now with trust established).
+
+Per-phase pricing model details: [`docs/pricing-model.md`](docs/pricing-model.md).
+
+---
+
+## 📐 RACI per Phase (solo operation + client stakeholders)
+
+| Phase | FDE (you) | Executive sponsor | Client operational team | Client IT/Security |
 | --- | --- | --- | --- | --- |
-| 0. Qualificação | Responsável | Aprova | Consultado | Informado |
-| 1. Assessment | Responsável | Aprova ROI/Go-No-Go | Consultado (shadowing) | Informado |
-| 2. Context | Responsável | Informado | Consultado (validação de dados) | Aprova acessos |
-| 3. Engineering | Responsável | Aprova matriz HITL | Testa/valida golden set | Aprova guardrails de produção |
-| 4. Scale | Responsável | Aprova renovação | Consultado | Consultado (auditorias) |
+| 0. Qualification | Responsible | Approves | Consulted | Informed |
+| 1. Assessment | Responsible | Approves ROI/Go-No-Go | Consulted (shadowing) | Informed |
+| 2. Context | Responsible | Informed | Consulted (data validation) | Approves access |
+| 3. Engineering | Responsible | Approves HITL matrix | Tests/validates golden set | Approves production guardrails |
+| 4. Scale | Responsible | Approves renewal | Consulted | Consulted (audits) |
 
 ---
 
-## 📊 KPIs de Sucesso do Engajamento
+## 📊 Engagement Success KPIs
 
-| Métrica | Onde é medida | Meta de referência |
+| Metric | Where it is measured | Reference target |
 | --- | --- | --- |
-| Tempo de ciclo até 1º PoC | Fase 1 | ≤ 15 dias úteis |
-| Taxa de recall no golden set | Fase 2 | ≥ 85% |
-| Taxa de intervenção humana (HITL) | Fase 4 (contínuo) | Tendência de queda mês a mês |
-| ROI realizado vs. estimado | Fase 4 (contínuo) | ≥ 80% do estimado na Fase 1 |
-| Taxa de renovação de retainer | Fase 4 | ≥ 70% dos clientes ativos |
+| Cycle time to first PoC | Phase 1 | ≤ 15 business days |
+| Golden-set recall rate | Phase 2 | ≥ 85% |
+| Human intervention (HITL) rate | Phase 4 (continuous) | Falling month over month |
+| Realized vs. estimated ROI | Phase 4 (continuous) | ≥ 80% of the Phase 1 estimate |
+| Retainer renewal rate | Phase 4 | ≥ 70% of active clients |
 
 ---
 
-## 🚫 Antipadrões Comuns (o que evitar)
+## 🚫 Common Antipatterns (what to avoid)
 
-* **Big bang sem PoC:** pular a Fase 1 e ir direto para arquitetura complexa sem validar valor com dados reais.
-* **Agente sem guardrails de saída:** liberar ações de escrita em sistemas de produção antes de definir a matriz Autônoma/Aprovação/Bloqueada.
-* **Excesso de agentes:** criar topologia multi-agente para um processo que um único prompt bem estruturado resolveria.
-* **RAG sem estratégia de atualização:** vetorizar uma vez e nunca mais reindexar — a base "descola" da realidade do negócio em semanas.
-* **Retainer sem relatório de valor:** operar a Fase 4 sem reportar ROI mensal mensurável — é o motivo nº 1 de churn de fractional FDE.
+* **Big bang without a PoC:** skipping Phase 1 and going straight to complex architecture without proving value against real data.
+* **Agent without output guardrails:** allowing write actions against production systems before the Autonomous/Approval/Blocked matrix exists.
+* **Too many agents:** building a multi-agent topology for a process a single well-structured prompt would solve.
+* **RAG without a refresh strategy:** vectorising once and never reindexing — the knowledge base drifts from business reality within weeks.
+* **Retainer without a value report:** running Phase 4 without reporting measurable monthly ROI — the number one cause of fractional FDE churn.
 
 ---
 
-## 🧰 Toolkit de Entrega do FDE Solo
+## 🧰 Solo FDE Delivery Toolkit
 
-Para manter a velocidade de execução sem a necessidade de uma equipe de desenvolvimento, adote a seguinte pilha operacional (cardápio completo com alternativas em [`docs/stack-referencia.md`](docs/stack-referencia.md)):
+To keep execution speed without a development team, adopt the following operational stack (full menu with alternatives in [`docs/reference-stack.md`](docs/reference-stack.md)):
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    CAMADA DE APLICAÇÃO                       │
-│            Interfaces Web / WhatsApp API / CRMs              │
+│                     APPLICATION LAYER                        │
+│           Web interfaces / WhatsApp API / CRMs               │
 └──────────────────────────────┬───────────────────────────────┘
                                 │
 ┌──────────────────────────────▼───────────────────────────────┐
-│                  ORQUESTRAÇÃO E FLUXOS                        │
-│         n8n (Self-hosted/Cloud) / LangChain / MCP             │
+│                 ORCHESTRATION AND FLOWS                       │
+│         n8n (self-hosted/cloud) / LangChain / MCP             │
 └──────────────────────────────┬───────────────────────────────┘
                                 │
 ┌──────────────────────────────▼───────────────────────────────┐
-│             BASE DE CONHECIMENTO & MEMÓRIA                    │
+│               KNOWLEDGE BASE & MEMORY                         │
 │             Qdrant / Pinecone / PostgreSQL (pgvector)         │
 └──────────────────────────────┬───────────────────────────────┘
                                 │
 ┌──────────────────────────────▼───────────────────────────────┐
-│               OBSERVABILIDADE E GOVERNANÇA                    │
+│              OBSERVABILITY AND GOVERNANCE                     │
 │                Langfuse / Guardrails AI                       │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-> **Regra de Ouro do FDE Solo:** mantenha a arquitetura simples na PoC para comprovar valor rápido, e adicione complexidade agêntica apenas onde o processo de negócio realmente exigir.
+> **Solo FDE Golden Rule:** keep the architecture simple in the PoC to prove value fast, and add agentic complexity only where the business process genuinely demands it.
 
 ---
 
-## 📎 Referências Rápidas
+## 📎 Quick References
 
-* Checklists Go/No-Go por fase: [`checklists/`](checklists)
-* Templates de campo: [`templates/`](templates)
-* Modelo de precificação: [`docs/modelo-precificacao.md`](docs/modelo-precificacao.md)
-* Governança e segurança (LGPD): [`docs/governanca-seguranca.md`](docs/governanca-seguranca.md)
-* Stack de referência e alternativas: [`docs/stack-referencia.md`](docs/stack-referencia.md)
-* Adaptação por porte/setor de cliente: [`docs/adaptacao-por-perfil-cliente.md`](docs/adaptacao-por-perfil-cliente.md)
+* Go/No-Go checklists per phase: [`checklists/`](checklists)
+* Field templates: [`templates/`](templates)
+* Pricing model: [`docs/pricing-model.md`](docs/pricing-model.md)
+* Governance and security: [`docs/security-governance.md`](docs/security-governance.md)
+* Reference stack and alternatives: [`docs/reference-stack.md`](docs/reference-stack.md)
+* Adaptation by client size/sector: [`docs/client-profile-adaptation.md`](docs/client-profile-adaptation.md)

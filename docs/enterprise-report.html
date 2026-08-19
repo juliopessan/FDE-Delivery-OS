@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FDE Delivery OS — A.C.E.S. Methodology · Enterprise Report</title>
+<meta name="description" content="Consolidated report on FDE Delivery OS (the A.C.E.S. methodology) for Forward Deployed Engineers: framework, execution agent team, governance and pricing model.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #E9ECEF;
+    --surface: #FFFFFF;
+    --surface-2: #F3F5F7;
+    --ink: #161B22;
+    --ink-soft: #4B5563;
+    --ink-faint: #7B8794;
+    --accent: #2E6DA4;
+    --accent-deep: #1B4C77;
+    --accent-soft: #DCE8F2;
+    --line: #C9D0D8;
+    --line-strong: #A9B2BB;
+    --good: #2F7A4F;
+    --warn: #A9701C;
+    --critical: #B23A32;
+    --shadow: 0 1px 2px rgba(22,27,34,.04), 0 8px 24px rgba(22,27,34,.05);
+    --radius: 3px;
+    --font-display: 'Archivo', 'Arial Narrow', Arial, sans-serif;
+    --font-body: 'IBM Plex Sans', -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #10141A;
+      --surface: #171D25;
+      --surface-2: #1D242D;
+      --ink: #E7EBEF;
+      --ink-soft: #A8B3BF;
+      --ink-faint: #78838F;
+      --accent: #6FA8DC;
+      --accent-deep: #9CC3E8;
+      --accent-soft: #1E3347;
+      --line: #2B333D;
+      --line-strong: #3A4553;
+      --good: #4CAF7D;
+      --warn: #D9A441;
+      --critical: #E0837C;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #10141A; --surface: #171D25; --surface-2: #1D242D;
+    --ink: #E7EBEF; --ink-soft: #A8B3BF; --ink-faint: #78838F;
+    --accent: #6FA8DC; --accent-deep: #9CC3E8; --accent-soft: #1E3347;
+    --line: #2B333D; --line-strong: #3A4553;
+    --good: #4CAF7D; --warn: #D9A441; --critical: #E0837C;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"] {
+    --bg: #E9ECEF; --surface: #FFFFFF; --surface-2: #F3F5F7;
+    --ink: #161B22; --ink-soft: #4B5563; --ink-faint: #7B8794;
+    --accent: #2E6DA4; --accent-deep: #1B4C77; --accent-soft: #DCE8F2;
+    --line: #C9D0D8; --line-strong: #A9B2BB;
+    --good: #2F7A4F; --warn: #A9701C; --critical: #B23A32;
+    --shadow: 0 1px 2px rgba(22,27,34,.04), 0 8px 24px rgba(22,27,34,.05);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent-soft); color: var(--accent-deep); }
+
+  a { color: var(--accent-deep); text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+  a:hover { color: var(--accent); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; color: var(--ink); text-wrap: balance; margin: 0; }
+  h2 { letter-spacing: -0.01em; }
+  p { margin: 0; }
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
+  @media (max-width: 640px) { .container { padding: 0 1.25rem; } }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 40;
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1.5rem; padding: .85rem 0;
+  }
+  .brand { display: flex; align-items: baseline; gap: .55rem; font-family: var(--font-display); font-weight: 800; font-size: 1rem; letter-spacing: -0.01em; white-space: nowrap; }
+  .brand .mark { color: var(--accent); }
+  .topnav { display: flex; gap: 1.3rem; overflow-x: auto; scrollbar-width: none; }
+  .topnav::-webkit-scrollbar { display: none; }
+  .topnav a { font-size: .82rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; white-space: nowrap; padding: .2rem 0; border-bottom: 2px solid transparent; }
+  .topnav a:hover { color: var(--ink); border-color: var(--line-strong); }
+
+  /* ---------- Masthead ---------- */
+  .masthead { padding: 4.5rem 0 3.5rem; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-family: var(--font-mono); font-size: .72rem; font-weight: 500;
+    letter-spacing: .09em; text-transform: uppercase; color: var(--accent-deep);
+    background: var(--accent-soft); padding: .3rem .6rem; border-radius: var(--radius);
+    margin-bottom: 1.25rem;
+  }
+  .masthead h1 { font-size: clamp(2rem, 4.4vw, 3.1rem); line-height: 1.08; max-width: 18ch; }
+  .masthead .subtitle { margin-top: 1.1rem; font-size: 1.1rem; color: var(--ink-soft); max-width: 58ch; }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 2rem; margin-top: 2.25rem;
+    padding-top: 1.75rem; border-top: 1px solid var(--line);
+  }
+  .meta-item .label { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+  .meta-item .value { margin-top: .3rem; font-size: .92rem; font-weight: 500; }
+
+  /* ---------- Sections ---------- */
+  section.block { padding: 3.6rem 0; border-bottom: 1px solid var(--line); }
+  section.block:last-of-type { border-bottom: none; }
+  .section-head { display: flex; align-items: baseline; gap: .9rem; margin-bottom: 1.6rem; }
+  .section-num { font-family: var(--font-mono); font-size: .85rem; color: var(--accent); font-weight: 500; }
+  .section-head h2 { font-size: 1.6rem; }
+  .section-intro { max-width: 68ch; color: var(--ink-soft); margin-bottom: 1.75rem; font-size: 1rem; }
+  h3.sub { font-family: var(--font-display); font-size: 1.02rem; font-weight: 700; margin: 2.1rem 0 .9rem; color: var(--ink); }
+  h3.sub:first-child { margin-top: 0; }
+
+  /* ---------- Tables ---------- */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); background: var(--surface); }
+  table { width: 100%; border-collapse: collapse; font-size: .89rem; min-width: 560px; }
+  thead th {
+    text-align: left; font-family: var(--font-mono); font-weight: 500;
+    font-size: .68rem; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--accent-deep); background: var(--accent-soft);
+    padding: .7rem .9rem; border-bottom: 1px solid var(--line-strong);
+    white-space: nowrap;
+  }
+  tbody td { padding: .68rem .9rem; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-soft); }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--surface-2); }
+  tbody td:first-child { color: var(--ink); font-weight: 600; }
+  tbody td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+  tbody code { font-family: var(--font-mono); font-size: .85em; background: var(--surface-2); padding: .1rem .35rem; border-radius: 2px; color: var(--accent-deep); }
+  caption { text-align: left; caption-side: top; font-size: .82rem; color: var(--ink-faint); padding: .8rem .9rem 0; }
+
+  .pill { display: inline-block; padding: .15rem .5rem; border-radius: 999px; font-size: .72rem; font-weight: 600; white-space: nowrap; }
+  .pill--good { background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good); }
+  .pill--warn { background: color-mix(in srgb, var(--warn) 16%, transparent); color: var(--warn); }
+  .pill--critical { background: color-mix(in srgb, var(--critical) 16%, transparent); color: var(--critical); }
+  .pill--accent { background: var(--accent-soft); color: var(--accent-deep); }
+
+  /* ---------- Phase flow ---------- */
+  .flow { display: flex; flex-direction: column; gap: 0; margin: 1rem 0 2.25rem; }
+  .flow-step {
+    display: grid; grid-template-columns: 3.4rem 1fr; gap: 1.1rem;
+    padding: 1.05rem 0; border-bottom: 1px dashed var(--line);
+  }
+  .flow-step:last-child { border-bottom: none; }
+  .flow-index { font-family: var(--font-mono); font-size: .95rem; font-weight: 600; color: var(--accent); }
+  .flow-body .flow-title { font-family: var(--font-display); font-weight: 700; font-size: 1.02rem; }
+  .flow-body .flow-desc { margin-top: .3rem; font-size: .9rem; color: var(--ink-soft); max-width: 62ch; }
+  .flow-body .flow-dur { margin-top: .45rem; font-family: var(--font-mono); font-size: .74rem; color: var(--ink-faint); letter-spacing: .02em; }
+
+  /* ---------- Cards / grids ---------- */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1rem 0 2rem; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1rem 0 2rem; }
+  @media (max-width: 760px) { .grid-3, .grid-2 { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 1.2rem 1.3rem; box-shadow: var(--shadow);
+  }
+  .card .k { font-family: var(--font-mono); font-size: 1.7rem; font-weight: 600; color: var(--accent-deep); font-variant-numeric: tabular-nums; }
+  .card .l { margin-top: .35rem; font-size: .82rem; color: var(--ink-soft); }
+  .card h4 { font-size: .95rem; margin-bottom: .5rem; }
+  .card p { font-size: .87rem; color: var(--ink-soft); }
+
+  ul.clean, ol.clean { margin: 0; padding-left: 1.2rem; color: var(--ink-soft); font-size: .92rem; }
+  ul.clean li, ol.clean li { margin-bottom: .5rem; }
+  ul.clean li:last-child, ol.clean li:last-child { margin-bottom: 0; }
+  ul.clean strong, ol.clean strong { color: var(--ink); }
+
+  blockquote.principle {
+    margin: 1.5rem 0 0; padding: 1.1rem 1.3rem;
+    border-left: 3px solid var(--accent); background: var(--accent-soft);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-family: var(--font-display); font-weight: 600; font-size: 1rem;
+    color: var(--accent-deep);
+  }
+
+  code.path { font-family: var(--font-mono); font-size: .83em; }
+
+  footer.report-footer { padding: 3rem 0 4rem; }
+  .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; padding-top: 1.75rem; border-top: 1px solid var(--line); }
+  .footer-grid .fmeta { font-size: .8rem; color: var(--ink-faint); }
+  .footer-grid .fmeta strong { color: var(--ink-soft); }
+
+  @media print {
+    .topbar { position: static; backdrop-filter: none; }
+    a { color: inherit; text-decoration: none; }
+    section.block { break-inside: avoid-page; padding: 1.5rem 0; }
+    .table-wrap { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand"><span class="mark">A.C.E.S.</span> Enterprise Report</div>
+    <nav class="topnav">
+      <a href="#executive-summary">Summary</a>
+      <a href="#framework">Framework</a>
+      <a href="#agents">Agents</a>
+      <a href="#raci">RACI</a>
+      <a href="#kpis">KPIs</a>
+      <a href="#capacity">Capacity</a>
+      <a href="#governance">Governance</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#adaptation">Adaptation</a>
+      <a href="#repository">Repository</a>
+    </nav>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="container">
+    <span class="eyebrow">Reference Document · Internal Use</span>
+    <h1>FDE Delivery OS — The A.C.E.S. Methodology for Forward Deployed Engineers</h1>
+    <p class="subtitle">An enterprise Gen AI acceleration framework — 5 phases, 9 execution agents, governance and the pricing model, consolidated into a single report.</p>
+    <div class="meta-row">
+      <div class="meta-item"><div class="label">Project</div><div class="value">FDE-Delivery-OS</div></div>
+      <div class="meta-item"><div class="label">Version</div><div class="value">0.3.0</div></div>
+      <div class="meta-item"><div class="label">Updated</div><div class="value">21 July 2026</div></div>
+      <div class="meta-item"><div class="label">Classification</div><div class="value">Own methodology — not confidential</div></div>
+      <div class="meta-item"><div class="label">Licence</div><div class="value">MIT</div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="block" id="executive-summary">
+    <div class="section-head"><span class="section-num">00</span><h2>Executive Summary</h2></div>
+    <p class="section-intro">
+      The A.C.E.S. methodology structures a solo Forward Deployed Engineer's work into five sequential phases —
+      Qualification, Assessment, Context, Engineering and Scale — each with its own objective, reference duration,
+      deliverables and Go/No-Go gate. The framework is agnostic to client size and sector: what changes between a small
+      business and an enterprise account is the depth and formality of each phase, never the sequence or the security gates.
+    </p>
+    <p class="section-intro">
+      From version 0.2.0 onwards, the methodology stopped being reference documentation alone and became something executed
+      by a team of <strong style="color:var(--ink)">9 specialist AI agents</strong>, each responsible for one phase or
+      discipline, coordinated by an orchestrator agent and supported by 7 reusable skills and an operational harness with a
+      per-engagement folder convention.
+    </p>
+    <div class="grid-3">
+      <div class="card"><div class="k">5</div><div class="l">Phases (0 to 4), from qualification to continuous scale</div></div>
+      <div class="card"><div class="k">9</div><div class="l">Specialist AI agents, one per phase or discipline</div></div>
+      <div class="card"><div class="k">7</div><div class="l">Reusable skills invoked by several agents</div></div>
+      <div class="card"><div class="k">8–10</div><div class="l">Reference weeks from Phase 0 to production go-live</div></div>
+      <div class="card"><div class="k">15–20%</div><div class="l">Mandatory buffer on every effort estimate (PERT)</div></div>
+      <div class="card"><div class="k">≥85%</div><div class="l">Minimum recall required on the RAG validation golden set</div></div>
+    </div>
+  </section>
+
+  <section class="block" id="framework">
+    <div class="section-head"><span class="section-num">01</span><h2>Framework Overview</h2></div>
+    <p class="section-intro">The phases follow a strict sequence — no engagement advances without its Go/No-Go checklist approved.</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-index">00</div>
+        <div class="flow-body">
+          <div class="flow-title">Qualification</div>
+          <div class="flow-desc">Prospect fit score (5 criteria, 0–25 points), company research, and a GO / partial GO / NO-GO decision before any commitment.</div>
+          <div class="flow-dur">3–5 business days · pre-contract</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-index">01</div>
+        <div class="flow-body">
+          <div class="flow-title">Assessment</div>
+          <div class="flow-desc">Operational shadowing, process qualification matrix, ICE prioritisation, AI Architecture Blueprint and estimated ROI (optimistic/conservative range).</div>
+          <div class="flow-dur">2–3 weeks · Sprints 1–2</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-index">02</div>
+        <div class="flow-body">
+          <div class="flow-title">Context</div>
+          <div class="flow-desc">Ingestion and RAG pipeline, chunking and embedding strategy, VectorDB choice, MCP/API connectors (read-only by default) and the validation golden set.</div>
+          <div class="flow-dur">2–3 weeks · Sprints 3–4</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-index">03</div>
+        <div class="flow-body">
+          <div class="flow-title">Engineering</div>
+          <div class="flow-desc">Orchestration topology, model routing, input and output guardrails, the action autonomy matrix, and load and red-team testing before go-live.</div>
+          <div class="flow-dur">3–4 weeks · Sprints 5–6</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-index">04</div>
+        <div class="flow-body">
+          <div class="flow-title">Scale</div>
+          <div class="flow-desc">Continuous observability, a monthly report of realized vs. estimated ROI, an incident runbook, and the transition to a fractional retainer (10–15h/week).</div>
+          <div class="flow-dur">Continuous · monthly recurrence</div>
+        </div>
+      </div>
+    </div>
+
+    <blockquote class="principle">
+      Keep the architecture simple in the PoC to prove value fast, and add agentic complexity only where the business process genuinely demands it.
+    </blockquote>
+  </section>
+
+  <section class="block" id="agents">
+    <div class="section-head"><span class="section-num">02</span><h2>Execution Agent Team</h2></div>
+    <p class="section-intro">Nine native Claude Code agents, defined in <code class="path">.claude/agents/</code>, each with its own mission, tools and handoff criteria.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Agent</th><th>Phase</th><th>Mission</th><th>Hands off to</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>fde-master</td><td>All</td><td>Orchestrates, routes between specialists and keeps engagement state in <code class="path">state.md</code>.</td><td>Every specialist</td></tr>
+          <tr><td>fde-qualifier</td><td>0</td><td>Prospect fit score, public company research, proposal one-pager.</td><td>fde-assessor (on GO)</td></tr>
+          <tr><td>fde-capacity-planner</td><td>Cross-cutting</td><td>WBS + PERT, hours per role and phase, how many engineers, solo vs. reinforcement.</td><td>fde-master (price impact)</td></tr>
+          <tr><td>fde-assessor</td><td>1</td><td>Shadowing, qualification matrix, ICE prioritisation, blueprint, estimated ROI.</td><td>fde-context-engineer (on GO)</td></tr>
+          <tr><td>fde-context-engineer</td><td>2</td><td>RAG pipeline, VectorDB, read-only connectors, validation golden set.</td><td>fde-architect (on GO)</td></tr>
+          <tr><td>fde-architect</td><td>3 (architecture)</td><td>Agent topology and model routing strategy.</td><td>fde-qa</td></tr>
+          <tr><td>fde-guardrails</td><td>3 (security)</td><td>I/O guardrails, autonomy matrix, data-protection review, audit trail. <strong>Veto over go-live.</strong></td><td>fde-qa</td></tr>
+          <tr><td>fde-qa</td><td>Cross-cutting</td><td>Validates Go/No-Go checklists, golden set, regression, load and red-team tests.</td><td>fde-master (with a verdict)</td></tr>
+          <tr><td>fde-scale-ops</td><td>4</td><td>Observability, realized ROI, incident runbook, retainer management.</td><td>fde-master (new use case → Phase 0)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Reusable Skills</h3>
+    <div class="grid-3">
+      <div class="card"><h4>fit-score</h4><p>A 0–25 prospect qualification fit score, with the GO / partial GO / NO-GO decision rule.</p></div>
+      <div class="card"><h4>roi-calculator</h4><p>Estimated and realized ROI using the standard formula of current monthly cost vs. cost with AI.</p></div>
+      <div class="card"><h4>golden-set-builder</h4><p>Building and validating the golden set of reference questions for the RAG pipeline.</p></div>
+      <div class="card"><h4>guardrail-matrix</h4><p>Classifying actions as Autonomous / Prior Approval / Blocked, per connector.</p></div>
+      <div class="card"><h4>blueprint-writer</h4><p>Structuring the AI Architecture Blueprint from shadowing data.</p></div>
+      <div class="card"><h4>status-report</h4><p>The weekly status report and the monthly realized-ROI report.</p></div>
+      <div class="card"><h4>effort-estimation</h4><p>The WBS + PERT (three-point) methodology for estimating hours per task and per phase.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="raci">
+    <div class="section-head"><span class="section-num">03</span><h2>RACI per Phase</h2></div>
+    <p class="section-intro">Solo operation plus the typical stakeholders on the client side.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Phase</th><th>FDE (you)</th><th>Executive sponsor</th><th>Client operational team</th><th>Client IT/Security</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0 — Qualification</td><td>Responsible</td><td>Approves</td><td>Consulted</td><td>Informed</td></tr>
+          <tr><td>1 — Assessment</td><td>Responsible</td><td>Approves ROI / Go-No-Go</td><td>Consulted (shadowing)</td><td>Informed</td></tr>
+          <tr><td>2 — Context</td><td>Responsible</td><td>Informed</td><td>Consulted (data validation)</td><td>Approves access</td></tr>
+          <tr><td>3 — Engineering</td><td>Responsible</td><td>Approves the HITL matrix</td><td>Tests / validates the golden set</td><td>Approves production guardrails</td></tr>
+          <tr><td>4 — Scale</td><td>Responsible</td><td>Approves renewal</td><td>Consulted</td><td>Consulted (audits)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block" id="kpis">
+    <div class="section-head"><span class="section-num">04</span><h2>Engagement Success KPIs</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Metric</th><th>Where it is measured</th><th>Reference target</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Cycle time to first PoC</td><td>Phase 1</td><td class="num">≤ 15 business days</td><td><span class="pill pill--accent">Reference</span></td></tr>
+          <tr><td>Golden-set recall rate</td><td>Phase 2</td><td class="num">≥ 85%</td><td><span class="pill pill--good">Mandatory gate</span></td></tr>
+          <tr><td>Human intervention (HITL) rate</td><td>Phase 4 (continuous)</td><td class="num">Falling month over month</td><td><span class="pill pill--accent">Reference</span></td></tr>
+          <tr><td>Realized vs. estimated ROI</td><td>Phase 4 (continuous)</td><td class="num">≥ 80% of the estimate</td><td><span class="pill pill--warn">Always report, even when below</span></td></tr>
+          <tr><td>Retainer renewal rate</td><td>Phase 4</td><td class="num">≥ 70%</td><td><span class="pill pill--accent">Reference</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Common Antipatterns</h3>
+    <ul class="clean">
+      <li><strong>Big bang without a PoC</strong> — skipping Phase 1 and going straight to complex architecture without proving value against real data.</li>
+      <li><strong>Agent without output guardrails</strong> — allowing write actions in production before the Autonomous/Approval/Blocked matrix exists.</li>
+      <li><strong>Too many agents</strong> — a multi-agent topology for a process a single prompt would solve.</li>
+      <li><strong>RAG without a refresh strategy</strong> — vectorising once and never reindexing; the knowledge base drifts from reality within weeks.</li>
+      <li><strong>Retainer without a value report</strong> — running Phase 4 without measurable monthly ROI, the leading cause of churn.</li>
+    </ul>
+  </section>
+
+  <section class="block" id="capacity">
+    <div class="section-head"><span class="section-num">05</span><h2>Effort Estimation &amp; Capacity</h2></div>
+    <p class="section-intro">
+      Every fixed fee derives from a WBS + PERT estimate — never from guesswork. The <code class="path">fde-capacity-planner</code>
+      agent decomposes the phase into granular tasks, estimates three points per task and compares the total against the solo FDE's productive capacity.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <caption>The PERT formula, applied per task</caption>
+        <thead><tr><th>Variable</th><th>Definition</th><th>Formula</th></tr></thead>
+        <tbody>
+          <tr><td>O</td><td>Optimistic — everything goes well, no surprises</td><td class="num">hours</td></tr>
+          <tr><td>M</td><td>Most likely — a realistic scenario</td><td class="num">hours</td></tr>
+          <tr><td>P</td><td>Pessimistic — reasonable surprises</td><td class="num">hours</td></tr>
+          <tr><td>Estimate (E)</td><td>The task's weighted effort</td><td class="num">(O + 4×M + P) / 6</td></tr>
+          <tr><td>Standard deviation</td><td>The task's overrun risk</td><td class="num">(P − O) / 6</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Available capacity — solo FDE reference</h3>
+    <div class="grid-3">
+      <div class="card"><div class="k">30–35h</div><div class="l">Productive capacity per week, net of prospecting and admin</div></div>
+      <div class="card"><div class="k">15–20%</div><div class="l">Mandatory minimum buffer on the phase's PERT total</div></div>
+      <div class="card"><div class="k">1</div><div class="l">Client in active focus at a time, except retainers in maintenance mode (Phase 4)</div></div>
+    </div>
+
+    <h3 class="sub">Sizing decision</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Scenario</th><th>Condition</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Solo holds</td><td>Available capacity ≥ estimated effort with buffer</td><td><span class="pill pill--good">Proceed without reinforcement</span></td></tr>
+          <tr><td>Reinforcement required</td><td>Effort exceeds capacity within the target timeline</td><td><span class="pill pill--warn">One-off subcontract or partner, with a price impact</span></td></tr>
+          <tr><td>Timeline extension</td><td>Reinforcement is not feasible or not wanted by the client</td><td><span class="pill pill--warn">A new duration negotiated before signature</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block" id="governance">
+    <div class="section-head"><span class="section-num">06</span><h2>Governance &amp; Security</h2></div>
+    <p class="section-intro">Mandatory from Phase 2 onwards, and a veto gate before any move to production in Phase 3, owned by <code class="path">fde-guardrails</code>.</p>
+
+    <h3 class="sub">Action Autonomy Matrix</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Class</th><th>Definition</th><th>Example</th><th>Approval required</th></tr></thead>
+        <tbody>
+          <tr><td><span class="pill pill--good">Autonomous</span></td><td>Reversible, low impact, no sensitive data</td><td>Summarise a document, classify a ticket</td><td>None (logging only)</td></tr>
+          <tr><td><span class="pill pill--warn">Prior Approval</span></td><td>Irreversible or medium-to-high impact</td><td>Send an email, create a CRM record</td><td>A human confirms first (HITL)</td></tr>
+          <tr><td><span class="pill pill--critical">Blocked</span></td><td>Financial action, data deletion, critical configuration</td><td>Transfer, hard delete, permission change</td><td>Never automated</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">Non-negotiable principles</h3>
+    <ul class="clean">
+      <li><strong>Inherited permission</strong> — the agent never holds broader access than the FDE in that system; no separate service account.</li>
+      <li><strong>Environment-sensitive autonomy</strong> — the same action can be more permissive in sandbox or PoC and more restricted in production; promotion never inherits the sandbox's permissiveness.</li>
+      <li><strong>A complete audit trail</strong> — timestamp, actor, input, tools called, output and guardrail decision, not editable by the agent itself.</li>
+      <li><strong>Data-protection review before ingestion</strong> — PII masking at the input, never only at the output.</li>
+    </ul>
+  </section>
+
+  <section class="block" id="pricing">
+    <div class="section-head"><span class="section-num">07</span><h2>Pricing Model</h2></div>
+    <p class="section-intro">Priced per phase, aligned to the value delivered — never by the hour in Phases 1–3.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Phase</th><th>Model</th><th>Rationale</th></tr></thead>
+        <tbody>
+          <tr><td>0 — Qualification</td><td>Free or a nominal fee</td><td>Lowers the barrier to entry; works as a qualified lead magnet</td></tr>
+          <tr><td>1 — Assessment</td><td>Fixed fee</td><td>Clear, short scope; protects the FDE from scope creep</td></tr>
+          <tr><td>2 — Context</td><td>Fixed fee or milestone</td><td>Reassess if scope changed after Phase 1</td></tr>
+          <tr><td>3 — Engineering</td><td>Fixed fee with a "production approved" milestone</td><td>Final payment tied to approval of the HITL matrix</td></tr>
+          <tr><td>4 — Scale</td><td>Monthly retainer (10–15h/week)</td><td>Recurring revenue; renewal conditional on the ROI report</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block" id="adaptation">
+    <div class="section-head"><span class="section-num">08</span><h2>Adaptation by Client Profile</h2></div>
+    <p class="section-intro">The phases do not change shape — only depth, formality and duration, according to size and sector.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Size</th><th>Phases 0–1</th><th>Phase 2</th><th>Phase 3</th><th>Phase 4</th></tr></thead>
+        <tbody>
+          <tr><td>SMB (up to ~100 staff)</td><td>Compressed into 1 week</td><td>Managed stack (SaaS)</td><td>More permissive autonomy matrix</td><td>5–8h/week</td></tr>
+          <tr><td>Mid-market (100–1,000)</td><td>Standard playbook</td><td>Formal IT involved</td><td>Standard playbook</td><td>10–15h/week</td></tr>
+          <tr><td>Enterprise (1,000+)</td><td>2–3 weeks, multiple decision-makers</td><td>Via internal platform teams</td><td>Security committee mandatory</td><td>Contract via procurement</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-wrap" style="margin-top:1.25rem">
+      <table>
+        <thead><tr><th>Sector</th><th>Main adjustment</th></tr></thead>
+        <tbody>
+          <tr><td>Healthcare</td><td>No action with clinical impact is Autonomous; data-protection law plus health-data specific rules</td></tr>
+          <tr><td>Financial</td><td>Auditing and log trails are a regulatory requirement, not optional</td></tr>
+          <tr><td>Legal</td><td>Extended golden set (50+ cases), required recall ≥ 95%, every output cites a source</td></tr>
+          <tr><td>Retail / E-commerce</td><td>Focus on volume and latency (end-customer response SLA)</td></tr>
+          <tr><td>Public sector</td><td>Formal procurement from Phase 0; explainability is a requirement</td></tr>
+          <tr><td>Industry / Manufacturing</td><td>Check that Gen AI really is the right solution before selling the engagement</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block" id="repository">
+    <div class="section-head"><span class="section-num">09</span><h2>Repository Structure</h2></div>
+    <p class="section-intro">Two layers: the reference methodology and the execution agent team.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Path</th><th>Layer</th><th>Contents</th></tr></thead>
+        <tbody>
+          <tr><td><code class="path">PLAYBOOK.md</code></td><td>Reference</td><td>The full framework — 5 phases, RACI, KPIs, toolkit</td></tr>
+          <tr><td><code class="path">docs/</code></td><td>Reference</td><td>Pricing, governance, stack, adaptation by profile</td></tr>
+          <tr><td><code class="path">templates/</code></td><td>Reference</td><td>Qualification, blueprint, ROI, SOW, estimate, status</td></tr>
+          <tr><td><code class="path">checklists/</code></td><td>Reference</td><td>Go/No-Go per phase and production go-live</td></tr>
+          <tr><td><code class="path">.claude/agents/</code></td><td>Execution</td><td>9 native Claude Code AI agents</td></tr>
+          <tr><td><code class="path">.claude/skills/</code></td><td>Execution</td><td>7 skills reused across agents</td></tr>
+          <tr><td><code class="path">specs/</code></td><td>Execution</td><td>Team roster and handoff/task protocols</td></tr>
+          <tr><td><code class="path">harness/</code></td><td>Execution</td><td>Per-engagement folder convention and tool matrix</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer class="report-footer">
+  <div class="container footer-grid">
+    <div class="fmeta"><strong>FDE Delivery OS — The A.C.E.S. Methodology</strong><br>Licensed under MIT. Use, adapt and redistribute freely.</div>
+    <div class="fmeta">Report generated from <code class="path">PLAYBOOK.md</code>, <code class="path">specs/</code>, <code class="path">docs/</code> and <code class="path">.claude/</code>.<br>Version 0.3.0 · 16 August 2026.</div>
+  </div>
+</footer>
+
+</body>
+</html>

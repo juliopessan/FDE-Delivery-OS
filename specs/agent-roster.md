@@ -1,34 +1,34 @@
-# Spec — Roster do Time de Agentes FDE
+# Spec — FDE Agent Team Roster
 
-Visão geral de todos os agentes que operam a metodologia A.C.E.S. Definições executáveis em [`.claude/agents/`](../.claude/agents).
+Overview of every agent that operates the A.C.E.S. methodology. Executable definitions live in [`.claude/agents/`](../.claude/agents).
 
-| Agente | Fase | Missão | Ferramentas | Entra em cena quando | Handoff para |
+| Agent | Phase | Mission | Tools | Enters when | Hands off to |
 | --- | --- | --- | --- | --- | --- |
-| [`fde-master`](../.claude/agents/fde-master.md) | Todas | Orquestra, roteia, mantém estado do engajamento | Read, Write, Edit, Bash, Grep, Glob, Agent | Início/retomada de qualquer sessão | Todos os especialistas |
-| [`fde-qualifier`](../.claude/agents/fde-qualifier.md) | 0 | Fit score, pesquisa do prospect, one-pager de proposta | Read, Write, Edit, WebSearch, WebFetch | Novo prospect, sem contrato | `fde-assessor` (se GO) |
-| [`fde-capacity-planner`](../.claude/agents/fde-capacity-planner.md) | Transversal | WBS + PERT, horas por papel/fase, quantos devs, solo vs. reforço | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Antes de fechar prazo/preço de qualquer fase; a cada mudança de escopo | `fde-master` (impacto de preço) |
-| [`fde-assessor`](../.claude/agents/fde-assessor.md) | 1 | Shadowing, matriz de qualificação, ICE, blueprint, ROI estimado | Read, Write, Edit, Bash, WebSearch | Go da Fase 0 | `fde-context-engineer` (se GO) |
-| [`fde-context-engineer`](../.claude/agents/fde-context-engineer.md) | 2 | Pipeline RAG, VectorDB, conectores, golden set | Read, Write, Edit, Bash, Grep, Glob | Go da Fase 1 | `fde-architect` (se GO) |
-| [`fde-architect`](../.claude/agents/fde-architect.md) | 3 (arquitetura) | Topologia de agentes, roteamento de modelos | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Go da Fase 2 | `fde-qa` |
-| [`fde-guardrails`](../.claude/agents/fde-guardrails.md) | 3 (segurança) | Guardrails I/O, matriz de autonomia, LGPD, auditoria | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Em paralelo a `fde-architect` | `fde-qa` |
-| [`fde-qa`](../.claude/agents/fde-qa.md) | Transversal | Valida checklists Go/No-Go, golden set, testes de carga/red-team | Read, Write, Edit, Bash, Grep, Glob | Fim de cada fase | `fde-master` (com veredito) |
-| [`fde-scale-ops`](../.claude/agents/fde-scale-ops.md) | 4 | Observabilidade, ROI realizado, runbook, retainer | Read, Write, Edit, Bash, WebSearch | Sistema em produção | `fde-master` (novo caso de uso → volta à Fase 0) |
+| [`fde-master`](../.claude/agents/fde-master.md) | All | Orchestrates, routes, keeps engagement state | Read, Write, Edit, Bash, Grep, Glob, Agent | Start or resumption of any session | Every specialist |
+| [`fde-qualifier`](../.claude/agents/fde-qualifier.md) | 0 | Fit score, prospect research, proposal one-pager | Read, Write, Edit, WebSearch, WebFetch | New prospect, no contract | `fde-assessor` (on GO) |
+| [`fde-capacity-planner`](../.claude/agents/fde-capacity-planner.md) | Cross-cutting | WBS + PERT, hours per role and phase, how many engineers, solo vs. reinforcement | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Before agreeing any phase timeline or price; at every scope change | `fde-master` (price impact) |
+| [`fde-assessor`](../.claude/agents/fde-assessor.md) | 1 | Shadowing, qualification matrix, ICE, blueprint, estimated ROI | Read, Write, Edit, Bash, WebSearch | Phase 0 Go | `fde-context-engineer` (on GO) |
+| [`fde-context-engineer`](../.claude/agents/fde-context-engineer.md) | 2 | RAG pipeline, VectorDB, connectors, golden set | Read, Write, Edit, Bash, Grep, Glob | Phase 1 Go | `fde-architect` (on GO) |
+| [`fde-architect`](../.claude/agents/fde-architect.md) | 3 (architecture) | Agent topology, model routing | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Phase 2 Go | `fde-qa` |
+| [`fde-guardrails`](../.claude/agents/fde-guardrails.md) | 3 (security) | I/O guardrails, autonomy matrix, data protection, auditing | Read, Write, Edit, Bash, Grep, Glob, WebSearch | In parallel with `fde-architect` | `fde-qa` |
+| [`fde-qa`](../.claude/agents/fde-qa.md) | Cross-cutting | Validates Go/No-Go checklists, golden set, load and red-team tests | Read, Write, Edit, Bash, Grep, Glob | End of each phase | `fde-master` (with a verdict) |
+| [`fde-scale-ops`](../.claude/agents/fde-scale-ops.md) | 4 | Observability, realized ROI, runbook, retainer | Read, Write, Edit, Bash, WebSearch | System in production | `fde-master` (new use case → back to Phase 0) |
 
-## Princípios de Design do Roster
+## Roster Design Principles
 
-1. **Um agente, uma fase, uma responsabilidade primária.** Evita "agente faz-tudo" — mesmo princípio que os agentes aplicam à arquitetura dos clientes (ver `PLAYBOOK.md`, Fase 3).
-2. **`fde-qa` nunca é dono de solução.** É o único agente com poder de bloquear avanço de fase sem propor a correção ele mesmo — a correção volta ao especialista responsável.
-3. **`fde-guardrails` tem veto sobre go-live.** Nenhum outro agente pode aprovar a virada para produção sem o sinal verde explícito dele.
-4. **Todo handoff é por arquivo**, em `harness/engagements/<cliente>/<fase>/`, nunca apenas por contexto de conversa — garante retomada em outra sessão sem perda de estado.
-5. **Skills (`.claude/skills/`) são compartilhadas entre agentes** — procedimentos reutilizáveis (fit score, ROI, golden set, matriz de autonomia, blueprint, status report, estimativa de esforço) que mais de um agente invoca, evitando duplicação de lógica entre as personas.
-6. **`fde-capacity-planner` é o gate de realismo antes do gate de segurança.** Enquanto `fde-guardrails` veta go-live por risco técnico/compliance, `fde-capacity-planner` veta compromisso de prazo/preço por inviabilidade de esforço — nenhuma proposta fecha sem passar por ele.
+1. **One agent, one phase, one primary responsibility.** It avoids the do-everything agent — the same principle the agents apply to client architectures (see `PLAYBOOK.md`, Phase 3).
+2. **`fde-qa` never owns a solution.** It is the only agent that can block a phase from advancing without proposing the fix itself — the fix returns to the responsible specialist.
+3. **`fde-guardrails` holds a veto over go-live.** No other agent can approve the move to production without its explicit sign-off.
+4. **Every handoff goes through files**, under `harness/engagements/<client>/<phase>/`, never through conversation context alone — that is what allows another session to resume without losing state.
+5. **Skills (`.claude/skills/`) are shared between agents** — reusable procedures (fit score, ROI, golden set, autonomy matrix, blueprint, status report, effort estimation) that more than one agent invokes, avoiding duplicated logic across the personas.
+6. **`fde-capacity-planner` is the realism gate ahead of the security gate.** Where `fde-guardrails` vetoes go-live on technical or compliance risk, `fde-capacity-planner` vetoes timeline and price commitments on infeasible effort — no proposal closes without passing through it.
 
-## Modelo de Invocação
+## Invocation Model
 
-Em uma sessão do Claude Code dentro deste repositório (ou de um repositório de cliente que referencie este framework), os agentes ficam disponíveis automaticamente via `.claude/agents/`. O fluxo recomendado:
+In a Claude Code session inside this repository (or inside a client repository that references this framework), the agents are available automatically via `.claude/agents/`. The recommended flow:
 
 ```
-Usuário → fde-master → decide fase/agente → delega via Agent tool → agente especialista executa → grava artefatos → fde-master atualiza state.md
+User → fde-master → decides phase/agent → delegates via the Agent tool → specialist agent executes → writes artifacts → fde-master updates state.md
 ```
 
-Ver [`harness/README.md`](../harness/README.md) para a convenção de pastas por engajamento e o cheatsheet de comandos.
+See [`harness/README.md`](../harness/README.md) for the per-engagement folder convention and the command cheatsheet.

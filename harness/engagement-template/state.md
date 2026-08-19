@@ -1,38 +1,38 @@
-# Estado do Engajamento — <Nome do Cliente>
+# Engagement State — <Client Name>
 
-**Slug:** <slug-do-cliente>
-**FDE responsável:** ______________________
-**Data de início (Fase 0):** ______________________
+**Slug:** <client-slug>
+**FDE owner:** ______________________
+**Start date (Phase 0):** ______________________
 
-## Perfil do Cliente (ver `docs/adaptacao-por-perfil-cliente.md`)
+## Client Profile (see `docs/client-profile-adaptation.md`)
 
-- Porte: [ ] PME [ ] Média empresa [ ] Enterprise
-- Setor: ______________________
-- Setor regulado? [ ] Sim [ ] Não
-- TI própria? [ ] Sim [ ] Não
+- Size: [ ] SMB [ ] Mid-market [ ] Enterprise
+- Sector: ______________________
+- Regulated sector? [ ] Yes [ ] No
+- In-house IT? [ ] Yes [ ] No
 
-## Fase Atual
+## Current Phase
 
-- [ ] 0 — Qualificação
+- [ ] 0 — Qualification
 - [ ] 1 — Assessment
 - [ ] 2 — Context
 - [ ] 3 — Engineering
 - [ ] 4 — Scale (Retainer)
 
-## Histórico de Fases
+## Phase History
 
-| Fase | Status | Decisão | Data | Observação |
+| Phase | Status | Decision | Date | Note |
 | --- | --- | --- | --- | --- |
-| 0 — Qualificação | | | | |
+| 0 — Qualification | | | | |
 | 1 — Assessment | | | | |
 | 2 — Context | | | | |
 | 3 — Engineering | | | | |
-| 4 — Scale | Contínuo | | | |
+| 4 — Scale | Continuous | | | |
 
-## Pendências Abertas
+## Open Items
 
 -
 
-## Próximo Passo
+## Next Step
 
 -

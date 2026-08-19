@@ -17,16 +17,16 @@ def init_project(project_name, domain="custom"):
     project_path = os.path.join(harness_dir, project_name)
     
     if os.path.exists(project_path):
-        print(f"Erro: O projeto '{project_name}' já existe em {project_path}")
+        print(f"Error: project '{project_name}' already exists at {project_path}")
         return
     
-    print(f"Inicializando projeto: {project_name} (Domínio: {domain})")
+    print(f"Initialising project: {project_name} (domain: {domain})")
     
     # Copy template
     try:
         shutil.copytree(template_dir, project_path)
     except Exception as e:
-        print(f"Erro ao copiar template: {e}")
+        print(f"Error copying the template: {e}")
         return
     
     # Customize state.md
@@ -35,20 +35,20 @@ def init_project(project_name, domain="custom"):
         with open(state_file, "r", encoding="utf-8") as f:
             content = f.read()
         
-        content = content.replace("<Nome do Cliente>", project_name)
-        content = content.replace("<slug-do-cliente>", project_name.lower().replace(" ", "-"))
-        content = content.replace("Data de início (Fase 0): ______________________", f"Data de início (Fase 0): {datetime.now().strftime('%Y-%m-%d')}")
+        content = content.replace("<Client Name>", project_name)
+        content = content.replace("<client-slug>", project_name.lower().replace(" ", "-"))
+        content = content.replace("Start date (Phase 0): ______________________", f"Start date (Phase 0): {datetime.now().strftime('%Y-%m-%d')}")
         
         with open(state_file, "w", encoding="utf-8") as f:
             f.write(content)
 
-    print(f"Sucesso: Projeto '{project_name}' criado.")
+    print(f"Done: project '{project_name}' created.")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Inicializa um novo projeto FDE.")
-    parser.add_argument("command", choices=["init"], help="Comando a executar")
-    parser.add_argument("--name", required=True, help="Nome do projeto/cliente")
-    parser.add_argument("--domain", default="custom", help="Domínio do projeto")
+    parser = argparse.ArgumentParser(description="Initialise a new FDE project.")
+    parser.add_argument("command", choices=["init"], help="Command to run")
+    parser.add_argument("--name", required=True, help="Project or client name")
+    parser.add_argument("--domain", default="custom", help="Project domain")
     
     args = parser.parse_args()
     

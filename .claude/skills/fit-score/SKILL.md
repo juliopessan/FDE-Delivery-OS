@@ -1,32 +1,32 @@
 ---
 name: fit-score
-description: Calcula o Fit Score de qualificação (Fase 0) de um prospect de FDE — 5 critérios ponderados que decidem GO/GO parcial/NO-GO antes de comprometer semanas de trabalho solo. Use quando avaliar um novo cliente em potencial ou revisar uma qualificação já feita.
+description: Calculates the Phase 0 qualification Fit Score for an FDE prospect — 5 weighted criteria that decide GO / partial GO / NO-GO before committing weeks of solo work. Use it when assessing a potential new client or revisiting a qualification already made.
 ---
 
-# Skill: Fit Score de Qualificação
+# Skill: Qualification Fit Score
 
-## Quando usar
+## When to use it
 
-Sempre que um novo prospect de FDE precisar ser avaliado antes de uma proposta comercial, ou quando um engajamento em andamento precisar ser reavaliado por mudança de contexto (ex.: patrocinador saiu da empresa).
+Whenever a new FDE prospect needs assessing before a commercial proposal, or when an engagement in flight needs reassessing because its context changed (for example, the sponsor left the company).
 
-## Passo a passo
+## Steps
 
-1. Abra `templates/qualificacao-fit-score.md` (repositório de referência).
-2. Para cada um dos 5 critérios, atribua nota de 0 a 5 com base em evidência concreta (não impressão):
-   - **Dor mensurável** — existe custo/tempo hoje que dá para quantificar em R$ ou horas?
-   - **Patrocínio executivo** — há um decisor com orçamento e autoridade engajado?
-   - **Acesso a dados** — o cliente consegue liberar amostras reais em até 5 dias?
-   - **Maturidade de processo** — o processo já é entendido e documentável?
-   - **Tolerância a risco** — o cliente aceita um ciclo iterativo (PoC → produção)?
-3. Some o total (máximo 25).
-4. Aplique a regra de decisão:
-   - **≥ 15** → GO para Fase 1 completa.
-   - **10-14** → GO parcial (apenas diagnóstico isolado, sem compromisso de fases seguintes).
+1. Open `templates/fit-score-qualification.md` (reference repository).
+2. For each of the 5 criteria, score 0 to 5 based on concrete evidence, not impressions:
+   - **Measurable pain** — is there a cost or time today that can be quantified in money or hours?
+   - **Executive sponsorship** — is there an engaged decision-maker with budget and authority?
+   - **Data access** — can the client release real samples within 5 days?
+   - **Process maturity** — is the process already understood and documentable?
+   - **Risk tolerance** — will the client accept an iterative cycle (PoC → production)?
+3. Total the score (maximum 25).
+4. Apply the decision rule:
+   - **≥ 15** → GO for a full Phase 1.
+   - **10-14** → partial GO (standalone diagnostic only, no commitment to later phases).
    - **< 10** → NO-GO.
-5. Registre a decisão e a justificativa por escrito — nunca deixe implícita.
+5. Record the decision and its justification in writing — never leave it implied.
 
-## Erros comuns a evitar
+## Common mistakes to avoid
 
-- Pontuar "Patrocínio executivo" alto só porque a pessoa é simpática/responsiva — o critério é orçamento + autoridade, não relacionamento.
-- Inflar "Acesso a dados" antes de o cliente efetivamente confirmar por escrito o que pode compartilhar.
-- Pular a reavaliação quando o contexto muda no meio de um engajamento em andamento.
+- Scoring "Executive sponsorship" high just because the person is friendly and responsive — the criterion is budget plus authority, not rapport.
+- Inflating "Data access" before the client has confirmed in writing what they can share.
+- Skipping reassessment when context changes mid-engagement.

@@ -1,57 +1,57 @@
 ---
 name: roi-calculator
-description: Calcula o ROI estimado (Fase 1) ou realizado (Fase 4) de um engajamento de FDE, usando a fórmula padrão de custo mensal atual vs. custo mensal com IA. Use sempre que precisar produzir ou atualizar uma projeção/realização de ROI para um cliente.
+description: Calculates estimated (Phase 1) or realized (Phase 4) ROI for an FDE engagement, using the standard formula of current monthly cost vs. monthly cost with AI. Use it whenever an ROI projection or result needs producing or updating for a client.
 ---
 
-# Skill: Cálculo de ROI
+# Skill: ROI Calculation
 
-## Quando usar
+## When to use it
 
-- Na Fase 1, para estimar o ROI do PoC antes do Go/No-Go (`templates/calculo-roi.md`).
-- Na Fase 4, mensalmente, para comparar o ROI realizado contra o estimado (`fde-scale-ops`).
+- In Phase 1, to estimate PoC ROI before the Go/No-Go (`templates/roi-calculation.md`).
+- In Phase 4, monthly, to compare realized ROI against the estimate (`fde-scale-ops`).
 
-## Fórmula
+## Formula
 
 ```
-Custo mensal atual   = (tempo_atual_min / 60) × volume_mensal × custo_hora
-Custo mensal com IA  = [(tempo_ia_min / 60) × volume_mensal × custo_hora × %HITL]
-                      + (custo_token_execucao × volume_mensal)
-                      + custo_infraestrutura_mensal_fixo
+Current monthly cost = (current_time_min / 60) × monthly_volume × hourly_cost
+Monthly cost with AI = [(ai_time_min / 60) × monthly_volume × hourly_cost × %HITL]
+                       + (token_cost_per_run × monthly_volume)
+                       + fixed_monthly_infrastructure_cost
 
-Economia mensal      = Custo mensal atual − Custo mensal com IA
-ROI (payback meses)  = Investimento total do engajamento (Fases 1-3) / Economia mensal
+Monthly saving       = Current monthly cost − Monthly cost with AI
+ROI (payback months) = Total engagement investment (Phases 1-3) / Monthly saving
 ```
 
-## Passo a passo
+## Steps
 
-1. Colete os dados de entrada (tempo médio por execução, volume mensal, custo/hora, taxa de erro atual) — na Fase 1, vêm do shadowing; na Fase 4, vêm da telemetria real de produção.
-2. Estime (Fase 1) ou meça (Fase 4) o tempo com IA, % de execuções autônomas vs. com HITL, e custo de infraestrutura/tokens.
-3. Aplique a fórmula acima.
-4. **Sempre reporte em faixa (otimista/conservador)** na Fase 1 — nunca um número único. Na Fase 4, reporte o número real observado, mas contextualize contra a faixa original.
-5. Se o realizado (Fase 4) divergir do estimado (Fase 1), documente a causa da divergência — não omita.
+1. Collect the inputs (average time per run, monthly volume, hourly cost, current error rate) — in Phase 1 they come from shadowing; in Phase 4 from real production telemetry.
+2. Estimate (Phase 1) or measure (Phase 4) the time with AI, the share of autonomous vs. HITL runs, and infrastructure and token cost.
+3. Apply the formula above.
+4. **Always report a range (optimistic/conservative)** in Phase 1 — never a single number. In Phase 4, report the real observed figure, but set it against the original range.
+5. If the realized figure (Phase 4) diverges from the estimate (Phase 1), document the cause — do not omit it.
 
-## Erros comuns a evitar
+## Common mistakes to avoid
 
-- Esquecer o custo de infraestrutura fixo (VectorDB, observabilidade) no cálculo — isso infla artificialmente o ROI.
-- Assumir 100% de execuções autônomas sem considerar o % real de HITL definido pela matriz de autonomia (`fde-guardrails`).
-- Apresentar um número único de payback sem faixa de confiança na Fase 1.
+- Forgetting fixed infrastructure cost (VectorDB, observability) — it inflates ROI artificially.
+- Assuming 100% autonomous runs without accounting for the real HITL share set by the autonomy matrix (`fde-guardrails`).
+- Presenting a single payback number with no confidence range in Phase 1.
 
-## Fallback: Benchmarking de Mercado (quando ainda não há shadowing real)
+## Fallback: market benchmarking (when there is no real shadowing yet)
 
-Antes do shadowing acontecer — ou quando o fit score aponta pendência de acesso a dado real (`fde-qualifier`) — o ROI pode ser pré-preenchido com **benchmarks públicos de mercado** para dar ordem de grandeza à proposta, em vez de deixar o cálculo vazio ou, pior, inventar números específicos do cliente.
+Before shadowing happens — or when the fit score flags that access to real data is still pending (`fde-qualifier`) — ROI can be pre-filled with **public market benchmarks** to give the proposal an order of magnitude, rather than leaving the calculation empty or, worse, inventing client-specific numbers.
 
-### Como usar
+### How to use it
 
-1. Para cada variável de entrada da fórmula (tempo por execução, custo/hora, taxa de conversão/erro), busque um benchmark público equivalente por **função/processo** (ex.: "tempo médio de elaboração de proposta comercial", "custo/hora de analista de marketing CLT", "lift de conversão de chatbot de atendimento") — não por empresa específica.
-2. Prefira benchmarks segmentados por porte/setor mais próximo do cliente (ex.: empresas < 100 funcionários, agências de marketing) a médias globais genéricas.
-3. Quando o benchmark encontrado for de um processo mais pesado/diferente do real (ex.: RFP formal como proxy de proposta comercial de agência), aplique um fator de ajuste explícito e documente a lógica do ajuste — nunca use o número bruto sem justificar a analogia.
-4. Cite a fonte de cada benchmark (nome + link) no documento de ROI — um benchmark sem fonte rastreável não é diferente de um chute.
-5. Rotule todo o cálculo como **"Cenário ilustrativo baseado em benchmark de mercado — não é dado real do cliente"**, em destaque, no topo do documento.
-6. Apresente em **cenários** (baixo/médio/alto volume ou baixo/médio/alto impacto), não em um número único — o benchmark tem mais incerteza que um dado medido, então a faixa deve ser mais larga, não mais estreita.
-7. Quando o shadowing real acontecer, **substitua** os números de benchmark pelos números reais — o documento baseado em benchmark é um placeholder de proposta, não o ROI final que entra no Go/No-Go da Fase 1.
+1. For each input in the formula (time per run, hourly cost, conversion or error rate), find an equivalent public benchmark by **function or process** (for example "average time to produce a commercial proposal", "hourly cost of a salaried marketing analyst", "conversion lift from a customer-service chatbot") — never by named company.
+2. Prefer benchmarks segmented to the client's closest size and sector (for example, companies under 100 employees, marketing agencies) over generic global averages.
+3. When the benchmark found covers a heavier or different process than the real one (for example, a formal RFP as a proxy for an agency's commercial proposal), apply an explicit adjustment factor and document its logic — never use the raw number without justifying the analogy.
+4. Cite each benchmark's source (name plus link) in the ROI document — a benchmark without a traceable source is no different from a guess.
+5. Label the whole calculation prominently at the top: **"Illustrative scenario based on market benchmarks — not client data."**
+6. Present it as **scenarios** (low/medium/high volume, or low/medium/high impact), not as a single number — a benchmark carries more uncertainty than a measurement, so the range should be wider, not narrower.
+7. When real shadowing happens, **replace** the benchmark numbers with the real ones — a benchmark-based document is a proposal placeholder, not the final ROI that enters the Phase 1 Go/No-Go.
 
-### Erros específicos deste fallback
+### Mistakes specific to this fallback
 
-- Apresentar um cenário de benchmark como se fosse o ROI real já validado — isso quebra a confiança do cliente quando o número real divergir.
-- Usar a estatística mais otimista encontrada na pesquisa (ex.: "+391% de conversão") como cenário-base — prefira sempre o extremo mais conservador do intervalo relatado na literatura, guardando o número otimista apenas como referência de teto.
-- Não atualizar o documento quando o dado real chegar — o benchmark expira no momento em que o shadowing produz um número medido.
+- Presenting a benchmark scenario as though it were validated ROI — it breaks client trust the moment the real number diverges.
+- Using the most optimistic statistic found in research as the base case — always prefer the conservative end of the reported range, keeping the optimistic figure only as a ceiling reference.
+- Not updating the document when the real data arrives — the benchmark expires the moment shadowing produces a measured number.

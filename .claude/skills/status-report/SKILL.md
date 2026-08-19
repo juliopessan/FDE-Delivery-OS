@@ -1,32 +1,32 @@
 ---
 name: status-report
-description: Gera o relatório de status semanal (qualquer fase) ou o relatório mensal de ROI realizado (Fase 4) de um engajamento de FDE. Use ao final de cada semana de trabalho em um engajamento ativo, ou mensalmente durante a Fase 4.
+description: Produces the weekly status report (any phase) or the monthly realized-ROI report (Phase 4) for an FDE engagement. Use it at the end of each working week on an active engagement, or monthly during Phase 4.
 ---
 
-# Skill: Relatório de Status / ROI
+# Skill: Status / ROI Report
 
-## Quando usar
+## When to use it
 
-- Semanalmente, em qualquer fase de um engajamento ativo — mantém o cliente informado e cria histórico auditável.
-- Mensalmente, na Fase 4, especificamente para o relatório de ROI realizado (`fde-scale-ops`).
+- Weekly, in any phase of an active engagement — it keeps the client informed and builds an auditable history.
+- Monthly, in Phase 4, specifically for the realized-ROI report (`fde-scale-ops`).
 
-## Passo a passo — Status semanal
+## Steps — Weekly status
 
-1. Abra `templates/relatorio-status-semanal.md`.
-2. Preencha o resumo executivo em no máximo 3 linhas — o cliente deve entender o essencial sem ler o resto.
-3. Liste os itens planejados da semana com status (concluído/em andamento/bloqueado).
-4. Registre bloqueios e riscos de forma explícita, mesmo que pareçam pequenos — bloqueios não reportados cedo viram atraso de fase.
-5. A partir da Fase 4, inclua as métricas semanais (taxa de intervenção HITL, custo de tokens, taxa de erro, volume processado).
+1. Open `templates/weekly-status-report.md`.
+2. Write the executive summary in 3 lines at most — the client should get the essentials without reading the rest.
+3. List the week's planned items with status (done / in progress / blocked).
+4. Record blockers and risks explicitly, even small-looking ones — blockers not reported early become phase delays.
+5. From Phase 4 onwards, include the weekly metrics (HITL intervention rate, token cost, error rate, volume processed).
 
-## Passo a passo — Relatório mensal de ROI (Fase 4)
+## Steps — Monthly ROI report (Phase 4)
 
-1. Puxe o ROI estimado original de `harness/engagements/<cliente>/01-assessment/calculo-roi.md`.
-2. Puxe os dados reais de produção do mês (telemetria de observabilidade).
-3. Compare realizado vs. estimado — se houver divergência, explique a causa (adoção, qualidade de dado, escopo reduzido).
-4. Destaque tendências (ex.: queda na taxa de intervenção HITL mês a mês) como sinal de maturidade.
-5. Encerre com uma recomendação clara: manter, expandir ou ajustar o escopo do retainer.
+1. Pull the original estimated ROI from `harness/engagements/<client>/01-assessment/roi-calculation.md`.
+2. Pull the month's real production data (observability telemetry).
+3. Compare realized against estimated — where they diverge, explain the cause (adoption, data quality, reduced scope).
+4. Highlight trends (for example, a falling HITL intervention rate month over month) as a maturity signal.
+5. Close with a clear recommendation: keep, expand or adjust the retainer scope.
 
-## Erros comuns a evitar
+## Common mistakes to avoid
 
-- Reportar apenas boas notícias — divergência de ROI omitida é a principal causa de churn quando descoberta depois.
-- Pular o relatório em semanas "sem novidade" — a ausência de relatório gera mais dúvida no cliente do que um relatório curto dizendo "sem bloqueios".
+- Reporting only good news — an omitted ROI gap is the leading cause of churn once it surfaces.
+- Skipping the report in quiet weeks — no report raises more doubt with a client than a short one saying there are no blockers.

@@ -1,47 +1,47 @@
 ---
 name: effort-estimation
-description: Metodologia de estimativa de esforço em horas por fase da metodologia A.C.E.S., usando WBS (work breakdown structure) + estimativa de três pontos (PERT). Use ao fechar prazo/preço de uma fase, ou ao revalidar esforço depois de qualquer mudança de escopo.
+description: Methodology for estimating effort in hours per phase of the A.C.E.S. methodology, using a WBS (work breakdown structure) plus three-point (PERT) estimation. Use it when committing to a phase timeline or price, or when revalidating effort after any scope change.
 ---
 
-# Skill: Estimativa de Esforço (WBS + PERT)
+# Skill: Effort Estimation (WBS + PERT)
 
-## Quando usar
+## When to use it
 
-- No fechamento de proposta de cada fase (Fase 0 para a Fase 1; ao final de cada Go/No-Go para a fase seguinte).
-- A cada revalidação de escopo durante as Fases 2-4 (nova ferramenta, novo caso de uso, mudança de porte/regulação do cliente).
-- Usada por `fde-capacity-planner`, mas qualquer agente pode invocá-la ao perceber que o escopo mudou.
+- When closing the proposal for each phase (Phase 0 for Phase 1; at each Go/No-Go for the next phase).
+- At every scope revalidation during Phases 2-4 (new tool, new use case, change in client size or regulatory posture).
+- Used by `fde-capacity-planner`, but any agent can invoke it on noticing that scope has changed.
 
-## Passo a passo
+## Steps
 
-1. **Decompor em WBS:** liste as tarefas da fase de forma granular. Regra prática: nenhuma tarefa deve ter estimativa maior que ~2 dias de esforço — se tiver, decomponha mais.
-2. **Estimar três pontos por tarefa** (em horas):
-   - **Otimista (O):** tudo corre bem, sem imprevistos.
-   - **Mais Provável (M):** cenário realista, com pequenos ajustes normais.
-   - **Pessimista (P):** imprevistos razoáveis (acesso atrasado, dado de baixa qualidade, retrabalho).
-3. **Aplicar a fórmula PERT:**
+1. **Break down into a WBS:** list the phase's tasks granularly. Rule of thumb: no task should estimate above roughly 2 days of effort — if it does, decompose further.
+2. **Estimate three points per task** (in hours):
+   - **Optimistic (O):** everything goes well, no surprises.
+   - **Most Likely (M):** realistic scenario, with the usual small adjustments.
+   - **Pessimistic (P):** reasonable surprises (delayed access, poor data quality, rework).
+3. **Apply the PERT formula:**
    ```
-   Estimativa (E)     = (O + 4×M + P) / 6
-   Desvio padrão (DP) = (P − O) / 6
+   Estimate (E)          = (O + 4×M + P) / 6
+   Standard deviation (SD) = (P − O) / 6
    ```
-4. **Somar por papel** (FDE generalista, dev de integração, data engineer, segurança/compliance) e por fase.
-5. **Aplicar buffer de 15-20%** sobre o total da fase.
-6. **Comparar contra a capacidade disponível** (ver agente `fde-capacity-planner`) para decidir se o solo sustenta ou se precisa de reforço/extensão de prazo.
+4. **Total by role** (generalist FDE, integration developer, data engineer, security/compliance) and by phase.
+5. **Apply a 15-20% buffer** on the phase total.
+6. **Compare against available capacity** (see the `fde-capacity-planner` agent) to decide whether solo delivery holds or whether reinforcement or a timeline extension is needed.
 
-## Referência de ancoragem (durações do `PLAYBOOK.md`)
+## Anchoring reference (durations from `PLAYBOOK.md`)
 
-| Fase | Duração de referência |
+| Phase | Reference duration |
 | --- | --- |
-| 0 — Qualificação | 3-5 dias úteis |
-| 1 — Assessment | 2-3 semanas |
-| 2 — Context | 2-3 semanas |
-| 3 — Engineering | 3-4 semanas |
-| 4 — Scale | Contínuo, 10-15h/semana |
+| 0 — Qualification | 3-5 business days |
+| 1 — Assessment | 2-3 weeks |
+| 2 — Context | 2-3 weeks |
+| 3 — Engineering | 3-4 weeks |
+| 4 — Scale | Continuous, 10-15h/week |
 
-Use essas durações como âncora para checar se a soma das estimativas PERT está plausível — se a WBS somar muito acima ou abaixo da referência, revise a decomposição antes de aceitar o número.
+Use these durations as an anchor to sanity-check the PERT total — if the WBS sums far above or below the reference, revisit the decomposition before accepting the number.
 
-## Erros comuns a evitar
+## Common mistakes to avoid
 
-- Estimar "de cabeça" sem decompor em WBS — perde granularidade e some com o desvio padrão de tarefas específicas.
-- Ignorar o desvio padrão — duas tarefas com a mesma média mas desvio muito diferente carregam riscos de estouro muito diferentes; a de maior desvio merece buffer adicional ou marco de checagem intermediário.
-- Não recalcular quando o escopo muda no meio da fase — a estimativa original vira ficção.
-- Zerar o buffer para "ganhar" a proposta comercial — transfere o risco de estouro para o meio do engajamento, quando é mais caro de corrigir.
+- Estimating off the top of your head without a WBS — it loses granularity and hides the standard deviation of specific tasks.
+- Ignoring the standard deviation — two tasks with the same mean but very different deviations carry very different overrun risk; the wider one deserves an extra buffer or an intermediate checkpoint.
+- Not recalculating when scope changes mid-phase — the original estimate becomes fiction.
+- Zeroing the buffer to win the commercial proposal — it moves overrun risk into the middle of the engagement, where it costs more to fix.

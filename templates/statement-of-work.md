@@ -1,39 +1,39 @@
 # Template — Statement of Work (SOW)
 
-**Cliente:** ______________________
-**Fase contratada:** [ ] 1 - Assessment [ ] 2 - Context [ ] 3 - Engineering [ ] 4 - Scale (Retainer)
-**Período:** ______ a ______
-**Valor:** R$ ______ ([ ] fixed-fee [ ] retainer mensal)
+**Client:** ______________________
+**Phase contracted:** [ ] 1 - Assessment [ ] 2 - Context [ ] 3 - Engineering [ ] 4 - Scale (Retainer)
+**Period:** ______ to ______
+**Value:** ______ ([ ] fixed fee [ ] monthly retainer)
 
-## Escopo Incluído
-
--
-
-## Fora de Escopo (explícito)
+## Scope Included
 
 -
 
-## Entregáveis
+## Out of Scope (explicit)
 
-| Entregável | Data prevista | Critério de aceite |
+-
+
+## Deliverables
+
+| Deliverable | Due date | Acceptance criterion |
 | --- | --- | --- |
 | | | |
 
-## Dependências do Cliente
+## Client Dependencies
 
-- Acesso a dados/sistemas necessário até: ______
-- Disponibilidade de patrocinador executivo: ______
-- Disponibilidade de time operacional para shadowing/validação: ______
+- Access to data and systems required by: ______
+- Executive sponsor availability: ______
+- Operational team availability for shadowing and validation: ______
 
-## Cláusulas Padrão
+## Standard Clauses
 
-1. **Mudança de escopo:** qualquer item fora da lista "Escopo Incluído" será tratado como novo engajamento, reiniciando pela Fase 0/1.
-2. **Confidencialidade:** regida por NDA assinado em anexo.
-3. **Propriedade intelectual:** código e artefatos desenvolvidos especificamente para o cliente são de propriedade do cliente; frameworks e templates reutilizáveis do FDE permanecem de propriedade do FDE.
-4. **Condição de pagamento:** ______
-5. **Critério de Go/No-Go:** avanço para a próxima fase depende de aprovação formal do checklist correspondente (ver `checklists/`).
+1. **Scope change:** any item outside the "Scope Included" list is treated as a new engagement, restarting at Phase 0/1.
+2. **Confidentiality:** governed by the NDA attached.
+3. **Intellectual property:** code and artifacts developed specifically for the client belong to the client; the FDE's reusable frameworks and templates remain the FDE's property.
+4. **Payment terms:** ______
+5. **Go/No-Go criterion:** advancing to the next phase depends on formal approval of the corresponding checklist (see `checklists/`).
 
-## Assinaturas
+## Signatures
 
-- FDE: ______________________ Data: ______
-- Cliente (patrocinador): ______________________ Data: ______
+- FDE: ______________________ Date: ______
+- Client (sponsor): ______________________ Date: ______

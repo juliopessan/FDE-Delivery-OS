@@ -1,88 +1,88 @@
-# Harness Operacional do Time de Agentes FDE
+# Operational Harness for the FDE Agent Team
 
-Este diretório é a camada de **execução** da metodologia A.C.E.S. — como o FDE solo efetivamente roda o time de agentes no dia a dia, dentro do Claude Code.
+This directory is the **execution** layer of the A.C.E.S. methodology — how a solo FDE actually runs the agent team day to day, inside Claude Code.
 
-Para a metodologia em si, ver [`../PLAYBOOK.md`](../PLAYBOOK.md). Para os agentes, ver [`../.claude/agents/`](../.claude/agents) e [`../specs/agent-roster.md`](../specs/agent-roster.md).
+For the methodology itself, see [`../PLAYBOOK.md`](../PLAYBOOK.md). For the agents, see [`../.claude/agents/`](../.claude/agents) and [`../specs/agent-roster.md`](../specs/agent-roster.md).
 
-## Como os agentes ficam disponíveis
+## How the agents become available
 
-Os arquivos em `.claude/agents/*.md` e `.claude/skills/*/SKILL.md` seguem o formato nativo de subagentes e skills do Claude Code. Duas formas de uso:
+The files in `.claude/agents/*.md` and `.claude/skills/*/SKILL.md` follow Claude Code's native subagent and skill formats. Two ways to use them:
 
-1. **Direto neste repositório:** abra o Claude Code na raiz deste repo — os agentes ficam disponíveis automaticamente.
-2. **Em um repositório de cliente:** copie a pasta `.claude/agents/` e `.claude/skills/` para o repositório do projeto do cliente (ou referencie este repo como submódulo/pacote interno), mantendo os caminhos relativos para `PLAYBOOK.md`, `templates/`, `checklists/` e `docs/` deste repositório de metodologia.
+1. **Directly in this repository:** open Claude Code at the repo root — the agents are available automatically.
+2. **In a client repository:** copy the `.claude/agents/` and `.claude/skills/` folders into the client project's repository (or reference this repo as a submodule or internal package), keeping the relative paths to `PLAYBOOK.md`, `templates/`, `checklists/` and `docs/` in this methodology repository.
 
-## Convenção de Pastas por Engajamento
+## Per-Engagement Folder Convention
 
-Cada cliente ativo tem sua própria pasta em `harness/engagements/<slug-do-cliente>/`, criada a partir do esqueleto em [`engagement-template/`](engagement-template). **Esta pasta não vai para o controle de versão do framework** (ver `.gitignore`) — cada engajamento é confidencial e deve viver em um repositório próprio ou área privada do FDE.
+Each active client has its own folder at `harness/engagements/<client-slug>/`, created from the skeleton in [`engagement-template/`](engagement-template). **This folder does not go into the framework's version control** (see `.gitignore`) — each engagement is confidential and must live in its own repository or in the FDE's private area.
 
 ```
-harness/engagements/<cliente>/
-├── state.md                  # fase atual, decisões de Go/No-Go, próximos passos
-├── 00-qualificacao/
+harness/engagements/<client>/
+├── state.md                  # current phase, Go/No-Go decisions, next steps
+├── 00-qualification/
 │   ├── fit-score.md
-│   ├── one-pager-proposta.md
-│   ├── estimativa-esforco.md     # fde-capacity-planner (WBS+PERT da Fase 1, antes de fechar a proposta)
-│   └── plano-capacidade.md       # fde-capacity-planner
+│   ├── proposal-one-pager.md
+│   ├── effort-estimate.md     # fde-capacity-planner (Phase 1 WBS+PERT, before agreeing the proposal)
+│   └── capacity-plan.md       # fde-capacity-planner
 ├── 01-assessment/
 │   ├── blueprint.md
-│   ├── calculo-roi.md
-│   ├── estimativa-esforco.md     # fde-capacity-planner (WBS+PERT da Fase 2, ao fechar o Go)
-│   ├── plano-capacidade.md       # fde-capacity-planner
+│   ├── roi-calculation.md
+│   ├── effort-estimate.md     # fde-capacity-planner (Phase 2 WBS+PERT, at the Go)
+│   ├── capacity-plan.md       # fde-capacity-planner
 │   └── handoff.md
 ├── 02-context/
 │   ├── pipeline-design.md
 │   ├── golden-set.md
-│   ├── conectores.md
-│   ├── estimativa-esforco.md     # fde-capacity-planner (WBS+PERT da Fase 3)
-│   ├── plano-capacidade.md       # fde-capacity-planner
+│   ├── connectors.md
+│   ├── effort-estimate.md     # fde-capacity-planner (Phase 3 WBS+PERT)
+│   ├── capacity-plan.md       # fde-capacity-planner
 │   └── handoff.md
 ├── 03-engineering/
-│   ├── arquitetura.md            # fde-architect
-│   ├── matriz-autonomia.md       # fde-guardrails
-│   ├── guardrails.md             # fde-guardrails
-│   ├── revisao-lgpd.md           # fde-guardrails
-│   ├── qa-report.md              # fde-qa
+│   ├── architecture.md            # fde-architect
+│   ├── autonomy-matrix.md         # fde-guardrails
+│   ├── guardrails.md              # fde-guardrails
+│   ├── data-protection-review.md  # fde-guardrails
+│   ├── qa-report.md               # fde-qa
 │   └── handoff.md
 └── 04-scale/
-    ├── relatorios-semanais/
-    ├── relatorios-mensais-roi/
-    ├── estimativa-esforco.md     # fde-capacity-planner — reexecutada a cada mudança de escopo/retainer
-    ├── plano-capacidade.md       # fde-capacity-planner
-    └── runbook-incidentes.md
+    ├── weekly-reports/
+    ├── monthly-roi-reports/
+    ├── effort-estimate.md     # fde-capacity-planner — re-run at every scope or retainer change
+    ├── capacity-plan.md       # fde-capacity-planner
+    └── incident-runbook.md
 ```
 
-`estimativa-esforco.md` e `plano-capacidade.md` (templates em `templates/`) são reexecutados **sempre que o escopo mudar**, não apenas uma vez por fase — a versão mais recente é a que vale para a proposta/preço vigente.
+`effort-estimate.md` and `capacity-plan.md` (templates in `templates/`) are re-run **whenever scope changes**, not once per phase — the most recent version is the one that governs the current proposal and price.
 
-## Cheatsheet de Comandos
+## Command Cheatsheet
 
-| Situação | O que fazer |
+| Situation | What to do |
 | --- | --- |
-| Começar um cliente novo | Peça ao `fde-master` para iniciar um engajamento; ele copia `engagement-template/` para `engagements/<cliente>/` |
-| Retomar um cliente em sessão nova | Peça ao `fde-master` para retomar `<cliente>`; ele lê `state.md` e delega ao agente da fase atual |
-| Pular direto a um especialista | Chame o agente diretamente (ex.: `fde-context-engineer`) quando já souber exatamente o que precisa — útil para retrabalho pontual dentro de uma fase já iniciada |
-| Validar antes de avançar fase | Peça ao `fde-qa` para rodar o checklist Go/No-Go da fase corrente |
-| Fechar o mês de um retainer ativo | Peça ao `fde-scale-ops` para gerar o relatório mensal de ROI |
-| Fechar prazo/preço de uma fase (nova ou repactuação) | Peça ao `fde-capacity-planner` para rodar a estimativa (WBS+PERT) e o plano de capacidade **antes** de comprometer prazo/preço |
-| Escopo mudou no meio de uma fase | Peça ao `fde-capacity-planner` para reexecutar a estimativa — nunca reaproveite a antiga |
+| Start a new client | Ask `fde-master` to start an engagement; it copies `engagement-template/` to `engagements/<client>/` |
+| Resume a client in a new session | Ask `fde-master` to resume `<client>`; it reads `state.md` and delegates to the current phase's agent |
+| Jump straight to a specialist | Call the agent directly (for example `fde-context-engineer`) when you already know exactly what you need — useful for targeted rework inside a phase already underway |
+| Validate before advancing a phase | Ask `fde-qa` to run the current phase's Go/No-Go checklist |
+| Close the month on an active retainer | Ask `fde-scale-ops` to produce the monthly ROI report |
+| Agree a phase timeline or price (new or renegotiated) | Ask `fde-capacity-planner` to run the estimate (WBS+PERT) and the capacity plan **before** committing to a timeline or price |
+| Scope changed mid-phase | Ask `fde-capacity-planner` to re-run the estimate — never reuse the old one |
 
-## Matriz de Ferramentas / MCP por Agente
+## Tool / MCP Matrix per Agent
 
-| Agente | Ferramentas nativas | MCP externo útil (opcional) |
+| Agent | Native tools | Useful external MCP (optional) |
 | --- | --- | --- |
 | `fde-master` | Read, Write, Edit, Bash, Grep, Glob, Agent | — |
-| `fde-qualifier` | Read, Write, Edit, WebSearch, WebFetch | CRM do FDE (se houver), LinkedIn/dados públicos da empresa |
-| `fde-capacity-planner` | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Planilha/ferramenta de gestão de projeto (se o FDE já usar uma), benchmark de taxas de mercado |
-| `fde-assessor` | Read, Write, Edit, Bash, WebSearch | Gravador de reunião/transcrição (para consolidar shadowing), planilha de dados do cliente |
-| `fde-context-engineer` | Read, Write, Edit, Bash, Grep, Glob | Conector do VectorDB escolhido, MCP dos sistemas legados do cliente (CRM/ERP) |
-| `fde-architect` | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Documentação do provedor de LLM/orquestração escolhido |
-| `fde-guardrails` | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Ferramenta de guardrails estruturados (ex.: validação de schema), referência de LGPD |
-| `fde-qa` | Read, Write, Edit, Bash, Grep, Glob | Ferramenta de teste de carga, se necessário além do básico |
-| `fde-scale-ops` | Read, Write, Edit, Bash, WebSearch | Plataforma de observabilidade/tracing (Langfuse ou equivalente), dashboard de custo de tokens |
+| `fde-qualifier` | Read, Write, Edit, WebSearch, WebFetch | The FDE's CRM (if any), public company data |
+| `fde-capacity-planner` | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Spreadsheet or project management tool (if the FDE already uses one), market rate benchmarks |
+| `fde-assessor` | Read, Write, Edit, Bash, WebSearch | Meeting recorder or transcription (to consolidate shadowing), client data spreadsheet |
+| `fde-context-engineer` | Read, Write, Edit, Bash, Grep, Glob | Connector for the chosen VectorDB, MCP for the client's legacy systems (CRM/ERP) |
+| `fde-architect` | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Documentation for the chosen LLM and orchestration provider |
+| `fde-guardrails` | Read, Write, Edit, Bash, Grep, Glob, WebSearch | Structured guardrail tooling (for example schema validation), data-protection reference |
+| `fde-qa` | Read, Write, Edit, Bash, Grep, Glob | Load-testing tool, if more than the basics is needed |
+| `fde-scale-ops` | Read, Write, Edit, Bash, WebSearch | Observability and tracing platform (Langfuse or equivalent), token cost dashboard |
 
-Nenhum MCP externo é obrigatório para o framework funcionar — os agentes operam com as ferramentas nativas do Claude Code. MCPs listados são aceleradores por fase, a incluir conforme a stack real do cliente (ver `docs/stack-referencia.md`).
+No external MCP is required for the framework to work — the agents operate with Claude Code's native tools. The MCPs listed are per-phase accelerators, to be added according to the client's real stack (see `docs/reference-stack.md`).
 
-## Regras do Harness
+## Harness Rules
 
-1. **Estado em arquivo, não em memória de conversa.** Qualquer sessão nova deve conseguir retomar um engajamento lendo `state.md` — nunca dependa de contexto de uma conversa anterior.
-2. **Um `state.md` por cliente.** Nunca misture o estado de dois engajamentos no mesmo arquivo.
-3. **Confidencialidade por padrão.** Dados reais de cliente nunca são commitados neste repositório de metodologia — vivem em `harness/engagements/` (gitignored) ou em repositório próprio do engajamento.
+1. **State in files, not in conversation memory.** Any new session must be able to resume an engagement by reading `state.md` — never depend on the context of a previous conversation.
+2. **One `state.md` per client.** Never mix the state of two engagements in the same file.
+3. **Confidential by default.** Real client data is never committed to this methodology repository — it lives in `harness/engagements/` (gitignored) or in the engagement's own repository.

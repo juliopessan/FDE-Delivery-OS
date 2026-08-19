@@ -1,27 +1,27 @@
-# Task Spec — Go-Live Review (Fim da Fase 3)
+# Task Spec — Go-Live Review (End of Phase 3)
 
-Executado conjuntamente por `fde-architect`, `fde-guardrails` e `fde-qa`, coordenado por `fde-master`. É o gate mais crítico do framework — a virada para produção.
+Executed jointly by `fde-architect`, `fde-guardrails` and `fde-qa`, coordinated by `fde-master`. It is the framework's most critical gate — the move to production.
 
-## Pré-condições
+## Preconditions
 
-- `fde-architect` entregou `arquitetura.md` com a topologia e roteamento de modelos definidos.
-- `fde-guardrails` entregou `matriz-autonomia.md`, `guardrails.md` e `revisao-lgpd.md`, com aprovação por escrito do patrocinador executivo do cliente.
+- `fde-architect` has delivered `architecture.md` with the topology and model routing defined.
+- `fde-guardrails` has delivered `autonomy-matrix.md`, `guardrails.md` and `data-protection-review.md`, with written approval from the client's executive sponsor.
 
-## Passos
+## Steps
 
-1. `fde-qa` roda o checklist `checklists/go-live-fase3.md` completo:
-   - Seção Guardrails/Matriz de Autonomia/Segurança/Compliance → evidência vem dos artefatos de `fde-guardrails`.
-   - Seção Testes/Observabilidade → `fde-qa` executa diretamente (golden set, carga, red-team, dashboards).
-2. Para cada item marcado como concluído, deve existir artefato de evidência associado — nenhuma marcação "de confiança".
-3. Se qualquer item de segurança/compliance estiver pendente, `fde-guardrails` tem **veto**: o go-live não é aprovado, independentemente do estado dos demais itens.
-4. Se todos os itens estiverem concluídos com evidência, `fde-qa` registra "GO-LIVE aprovado" com data e lista os responsáveis que assinam (FDE + patrocinador do cliente).
-5. `fde-master` atualiza `state.md` do engajamento para Fase 4 e delega a `fde-scale-ops`.
+1. `fde-qa` runs the full `checklists/go-live-phase3.md` checklist:
+   - Guardrails / Autonomy Matrix / Security / Compliance sections → evidence comes from `fde-guardrails`' artifacts.
+   - Testing / Observability sections → `fde-qa` executes them directly (golden set, load, red-team, dashboards).
+2. Every item marked complete must have an evidence artifact attached — nothing is ticked on trust.
+3. If any security or compliance item is outstanding, `fde-guardrails` holds a **veto**: go-live is not approved, whatever the state of the other items.
+4. If every item is complete with evidence, `fde-qa` records "GO-LIVE approved" with the date and lists the signatories (FDE plus the client's sponsor).
+5. `fde-master` moves the engagement's `state.md` to Phase 4 and delegates to `fde-scale-ops`.
 
-## Pós-condições
+## Postconditions
 
-- Sistema em produção com trilha de auditoria ativa desde o primeiro dia.
-- Runbook de incidentes já existente (mesmo que inicial) antes do primeiro uso real.
+- System in production with the audit trail live from day one.
+- An incident runbook already in place, however preliminary, before the first real use.
 
-## Regra inegociável
+## Non-negotiable rule
 
-Nenhuma pressão de prazo comercial justifica pular item de segurança/compliance deste checklist. Se o cliente pressionar, a resposta padrão é comprimir escopo (reduzir o que vai para produção), nunca comprimir o rigor do checklist.
+No commercial schedule pressure justifies skipping a security or compliance item on this checklist. If the client pushes, the standard answer is to compress scope (reduce what goes to production), never to compress the checklist's rigour.

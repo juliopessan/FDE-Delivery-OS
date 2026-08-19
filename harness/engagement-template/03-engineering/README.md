@@ -1,12 +1,12 @@
 # 03 — Engineering
 
-Preenchido por `fde-architect` (arquitetura) e `fde-guardrails` (segurança), validado por `fde-qa`. Artefatos esperados:
+Filled in by `fde-architect` (architecture) and `fde-guardrails` (security), validated by `fde-qa`. Expected artifacts:
 
-- `arquitetura.md` — `fde-architect`
-- `matriz-autonomia.md` — `fde-guardrails` (ver skill `guardrail-matrix`)
+- `architecture.md` — `fde-architect`
+- `autonomy-matrix.md` — `fde-guardrails` (see the `guardrail-matrix` skill)
 - `guardrails.md` — `fde-guardrails`
-- `revisao-lgpd.md` — `fde-guardrails`
+- `data-protection-review.md` — `fde-guardrails`
 - `qa-report.md` — `fde-qa`
 - `handoff.md`
 
-Checklist de saída (go-live): `checklists/go-live-fase3.md` — ver protocolo em `specs/task-specs/go-live-review.md`
+Exit checklist (go-live): `checklists/go-live-phase3.md` — see the protocol in `specs/task-specs/go-live-review.md`

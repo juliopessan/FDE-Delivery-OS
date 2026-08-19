@@ -179,7 +179,7 @@ that today, but there's no mid-pipeline resume — if a call in a much larger
 future roster timed out, you'd rerun the whole engagement. There's also no
 auth or multi-tenant isolation yet — one shared database, which matches the
 "solo FDE" scope this implements first, not the multi-FDE platform sketched
-in [`../docs/arquitetura-sistema/15-roadmap.md`](../docs/arquitetura-sistema/15-roadmap.md).
+in [`../docs/system-architecture/15-roadmap.md`](../docs/system-architecture/15-roadmap.md).
 
 ## Stack
 

@@ -1,11 +1,11 @@
 # 02 — Context
 
-Preenchido por `fde-context-engineer` e `fde-capacity-planner`. Artefatos esperados:
+Filled in by `fde-context-engineer` and `fde-capacity-planner`. Expected artifacts:
 
-- `pipeline-design.md` — desenho de ingestão, chunking/embedding, VectorDB
-- `golden-set.md` — ver skill `golden-set-builder`
-- `conectores.md` — mapeamento MCP/API, todos read-only nesta fase
-- `estimativa-esforco.md` / `plano-capacidade.md` — `fde-capacity-planner`, WBS+PERT da Fase 3, obrigatório antes de fechar o preço da fase seguinte
+- `pipeline-design.md` — ingestion, chunking/embedding and VectorDB design
+- `golden-set.md` — see the `golden-set-builder` skill
+- `connectors.md` — MCP/API mapping, all read-only in this phase
+- `effort-estimate.md` / `capacity-plan.md` — `fde-capacity-planner`, WBS+PERT for Phase 3, mandatory before agreeing the next phase's price
 - `handoff.md`
 
-Checklist de saída: `checklists/go-nogo-fase2.md`
+Exit checklist: `checklists/go-nogo-phase2.md`

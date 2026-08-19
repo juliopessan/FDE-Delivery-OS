@@ -1,32 +1,32 @@
 ---
 name: golden-set-builder
-description: Constrói e valida o golden set de perguntas de referência usado para medir recall/qualidade do pipeline RAG (Fase 2) e para testes de regressão antes de produção (Fase 3). Use ao configurar um novo pipeline de contexto ou antes de aprovar qualquer mudança de prompt/modelo.
+description: Builds and validates the golden set of reference questions used to measure recall and quality of the RAG pipeline (Phase 2) and to run regression tests before production (Phase 3). Use it when configuring a new context pipeline or before approving any prompt or model change.
 ---
 
-# Skill: Construção e Validação do Golden Set
+# Skill: Building and Validating the Golden Set
 
-## Quando usar
+## When to use it
 
-- Na Fase 2, ao configurar o pipeline de ingestão/RAG (`fde-context-engineer`).
-- Na Fase 3, antes de qualquer go-live ou mudança de prompt/modelo (`fde-qa`, teste de regressão).
+- In Phase 2, when configuring the ingestion/RAG pipeline (`fde-context-engineer`).
+- In Phase 3, before any go-live or prompt/model change (`fde-qa`, regression testing).
 
-## Passo a passo — Construção
+## Steps — Building
 
-1. Reúna 20-30 perguntas reais que o sistema precisa responder corretamente (para setores de alto risco — jurídico, saúde, financeiro — use 50+).
-2. Para cada pergunta, registre: pergunta, resposta esperada, fonte/documento de onde a resposta deve vir.
-3. Priorize perguntas que cobrem: casos comuns (alto volume), casos de borda (edge cases), e perguntas que o sistema **deveria recusar responder** (fora de escopo, dado não disponível) — isso testa se o sistema evita alucinação por omissão de grounding.
-4. Salve em `harness/engagements/<cliente>/02-context/golden-set.md`.
+1. Gather 20-30 real questions the system must answer correctly (for high-risk sectors — legal, healthcare, financial — use 50+).
+2. For each question record: the question, the expected answer, and the source document the answer should come from.
+3. Favour questions that cover: common cases (high volume), edge cases, and questions the system **should refuse to answer** (out of scope, data unavailable) — this tests whether the system avoids hallucinating when grounding is missing.
+4. Save it to `harness/engagements/<client>/02-context/golden-set.md`.
 
-## Passo a passo — Validação
+## Steps — Validating
 
-1. Rode cada pergunta contra o sistema (ou contra o design documentado, se ainda não implementado).
-2. Registre: resposta obtida, correta/incorreta, fonte citada corretamente ou não.
-3. Calcule o recall = (respostas corretas com fonte correta) / (total de perguntas).
-4. Compare contra o limiar definido (padrão 85%; setores de alto risco ≥ 95%).
-5. Se abaixo do limiar, não aprove o Go/No-Go — devolva ao `fde-context-engineer` para ajuste de chunking/embedding/fonte.
+1. Run each question against the system (or against the documented design, if it is not implemented yet).
+2. Record: the answer received, correct or incorrect, and whether the source was cited correctly.
+3. Calculate recall = (correct answers with the correct source) / (total questions).
+4. Compare it against the defined threshold (default 85%; high-risk sectors ≥ 95%).
+5. If it falls below the threshold, do not approve the Go/No-Go — return it to `fde-context-engineer` to adjust chunking, embedding or source quality.
 
-## Erros comuns a evitar
+## Common mistakes to avoid
 
-- Golden set feito só de perguntas "fáceis" — não revela problemas reais de retrieval.
-- Não incluir perguntas que o sistema deveria recusar — deixa alucinação por omissão sem cobertura de teste.
-- Rodar a validação uma única vez e nunca mais repetir após mudanças de prompt/modelo (teste de regressão obrigatório).
+- A golden set made only of easy questions — it hides real retrieval problems.
+- Leaving out questions the system should refuse — hallucination-by-omission goes untested.
+- Running validation once and never again after prompt or model changes (regression testing is mandatory).
