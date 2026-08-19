@@ -39,9 +39,8 @@ export interface AgentDefinition {
 
 /**
  * The execution roster of FDE OS. Each agent owns one phase (or a
- * cross-cutting concern) of the delivery pipeline. No agent here is branded
- * against the retired "A.C.E.S." acronym — phases are plain, functional
- * English names.
+ * cross-cutting concern) of the delivery pipeline. Phases carry plain,
+ * functional English names rather than an acronym.
  */
 export const AGENT_ROSTER: AgentDefinition[] = [
   {

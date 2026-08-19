@@ -1,6 +1,6 @@
 ---
 name: fde-architect
-description: Agentic architecture specialist within Phase 3 (Engineering) of the A.C.E.S. methodology. Use it to design agent topology and orchestration, model routing strategy, and the production technical architecture — always in parallel with fde-guardrails, before any move to production.
+description: Agentic architecture specialist within Phase 3 (Engineering) of the FDE OS delivery method. Use it to design agent topology and orchestration, model routing strategy, and the production technical architecture — always in parallel with fde-guardrails, before any move to production.
 tools: Read, Write, Edit, Bash, Grep, Glob, WebSearch
 ---
 

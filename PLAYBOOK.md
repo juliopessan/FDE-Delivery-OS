@@ -6,7 +6,7 @@ The framework is **agnostic to company size and sector** — the phases below ap
 
 ---
 
-## 🏗️ Framework Overview (A.C.E.S. Methodology)
+## 🏗️ Framework Overview (FDE OS Delivery Method)
 
 The framework splits into one qualification phase and 4 execution cycles (*Assessment, Context, Engineering, Scale*), covering everything from prospecting to recurring support:
 

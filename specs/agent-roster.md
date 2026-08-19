@@ -1,6 +1,6 @@
 # Spec — FDE Agent Team Roster
 
-Overview of every agent that operates the A.C.E.S. methodology. Executable definitions live in [`.claude/agents/`](../.claude/agents).
+Overview of every agent that operates the FDE OS delivery method. Executable definitions live in [`.claude/agents/`](../.claude/agents).
 
 | Agent | Phase | Mission | Tools | Enters when | Hands off to |
 | --- | --- | --- | --- | --- | --- |

@@ -1,6 +1,6 @@
 # Operational Harness for the FDE Agent Team
 
-This directory is the **execution** layer of the A.C.E.S. methodology — how a solo FDE actually runs the agent team day to day, inside Claude Code.
+This directory is the **execution** layer of the FDE OS delivery method — how a solo FDE actually runs the agent team day to day, inside Claude Code.
 
 For the methodology itself, see [`../PLAYBOOK.md`](../PLAYBOOK.md). For the agents, see [`../.claude/agents/`](../.claude/agents) and [`../specs/agent-roster.md`](../specs/agent-roster.md).
 

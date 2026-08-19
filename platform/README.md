@@ -101,8 +101,8 @@ Every agent is a system prompt in `src/lib/agents/prompts/`, listed in
 `src/lib/agents/roster.ts` alongside its phase. The roster mirrors the phase
 structure already defined in
 [`../specs/agent-roster.md`](../specs/agent-roster.md) — Qualification,
-Assessment, Context Engineering, Engineering, Scale — but the "A.C.E.S."
-acronym is retired here; phases are just their plain English names. The
+Assessment, Context Engineering, Engineering, Scale. Phases carry their
+plain English names, with no acronym in front of them. The
 report renderer converts each agent's Markdown output to HTML and wraps it in
 the visual language carried over from the `content-machine` project:
 Helvetica Neue for display type, italic Instrument Serif for accents,

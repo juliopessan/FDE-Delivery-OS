@@ -1,6 +1,6 @@
 ---
 name: effort-estimation
-description: Methodology for estimating effort in hours per phase of the A.C.E.S. methodology, using a WBS (work breakdown structure) plus three-point (PERT) estimation. Use it when committing to a phase timeline or price, or when revalidating effort after any scope change.
+description: Methodology for estimating effort in hours per phase of the FDE OS delivery method, using a WBS (work breakdown structure) plus three-point (PERT) estimation. Use it when committing to a phase timeline or price, or when revalidating effort after any scope change.
 ---
 
 # Skill: Effort Estimation (WBS + PERT)

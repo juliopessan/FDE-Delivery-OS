@@ -1,6 +1,6 @@
-# Adapting the A.C.E.S. Methodology by Client Profile
+# Adapting the FDE OS Delivery Method by Client Profile
 
-The A.C.E.S. methodology is agnostic to sector and company size — the 4 phases (plus Phase 0) do not change. What changes is the **depth, formality and duration** of each phase. Use this document to calibrate before closing scope in Phase 0.
+The FDE OS delivery method is agnostic to sector and company size — the 4 phases (plus Phase 0) do not change. What changes is the **depth, formality and duration** of each phase. Use this document to calibrate before closing scope in Phase 0.
 
 ## 1. Axes of adaptation
 

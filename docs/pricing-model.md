@@ -1,6 +1,6 @@
 # Pricing Model — Solo FDE
 
-Pricing per phase, aligned to the value delivered at each step of the A.C.E.S. methodology, not by the hour.
+Pricing per phase, aligned to the value delivered at each step of the FDE OS delivery method, not by the hour.
 
 **The fixed fee for each phase is never set off the top of your head.** It must derive from the effort estimate produced by `fde-capacity-planner` (WBS + PERT, see `templates/effort-estimate.md`) — a fixed fee with no hour estimate behind it is guesswork dressed as method, and it is the most common way a solo FDE erodes their own margin.
 

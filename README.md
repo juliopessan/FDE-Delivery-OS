@@ -2,13 +2,13 @@
 
 **Agentic Delivery Operating System for Forward Deployed Engineers**
 
-![FDE OS — one engagement enters, an Enterprise Report leaves](platform/docs/screenshot-landing-page.png)
+[![FDE OS — one engagement enters, an Enterprise Report leaves](platform/docs/screenshot-landing-page.png)](https://youtu.be/ZCILaPLkYBU)
 
-FDE OS is the evolution of the framework previously called A.C.E.S.: a repeatable 4-phase methodology (Assessment → Context → Engineering → Scale) for mapping, architecting and shipping enterprise agentic automation in short, high-impact cycles, designed for **solo** operation (a single FDE acting as end-to-end technical consultant) — and **executed by a team of 9 specialist AI agents**, not merely documented. This repository holds both the methodology plus its execution agents for Claude Code, and a **working web platform** ([`platform/`](platform)) that runs those same 9 agents against an engagement brief and returns a consolidated Enterprise Report — see [`platform/README.md`](platform/README.md) for details.
+**▶ [Watch the 4-minute demo](https://youtu.be/ZCILaPLkYBU)** — an engagement brief goes in, nine agents run, a consolidated Enterprise Report comes out.
+
+FDE OS is a repeatable 4-phase delivery method (Assessment → Context → Engineering → Scale) for mapping, architecting and shipping enterprise agentic automation in short, high-impact cycles, designed for **solo** operation (a single FDE acting as end-to-end technical consultant) — and **executed by a team of 9 specialist AI agents**, not merely documented. This repository holds both the method plus its execution agents for Claude Code, and a **working web platform** ([`platform/`](platform)) that runs those same 9 agents against an engagement brief and returns a consolidated Enterprise Report — see [`platform/README.md`](platform/README.md) for details.
 
 The framework is **agnostic to company size and sector**: the phases keep their shape and vary only in depth and formality according to the client profile — see [`docs/client-profile-adaptation.md`](docs/client-profile-adaptation.md).
-
-> **A note on language.** This README and the platform are in English. Most documents under [`docs/`](docs), [`templates/`](templates) and [`checklists/`](checklists) are still in Brazilian Portuguese, since they are used directly with Brazilian clients. Filenames stay as they are so existing links keep working.
 
 ## Core principle
 

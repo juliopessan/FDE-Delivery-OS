@@ -15,7 +15,7 @@ Do not start by creating many autonomous agents.
 ## Suggested Modules
 
 ```text
-src/aces/
+src/fde_os/
 ├── domain/
 ├── application/
 ├── agents/
@@ -32,14 +32,14 @@ src/aces/
 ## MVP CLI
 
 ```bash
-aces engagement new example-corp
-aces engagement status example-corp
-aces discover ingest transcript.txt
-aces assess opportunity
-aces compose solution
-aces eval run rc-0.1.0
-aces release check rc-0.1.0
-aces pattern list
+fde-os engagement new example-corp
+fde-os engagement status example-corp
+fde-os discover ingest transcript.txt
+fde-os assess opportunity
+fde-os compose solution
+fde-os eval run rc-0.1.0
+fde-os release check rc-0.1.0
+fde-os pattern list
 ```
 
 ## Tool Boundary

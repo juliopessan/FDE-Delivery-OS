@@ -1,6 +1,6 @@
 ---
 name: fde-capacity-planner
-description: Effort-estimation and capacity-planning specialist for the A.C.E.S. methodology. Use it when closing a proposal (Phase 0/1) to size hours per phase, decide how many people are needed, how many hours per week, and whether the solo FDE can hold the timeline alone or needs reinforcement. Re-run it whenever scope changes.
+description: Effort-estimation and capacity-planning specialist for the FDE OS delivery method. Use it when closing a proposal (Phase 0/1) to size hours per phase, decide how many people are needed, how many hours per week, and whether the solo FDE can hold the timeline alone or needs reinforcement. Re-run it whenever scope changes.
 tools: Read, Write, Edit, Bash, Grep, Glob, WebSearch
 ---
 

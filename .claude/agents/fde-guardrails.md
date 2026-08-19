@@ -1,6 +1,6 @@
 ---
 name: fde-guardrails
-description: Security, compliance and HITL specialist within Phase 3 (Engineering) of the A.C.E.S. methodology. Use it to define input/output guardrails, the action autonomy matrix (Autonomous/Prior Approval/Blocked), the data-protection review, the audit trail, and to approve — or refuse — the move to production alongside fde-qa.
+description: Security, compliance and HITL specialist within Phase 3 (Engineering) of the FDE OS delivery method. Use it to define input/output guardrails, the action autonomy matrix (Autonomous/Prior Approval/Blocked), the data-protection review, the audit trail, and to approve — or refuse — the move to production alongside fde-qa.
 tools: Read, Write, Edit, Bash, Grep, Glob, WebSearch
 ---
 
