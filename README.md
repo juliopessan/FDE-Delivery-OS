@@ -150,7 +150,9 @@ Open **http://localhost:3000**.
 2. Paste a client discovery document into the intake box — or upload a `.txt`, `.md`, `.pdf` or `.docx` — and press **Extract brief from this text**. The six fields below fill themselves in; review and correct them, since the agents treat this as the source of truth.
 3. Press **Run agent pipeline** on the engagement page. Nine agents run in sequence, each reading everything the previous ones produced.
 
-   Budget **3–5 minutes** and **roughly 200k tokens** per full run (measured: ~160k in, ~40k out). The input side dominates because context accumulates — the first agent sees a 1.5k-token prompt and the ninth sees 39k, since it reads all eight artifacts before it. Worth knowing before you point this at a free tier.
+   Budget **3–5 minutes**, **roughly 200k tokens** and **about $0.28** per full run (measured across five engagements: ~160k in, ~40k out). The input side dominates because context accumulates — the first agent sees a 1.5k-token prompt and the ninth sees 39k, since it reads all eight artifacts before it. Worth knowing before you point this at a free tier.
+
+   The engagement page reports the exact figures for your own runs under **Pipeline status**. Treat the money as an estimate: it comes from published list rates, ignores prompt-cache discounts, and Gemini 3.7 Flash is on a promotional rate that doubles on 2027-01-01.
 4. When it finishes, open **View enterprise report**, and use **Export PDF** in the report header to hand it to a sponsor.
 
 ### Verifying your setup

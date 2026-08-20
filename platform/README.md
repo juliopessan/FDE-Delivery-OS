@@ -141,6 +141,19 @@ the pipeline warns instead of persisting a half-written artifact silently. A
 budget too tight to fit any answer is also why an empty Gemini response is
 worth naming explicitly rather than treating as a generic failure.
 
+**Consumption is priced at the rate that was in effect the day it ran.**
+Every phase run already stored the token counts the provider reported;
+`src/lib/token-cost.ts` turns them into the input/output/cost strip on the
+engagement page. Two things that look like over-engineering and are not: the
+rate table carries an expiry (Gemini 3.7 Flash is promotional until
+2026-12-31, then doubles), so a run is priced by its own date rather than by
+today's — otherwise every past engagement would silently re-price itself on
+New Year's Day. And the totals include re-runs and repairs of truncated
+phases, because those attempts were billed too. The figure stays on the
+internal dashboard and out of the Enterprise Report: the report is a client
+deliverable, and an AI cost line beside an investment recommendation argues
+against you.
+
 **Mermaid diagrams are a known sharp edge.** Early testing produced diagrams
 that silently failed to render — unquoted node labels containing a literal
 `\n`, and Gantt task names containing a colon (Mermaid's own delimiter

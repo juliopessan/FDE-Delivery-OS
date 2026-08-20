@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+- **Token consumption and estimated cost per engagement.** The counts were
+  already stored on every phase run; nothing surfaced them. The pipeline
+  status row now carries input tokens, output tokens and an estimated cost
+  beside the runtime — measured at roughly 200k tokens and about $0.28 for a
+  full nine-agent run. A run is priced with the rate in effect the day it ran,
+  since Gemini 3.7 Flash is on a promotional rate that doubles on 2027-01-01
+  and pricing everything at today's rate would re-price the whole history at
+  the turn of the year. The figure is deliberately absent from the Enterprise
+  Report, which is a client deliverable.
+
 - **Committed to localhost.** Removed `vercel.json`, the deployment section and
   `DATABASE_AUTH_TOKEN`. State lives in a local SQLite file because engagement
   data is client material and stays on the machine that produced it — the same
