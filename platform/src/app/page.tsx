@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { StatusStrip } from "@/components/StatusStrip";
 import { SiteHeader } from "@/components/SiteHeader";
+import { ApiKeyDialog } from "@/components/ApiKeyDialog";
 import { Eyebrow } from "@/components/Eyebrow";
 import { RotatingLine } from "@/components/RotatingLine";
 import { AGENT_ROSTER } from "@/lib/agents/roster";
@@ -172,6 +173,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-paper text-ink">
       <StatusStrip />
       <SiteHeader />
+      <ApiKeyDialog />
 
       <main>
         {/* ─── Hero ─────────────────────────────────────────────────────── */}

@@ -34,6 +34,12 @@ const PROVIDERS: {
  * clone starts in. The pipeline cannot run without a key, so this is the
  * first thing worth doing rather than an error to hit three screens later.
  *
+ * It mounts on the landing page too. That looked wrong at first — asking a
+ * reader for a credential before they have read the pitch — but FDE OS only
+ * runs on localhost, so there is no such reader: whoever loads `/` is the
+ * operator who just started the server, and `/` is the first screen they see.
+ * "Later" dismisses it for anyone who only wants to look around.
+ *
  * The key is posted once and never comes back: the server answers with
  * whether each provider is configured, not with what was stored. Nothing is
  * kept in localStorage — a credential in browser storage outlives the tab
