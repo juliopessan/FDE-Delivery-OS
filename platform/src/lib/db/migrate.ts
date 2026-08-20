@@ -1,14 +1,13 @@
 import { createClient } from "@libsql/client";
 
 /**
- * Minimal bootstrap: creates tables directly (no migration history) so local
- * dev and first deploys work without running drizzle-kit generate/push.
- * Switch to drizzle-kit migrations once the schema stabilizes.
+ * Minimal bootstrap: creates tables directly (no migration history) so a fresh
+ * clone works without running drizzle-kit generate/push. Switch to drizzle-kit
+ * migrations once the schema stabilizes.
  */
 async function main() {
   const client = createClient({
     url: process.env.DATABASE_URL ?? "file:./local.db",
-    authToken: process.env.DATABASE_AUTH_TOKEN,
   });
 
   await client.execute(`

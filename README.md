@@ -23,7 +23,7 @@ Everything in this repository — documentation, agent prompts, templates and th
 | **1. Methodology (reference)** | The "what" and the "why" — playbook, templates, checklists, supporting docs | In use | [`PLAYBOOK.md`](PLAYBOOK.md), [`templates/`](templates), [`checklists/`](checklists), [`docs/`](docs) |
 | **2. Agent team (execution in Claude Code)** | The "who" and the "how" — 9 AI agents, reusable skills, task specs and the operating harness that runs them in Claude Code | In use | [`.claude/agents/`](.claude/agents), [`.claude/skills/`](.claude/skills), [`specs/`](specs), [`harness/`](harness) |
 | **3. System architecture (vision)** | The "where to" — a specification for a Delivery OS with persisted state, a pattern library, an evaluation engine and a production control plane | Aspirational — partly implemented (see layer 4) | [`docs/system-architecture/`](docs/system-architecture) |
-| **4. Platform (real implementation)** | The same 9 agents running as an actual Next.js app: engagement form with automatic brief extraction (paste or upload .txt/.md/.pdf/.docx), sequential pipeline on Gemini 3.7 Flash with Claude Haiku 4.5 fallback, state in SQLite (Turso/libSQL), light and dark themes, and a consolidated Enterprise Report in HTML with PDF export | In use — runs locally end to end; hosted deployment pending a database token | [`platform/`](platform) — see [`platform/README.md`](platform/README.md) |
+| **4. Platform (real implementation)** | The same 9 agents running as an actual Next.js app: engagement form with automatic brief extraction (paste or upload .txt/.md/.pdf/.docx), sequential pipeline on Gemini 3.7 Flash with Claude Haiku 4.5 fallback, state in a local SQLite file, light and dark themes, and a consolidated Enterprise Report in HTML with PDF export | In use — runs on localhost by design, no deployment step | [`platform/`](platform) — see [`platform/README.md`](platform/README.md) |
 
 Layer 3 remains largely target-architecture documentation — see the notice in [`docs/system-architecture/README.md`](docs/system-architecture/README.md). Layer 4 is where that vision becomes real code, starting with the "solo FDE" slice (no multi-tenancy, no RBAC yet).
 
@@ -99,7 +99,7 @@ Client engagements live in `harness/engagements/<client>/`, which is gitignored 
   - Gemini — free tier available at [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
   - Claude — [console.anthropic.com](https://console.anthropic.com/settings/keys)
 
-No database to install: local development uses a SQLite file created for you.
+No database to install and nothing to deploy: FDE OS runs on localhost against a SQLite file created for you. Engagement data is client material and stays on your machine.
 
 > **Do not clone into a cloud-synced folder** (iCloud Drive's Desktop & Documents, Dropbox, OneDrive). The sync daemon intercepts file access, and on a tree with `node_modules` and `.git` that surfaces as a dev server hanging at 0% CPU, renames reverting on their own, and duplicate "folder 2" copies — symptoms that look like disk failure and are not.
 
@@ -117,7 +117,7 @@ npm install
 cp .env.example .env.local
 ```
 
-Open `.env.local` and fill in `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`, or both. Leave `DATABASE_URL` as `file:./local.db` — that is the local default. `.env.local` is gitignored.
+Open `.env.local` and fill in `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`, or both. Leave `DATABASE_URL` as `file:./local.db`. `.env.local` is gitignored.
 
 ### 3. Create the database
 
@@ -161,7 +161,7 @@ npm run test:report  # report sanitiser test suite
 | Port 3000 already taken | `npm run dev -- --port 3001`. |
 | Dev server hangs without logging anything | Almost always the cloud-sync issue described above. Move the checkout outside the synced folder. |
 
-See [`platform/README.md`](platform/README.md) for architecture, model routing, the maintenance scripts and deploying to Vercel.
+See [`platform/README.md`](platform/README.md) for architecture, model routing and the maintenance scripts.
 
 ## Licence
 

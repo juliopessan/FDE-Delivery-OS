@@ -71,7 +71,7 @@ compounds instead of resetting to zero on the next engagement.
 Browser (dashboard, new-engagement form)
         │
         ▼
-Next.js API routes  ──▶  SQLite (Turso/libSQL, via Drizzle)
+Next.js API routes  ──▶  SQLite (local file, via Drizzle)
         │                     stores: engagements, phase_runs, reports
         ▼
 Agent pipeline (src/lib/agents/run-pipeline.ts)
@@ -89,13 +89,15 @@ It's a single Next.js app (App Router, TypeScript) — the frontend and the
 API routes live in the same deployable unit, so there's no separate backend
 service to stand up or keep in sync.
 
-State lives in SQLite through Drizzle ORM, using the `@libsql/client` driver.
-That's a deliberate choice, not the default: Vercel's serverless functions
-have a read-only, ephemeral filesystem, so a plain local SQLite file would
-vanish between requests. The libSQL driver speaks the exact same API against
-a local `file:` database in development and a remote Turso database in
-production, so the schema and every query in `src/lib/db/` work unmodified
-in both places — only the connection string changes.
+State lives in a local SQLite file through Drizzle ORM, using the
+`@libsql/client` driver. That is the whole design, not a development
+shortcut: FDE OS runs on localhost, and what it stores is client discovery
+material — briefs, assessments, architecture, numbers that went into a
+business case. Keeping that in a file on the operator's machine, with no
+hosted database and no third party in the path, is the point.
+
+The libSQL driver is used because it speaks SQLite over a `file:` URL with
+no server process to run, not because a remote database is planned.
 
 Every agent is a system prompt in `src/lib/agents/prompts/`, listed in
 `src/lib/agents/roster.ts` alongside its phase. The roster mirrors the phase
@@ -184,7 +186,7 @@ in [`../docs/system-architecture/15-roadmap.md`](../docs/system-architecture/15-
 ## Stack
 
 - **Next.js 15** (App Router, TypeScript) — frontend + API routes in one app.
-- **SQLite via Turso/libSQL + Drizzle ORM** — see above.
+- **SQLite (local file) via `@libsql/client` + Drizzle ORM** — see above.
 - **Gemini 3.7 Flash primary, Claude Haiku 4.5 fallback** (`@google/generative-ai`,
   `@anthropic-ai/sdk`) — powers every agent in the roster.
 - **`pdf-parse` + `mammoth`** — server-side text extraction for uploaded
@@ -232,16 +234,28 @@ copies appearing — symptoms that look like disk corruption and are not.
   running after touching `stripInlineLatex()`, since its failure mode is
   silent corruption of figures rather than an error.
 
-## Deploying to Vercel
+## Running it
 
-1. Create a [Turso](https://turso.tech) database and get its `libsql://` URL
-   and auth token.
-2. In the Vercel project settings, set the environment variables:
-   - `GEMINI_API_KEY` and/or `ANTHROPIC_API_KEY`
-   - `DATABASE_URL` (the `libsql://...` URL)
-   - `DATABASE_AUTH_TOKEN`
-3. Run the schema bootstrap once against the Turso database:
-   `DATABASE_URL=... DATABASE_AUTH_TOKEN=... npx tsx src/lib/db/migrate.ts`
-4. Deploy. `vercel.json` in this directory sets the framework preset and
-   build/install commands; point the Vercel project's root directory at
-   `platform/`.
+There is no deployment step. FDE OS is meant to run on the operator's own
+machine:
+
+```bash
+npm run db:migrate   # once, creates local.db
+npm run dev          # http://localhost:3000
+```
+
+`local.db` is gitignored, like `harness/engagements/` in the parent
+repository — client material never reaches the repository, and never leaves
+the machine that produced it.
+
+Two consequences worth being explicit about, since they are trade-offs and
+not oversights:
+
+- **No hosted demo link.** Anyone evaluating this clones it and runs it. The
+  [demo video](https://youtu.be/ZCILaPLkYBU) exists for people who want to see
+  it working without that.
+- **One machine, one operator.** There is no auth and no multi-tenant
+  isolation because there is no shared instance to protect. Adding either
+  belongs to the multi-FDE platform in
+  [`../docs/system-architecture/15-roadmap.md`](../docs/system-architecture/15-roadmap.md),
+  not here.
