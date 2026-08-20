@@ -111,6 +111,8 @@ cd FDE-OS/platform
 npm install
 ```
 
+`npm install` ends with a vulnerability count and suggests `npm audit fix --force`. **Do not run it.** It upgrades Next, drizzle-orm and drizzle-kit across major versions, and the Next 16 line defaults to Turbopack, which fails against the `webpack` block in `next.config.mjs` — the build breaks. The advisories themselves are covered under [Common problems](#common-problems) below.
+
 ### 2. Add your API key
 
 ```bash
@@ -159,6 +161,7 @@ npm run test:report  # report sanitiser test suite
 | Pipeline fails partway with a timeout | Each model call is capped at 90 seconds. Usually provider rate limiting: wait and press Run again. Completed phases are already persisted. |
 | `__webpack_modules__[moduleId] is not a function` | Stale build cache, typically after installing a dependency. `rm -rf .next node_modules/.cache` and restart. |
 | Port 3000 already taken | `npm run dev -- --port 3001`. |
+| `npm audit` reports 8 vulnerabilities | Expected, and none of them is reachable in this app. Four are dev-only (esbuild's dev server, pulled in by `drizzle-kit`). The others arrive through Next (postcss, sharp) and drizzle-orm, and each needs input this app never gives them: attacker-controlled CSS, user-uploaded images, or table names taken from user input. They are only fixed in Next 16 and drizzle-orm 0.45, which is a migration, not an `audit fix` — see the note in step 1. |
 | Dev server hangs without logging anything | Almost always the cloud-sync issue described above. Move the checkout outside the synced folder. |
 
 See [`platform/README.md`](platform/README.md) for architecture, model routing and the maintenance scripts.
