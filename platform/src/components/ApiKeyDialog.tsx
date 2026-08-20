@@ -97,7 +97,7 @@ export function ApiKeyDialog() {
       aria-modal="true"
       aria-labelledby="api-key-title"
     >
-      <div className="bg-paper text-ink w-full max-w-[560px] p-8 sm:p-10 border border-ink/15 shadow-2xl max-h-full overflow-y-auto">
+      <div className="bg-paper text-ink w-full max-w-[560px] p-8 sm:p-10 border border-ink/15 dark:border-paper2/15 shadow-2xl max-h-full overflow-y-auto">
         <div className="mono-face text-label tracking-[0.2em] uppercase text-ink/60">
           Setup — one step
         </div>
@@ -121,17 +121,26 @@ export function ApiKeyDialog() {
                 onClick={() => setProvider(p.id)}
                 className={`text-left p-4 transition-colors ${
                   provider === p.id
-                    ? "bg-ink text-paper2"
+                    ? "bg-ink dark:bg-inksoft dark:ring-1 dark:ring-paper2/20 text-paper2"
                     : "bg-paper hover:bg-paper2 dark:hover:bg-ink/10"
                 }`}
               >
                 <div className="mono-face text-label tracking-[0.14em] uppercase flex items-center gap-2">
+                  {/* In the light theme the selected card is a near-black slab
+                      against cream and needs no marker. In dark both cards are
+                      dark, so selection leans on the lime dot the roster
+                      already uses for "this one is live" — and lime only has
+                      the contrast for that job on a dark slab, which is
+                      exactly where the selected card sits in both themes. */}
+                  {provider === p.id && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-lime shrink-0" />
+                  )}
                   {p.label}
                   {status[p.id] && <CheckIcon />}
                 </div>
                 <div
                   className={`text-small mt-1.5 ${
-                    provider === p.id ? "text-paper2/70" : "text-ink/60"
+                    provider === p.id ? "text-paper2/80" : "text-ink/60"
                   }`}
                 >
                   {p.role}
@@ -185,7 +194,7 @@ export function ApiKeyDialog() {
             <button
               type="submit"
               disabled={saving || !key.trim()}
-              className="mono-face text-label tracking-[0.12em] uppercase bg-ink text-paper px-6 py-4 hover:bg-rust transition-colors disabled:opacity-40"
+              className="mono-face text-label tracking-[0.12em] uppercase bg-ink dark:bg-inksoft text-paper2 px-6 py-4 hover:bg-rust dark:hover:bg-rust transition-colors disabled:text-paper2/60 disabled:hover:bg-ink dark:disabled:hover:bg-inksoft"
             >
               <span className="inline-flex items-center gap-2">
                 {saving && <SpinnerIcon />}
