@@ -7,12 +7,28 @@ import { ApiKeyDialog } from "@/components/ApiKeyDialog";
 import { AGENT_ROSTER } from "@/lib/agents/roster";
 import { ActiveVerb } from "@/components/ActiveVerb";
 import { formatElapsed, formatTotalElapsed } from "@/lib/format-elapsed";
+import {
+  formatTokens,
+  formatUsd,
+  RATES_VERIFIED_ON,
+  summarizeConsumption,
+} from "@/lib/token-cost";
 import type { Engagement, PhaseRun, Report } from "@/lib/db/schema";
 
 interface EngagementData {
   engagement: Engagement;
   runs: PhaseRun[];
   report: Report | null;
+}
+
+/** One figure in the consumption strip: mono label above a lining-figure value. */
+function Meta({ label, value, title }: { label: string; value: string; title?: string }) {
+  return (
+    <div title={title}>
+      <dt className="mono-face text-label tracking-[0.14em] uppercase text-ink/60">{label}</dt>
+      <dd className="mt-1 text-small tabular-nums">{value}</dd>
+    </div>
+  );
 }
 
 const statusDot: Record<string, string> = {
@@ -69,6 +85,7 @@ export default function EngagementDetailPage({ params }: { params: Promise<{ id:
   const runByAgent = new Map(runs.map((r) => [r.agentKey, r]));
   const pipelineDone = engagement.status === "completed" && report;
   const totalElapsed = formatTotalElapsed(runs);
+  const consumption = summarizeConsumption(runs);
 
   return (
     <div className="min-h-screen bg-paper text-ink">
@@ -106,14 +123,38 @@ export default function EngagementDetailPage({ params }: { params: Promise<{ id:
         {error && <p className="mt-4 text-rustink text-small">{error}</p>}
 
         <div className="mt-14">
-          <div className="flex items-baseline justify-between gap-4">
-            <Eyebrow>Pipeline status</Eyebrow>
-            {totalElapsed ? (
-              <span className="mono-face text-label tracking-[0.14em] uppercase text-ink/60 tabular-nums">
-                {totalElapsed} agent runtime
-              </span>
-            ) : null}
-          </div>
+          <Eyebrow>Pipeline status</Eyebrow>
+
+          {/* Runtime alone was one figure hanging off the eyebrow. With
+              consumption beside it there are four, so they get a proper strip —
+              the same label-over-value pattern the report masthead uses, which
+              wraps on a narrow window instead of compressing. */}
+          {totalElapsed || consumption.promptTokens > 0 ? (
+            <dl className="mt-5 flex flex-wrap gap-x-10 gap-y-4">
+              {totalElapsed ? <Meta label="Agent runtime" value={totalElapsed} /> : null}
+              {consumption.promptTokens > 0 ? (
+                <Meta
+                  label="Input tokens"
+                  value={formatTokens(consumption.promptTokens)}
+                  title={`${consumption.promptTokens.toLocaleString("en-US")} input tokens`}
+                />
+              ) : null}
+              {consumption.completionTokens > 0 ? (
+                <Meta
+                  label="Output tokens"
+                  value={formatTokens(consumption.completionTokens)}
+                  title={`${consumption.completionTokens.toLocaleString("en-US")} output tokens`}
+                />
+              ) : null}
+              {consumption.costUsd !== null ? (
+                <Meta
+                  label="Est. cost"
+                  value={formatUsd(consumption.costUsd)}
+                  title={`Estimated from published list rates verified ${RATES_VERIFIED_ON}. Excludes prompt-cache discounts.`}
+                />
+              ) : null}
+            </dl>
+          ) : null}
           <div className="mt-6 divide-y divide-ink/12 border-t border-b border-ink/12">
             {AGENT_ROSTER.map((agent, i) => {
               const run = runByAgent.get(agent.key);
