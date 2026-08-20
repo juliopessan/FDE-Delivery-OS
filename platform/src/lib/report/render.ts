@@ -245,7 +245,38 @@ export function renderConsolidatedReport({
   .prose strong { font-weight: 700; }
   .prose a { color: var(--rustink); }
 
-  .prose table { width: 100%; border-collapse: collapse; margin: 18px 0 24px; font-size: 13.5px; }
+  /*
+    The scroll container, and the width floor that makes it necessary.
+
+    Auto layout keeps a table inside its column by compressing columns, which
+    works down to a point and then stops working: at phone width a 7-column
+    PERT table was giving each column ~28px, breaking "12.67" across two lines
+    and stacking a header one letter per row. Below 860px the table is allowed
+    to keep a readable width and the container scrolls instead — the prose
+    around it still reflows, and only the table moves sideways.
+  */
+  .prose .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 18px 0 24px;
+  }
+  .prose table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+
+  @media (max-width: 860px) {
+    /* The floor scales with column count — 680px is comfortable for four
+       columns and still cramped for seven. */
+    .prose table { min-width: 680px; }
+    .prose table:has(th:nth-child(7)) { min-width: 820px; }
+    .prose table:has(th:nth-child(10)) { min-width: 980px; }
+    /* Enough of an edge to read as "there is more this way", without a
+       scrollbar permanently parked under every table on desktop. */
+    .prose .table-scroll {
+      background:
+        linear-gradient(to right, var(--paper) 30%, rgba(var(--paper-ch),0)) left / 24px 100% no-repeat,
+        linear-gradient(to left, var(--paper) 30%, rgba(var(--paper-ch),0)) right / 24px 100% no-repeat;
+      background-attachment: local, local;
+    }
+  }
   /*
     The cell wrap rules are what keep a wide table the same width as a narrow
     one. A table's minimum width is the sum of its columns' longest unbreakable
@@ -260,8 +291,19 @@ export function renderConsolidatedReport({
   .prose th, .prose td {
     border: 1px solid rgba(var(--ink-ch),0.16); padding: 8px 10px;
     text-align: left; vertical-align: top;
-    overflow-wrap: break-word; word-break: break-word;
+    /*
+       overflow-wrap: anywhere rather than break-word. Both break a word only
+       as a last resort, but anywhere also lowers the cell's minimum width,
+       which is what lets a 7-column table fit its column on desktop instead of
+       scrolling. word-break: break-word used to sit here too, and that is what
+       split "12.67" across two lines — it breaks eagerly rather than as a last
+       resort. The width floor below keeps columns wide enough that the last
+       resort is rarely reached.
+    */
+    overflow-wrap: anywhere;
+    hyphens: none;
   }
+
   .prose th { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; background: var(--paper2); }
   /* Six or more columns leaves each one narrow enough that body size wraps to
      one or two words per line; a step down buys back a couple of words. */
@@ -334,6 +376,9 @@ export function renderConsolidatedReport({
     .phase-section { break-before: page; padding-top: 0; border-top: none; margin-top: 0; }
 
     /* Nothing legible should be split across a page boundary. */
+    .prose .table-scroll { overflow: visible; background: none; }
+    .prose table { min-width: 0 !important; }
+
     .prose table, .prose pre, .prose blockquote,
     pre.mermaid, pre.code-block, .diagram-fallback { break-inside: avoid; }
     .prose tr, .prose li { break-inside: avoid; }

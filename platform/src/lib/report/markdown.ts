@@ -135,5 +135,20 @@ export function stripInlineLatex(markdown: string): string {
 }
 
 export function markdownToHtml(markdown: string): string {
-  return marked.parse(stripInlineLatex(markdown), { async: false }) as string;
+  const html = marked.parse(stripInlineLatex(markdown), { async: false }) as string;
+
+  /*
+    Give every table its own scroll container. Below roughly 860px the agents'
+    wider tables — 7 columns of PERT estimates, a connector matrix — were
+    compressed until "12.67" broke across two lines and a header column read one
+    letter per row. Scrolling one table sideways costs the reader far less than
+    that, and the prose around it keeps reflowing normally.
+
+    Done by wrapping the rendered output rather than overriding marked's table
+    renderer, which would mean reimplementing its cell and alignment handling
+    against internals that change between versions.
+  */
+  return html
+    .replace(/<table>/g, '<div class="table-scroll"><table>')
+    .replace(/<\/table>/g, "</table></div>");
 }
