@@ -234,6 +234,28 @@ copies appearing — symptoms that look like disk corruption and are not.
   running after touching `stripInlineLatex()`, since its failure mode is
   silent corruption of figures rather than an error.
 
+## Configuring the model key
+
+On first run the dashboard shows a setup dialog when neither provider is
+configured. It verifies the key against the provider before saving anything —
+both checks list models rather than generating text, so they cost no tokens and
+still fail on a typo — then writes it to `.env.local` and applies it to the
+running process, so no restart is needed.
+
+Three deliberate choices sit behind it:
+
+- **The key goes to `.env.local`, not the database.** One credential store
+  instead of two, already gitignored, already the file the docs describe — and
+  a `local.db` that gets copied or backed up does not quietly carry an API key
+  with it. The file is chmod-ed to `600` on write.
+- **The key never comes back.** `GET /api/credentials` answers with two
+  booleans; there is no endpoint that returns a stored key, and nothing is kept
+  in `localStorage`, where a credential would outlive the tab and travel with a
+  profile sync.
+- **Writes are loopback-only.** `next dev -H 0.0.0.0` puts this app on the
+  local network, and without that guard the route would let anyone on that
+  network write a key into the operator's `.env.local`.
+
 ## Running it
 
 There is no deployment step. FDE OS is meant to run on the operator's own

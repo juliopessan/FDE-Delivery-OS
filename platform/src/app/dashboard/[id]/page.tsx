@@ -3,6 +3,7 @@
 import { useEffect, useCallback, useState, use } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Eyebrow } from "@/components/Eyebrow";
+import { ApiKeyDialog } from "@/components/ApiKeyDialog";
 import { AGENT_ROSTER } from "@/lib/agents/roster";
 import { ActiveVerb } from "@/components/ActiveVerb";
 import { formatElapsed, formatTotalElapsed } from "@/lib/format-elapsed";
@@ -58,6 +59,7 @@ export default function EngagementDetailPage({ params }: { params: Promise<{ id:
     return (
       <div className="min-h-screen bg-paper text-ink">
         <SiteHeader meta="Engagement" />
+      <ApiKeyDialog />
         <main className="max-w-[900px] mx-auto px-6 py-24 text-ink/60 mono-face text-small">Loading…</main>
       </div>
     );

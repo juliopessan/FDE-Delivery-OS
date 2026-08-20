@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Eyebrow } from "@/components/Eyebrow";
+import { ApiKeyDialog } from "@/components/ApiKeyDialog";
 import { RotatingPlaceholder } from "@/components/RotatingPlaceholder";
 import { AlertIcon, CheckIcon, FileIcon, SpinnerIcon, UploadIcon } from "@/components/Icon";
 
@@ -132,6 +133,7 @@ export default function NewEngagementPage() {
   return (
     <div className="min-h-screen bg-paper text-ink">
       <SiteHeader meta="New engagement" />
+      <ApiKeyDialog />
 
       <main className="max-w-[720px] mx-auto px-6 py-14">
         <Eyebrow>Qualification intake</Eyebrow>

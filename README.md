@@ -115,11 +115,18 @@ npm install
 
 ### 2. Add your API key
 
+You can do this in the browser: start the app (steps 3 and 4) and the dashboard asks for a key on first run, checks it against the provider, and writes it to `.env.local` for you.
+
+To do it by hand instead:
+
 ```bash
 cp .env.example .env.local
+nano .env.local
 ```
 
-Open `.env.local` and fill in `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`, or both. Leave `DATABASE_URL` as `file:./local.db`. `.env.local` is gitignored.
+Fill in `GEMINI_API_KEY`, `ANTHROPIC_API_KEY`, or both — either one alone works. Leave `DATABASE_URL` as `file:./local.db`. `.env.local` is gitignored.
+
+Avoid `echo "KEY=..." >> .env.local`: the key lands in your shell history, which is a copy nobody remembers to clean up.
 
 ### 3. Create the database
 
@@ -157,7 +164,7 @@ npm run test:report  # report sanitiser test suite
 
 | Symptom | Cause and fix |
 | --- | --- |
-| `Neither GEMINI_API_KEY nor ANTHROPIC_API_KEY is set` | `.env.local` is missing or empty. Confirm it sits in `platform/`, not the repository root, and restart the dev server — env files are read at boot. |
+| `Neither GEMINI_API_KEY nor ANTHROPIC_API_KEY is set` | No key configured yet. Open `/dashboard` and the setup dialog will take one, or fill `.env.local` by hand — it belongs in `platform/`, not the repository root. Editing the file by hand needs a dev server restart; the dialog does not. |
 | Pipeline fails partway with a timeout | Each model call is capped at 90 seconds. Usually provider rate limiting: wait and press Run again. Completed phases are already persisted. |
 | `__webpack_modules__[moduleId] is not a function` | Stale build cache, typically after installing a dependency. `rm -rf .next node_modules/.cache` and restart. |
 | Port 3000 already taken | `npm run dev -- --port 3001`. |

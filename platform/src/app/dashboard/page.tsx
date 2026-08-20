@@ -4,6 +4,7 @@ import { db } from "@/lib/db/client";
 import { engagements } from "@/lib/db/schema";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Eyebrow } from "@/components/Eyebrow";
+import { ApiKeyDialog } from "@/components/ApiKeyDialog";
 
 export const dynamic = "force-dynamic";
 
@@ -19,6 +20,7 @@ export default async function DashboardPage() {
   return (
     <div className="min-h-screen bg-paper text-ink">
       <SiteHeader meta="Dashboard" />
+      <ApiKeyDialog />
 
       <main className="max-w-[1180px] mx-auto px-6 py-14">
         <div className="flex items-end justify-between flex-wrap gap-6">
