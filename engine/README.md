@@ -81,10 +81,11 @@ uv run fde-engine --db /tmp/copy.db regenerate-report <id>
 uv run pytest
 ```
 
-The sanitiser cases were extracted from the TypeScript suite by evaluating its
-arrays rather than retyping them, so both implementations are held to literally
-the same expectations. When you add a case on either side, add it on both — a
-divergence there is the port drifting.
+The sanitiser cases came across from the TypeScript suite by evaluating its
+arrays rather than retyping them, which is how the port was held to literally
+the same expectations while both existed. That suite is gone now and these are
+the only ones, so a rule added to `markdown.py` without a case here is a rule
+nothing is holding.
 
 ## What stayed in TypeScript
 
