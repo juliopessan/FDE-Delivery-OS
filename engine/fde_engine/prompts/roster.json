@@ -1,0 +1,146 @@
+[
+  {
+    "key": "qualifier",
+    "name": "Qualification Agent",
+    "phaseKey": "qualification",
+    "phaseLabel": "Qualification",
+    "mission": "Fit score, prospect research, GO/NO-GO recommendation",
+    "model": "gemini-3.7-flash (fallback: claude-haiku-4-5)",
+    "activeVerbs": [
+      "Qualifying",
+      "Scoring fit",
+      "Probing sponsorship",
+      "Sizing the pain",
+      "Testing access",
+      "Weighing risk"
+    ]
+  },
+  {
+    "key": "capacity-planner",
+    "name": "Capacity Planning Agent",
+    "phaseKey": "qualification",
+    "phaseLabel": "Qualification",
+    "mission": "WBS + PERT effort estimate, solo-vs-reinforcement call",
+    "model": "gemini-3.7-flash (fallback: claude-haiku-4-5)",
+    "activeVerbs": [
+      "Estimating",
+      "Breaking down work",
+      "Running PERT",
+      "Tracing critical path",
+      "Sizing the crew",
+      "Costing the weeks"
+    ]
+  },
+  {
+    "key": "assessor",
+    "name": "Assessment Agent",
+    "phaseKey": "assessment",
+    "phaseLabel": "Assessment",
+    "mission": "Process classification, AI architecture blueprint, estimated ROI",
+    "model": "gemini-3.7-flash (fallback: claude-haiku-4-5)",
+    "activeVerbs": [
+      "Assessing",
+      "Shadowing the process",
+      "Quantifying effort",
+      "Modelling value",
+      "Testing feasibility",
+      "Baselining volumes"
+    ]
+  },
+  {
+    "key": "context-engineer",
+    "name": "Context Engineering Agent",
+    "phaseKey": "context",
+    "phaseLabel": "Context Engineering",
+    "mission": "Ingestion, RAG/vector design, connector map, golden set",
+    "model": "gemini-3.7-flash (fallback: claude-haiku-4-5)",
+    "activeVerbs": [
+      "Ingesting",
+      "Mapping sources",
+      "Designing retrieval",
+      "Chunking context",
+      "Curating the golden set",
+      "Wiring connectors"
+    ]
+  },
+  {
+    "key": "architect",
+    "name": "Solution Architecture Agent",
+    "phaseKey": "engineering",
+    "phaseLabel": "Engineering",
+    "mission": "Orchestration pattern, model routing, system architecture, ADR",
+    "model": "gemini-3.7-flash (fallback: claude-haiku-4-5)",
+    "activeVerbs": [
+      "Architecting",
+      "Choosing the pattern",
+      "Placing the seams",
+      "Weighing determinism",
+      "Drafting the ADR",
+      "Rejecting swarms"
+    ]
+  },
+  {
+    "key": "guardrails",
+    "name": "Security & Guardrails Agent",
+    "phaseKey": "engineering",
+    "phaseLabel": "Engineering",
+    "mission": "Autonomy matrix, guardrails, audit trail, go-live veto",
+    "model": "gemini-3.7-flash (fallback: claude-haiku-4-5)",
+    "activeVerbs": [
+      "Hardening",
+      "Drawing boundaries",
+      "Scoping permissions",
+      "Auditing residency",
+      "Blocking autonomy",
+      "Writing the veto"
+    ]
+  },
+  {
+    "key": "qa",
+    "name": "Quality Assurance Agent",
+    "phaseKey": "engineering",
+    "phaseLabel": "Engineering",
+    "mission": "Independent Go/No-Go quality gate",
+    "model": "gemini-3.7-flash (fallback: claude-haiku-4-5)",
+    "activeVerbs": [
+      "Validating",
+      "Challenging assumptions",
+      "Cross-checking artifacts",
+      "Setting acceptance",
+      "Building the punch list",
+      "Hunting contradictions"
+    ]
+  },
+  {
+    "key": "scale-ops",
+    "name": "Scale & Value Operations Agent",
+    "phaseKey": "scale",
+    "phaseLabel": "Scale",
+    "mission": "Observability plan, realized ROI, runbook, retainer case",
+    "model": "gemini-3.7-flash (fallback: claude-haiku-4-5)",
+    "activeVerbs": [
+      "Operating",
+      "Wiring observability",
+      "Realising value",
+      "Costing the run",
+      "Drafting the runbook",
+      "Structuring the retainer"
+    ]
+  },
+  {
+    "key": "compound-intelligence",
+    "name": "Compound Intelligence Agent",
+    "phaseKey": "scale",
+    "phaseLabel": "Scale",
+    "mission": "Company IQ extraction, cross-stack governance, pattern reuse, continuous improvement loop",
+    "model": "gemini-3.7-flash (fallback: claude-haiku-4-5)",
+    "activeVerbs": [
+      "Compounding",
+      "Extracting patterns",
+      "Naming the rules",
+      "Partitioning IP",
+      "Banking the learning",
+      "Building Company IQ"
+    ]
+  }
+]
