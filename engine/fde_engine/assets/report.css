@@ -1,0 +1,321 @@
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink-ch: 20,21,15;
+    --paper-ch: 242,240,234;
+
+    --ink: #14150F;
+    --inksoft: #1C1F18;
+    --paper: #F2F0EA;
+    --paper2: #EDEAE0;
+    --lime: #C4F04C;
+    --amber: #E8B84B;
+    --rust: #D97757;
+    --peach: #E8916E;
+    /* Rust as body-size type on cream is 2.74:1. Links take a darkened cut of
+       the same hue; fills and rules keep --rust. */
+    --rustink: #9E4226;
+
+    /* The contrast surface (executive summary) and the type that sits on it.
+       Named separately from ink/paper because in dark mode they do not simply
+       swap: the surface only lifts off a near-black ground, and its type stays
+       light in both themes. */
+    --contrast: var(--ink);
+    --on-contrast: var(--paper2);
+    --on-contrast-ch: 237,234,224;
+  }
+
+  /*
+    Screen only. The report's whole purpose is to be exported as a PDF, and a
+    print stylesheet that inherited dark mode would hand the sponsor black
+    pages — print-color-adjust: exact would faithfully render every one.
+  */
+  @media screen and (prefers-color-scheme: dark) {
+    :root {
+      --ink-ch: 237,234,224;
+      --paper-ch: 20,21,15;
+
+      --ink: #EDEAE0;
+      --paper: #14150F;
+      --paper2: #EDEAE0;
+      --contrast: #1C1F18;
+      --on-contrast: #EDEAE0;
+      --on-contrast-ch: 237,234,224;
+
+      --lime: #B0D844;
+      --amber: #D6AA46;
+      --rust: #E88868;
+      --peach: #F0A382;
+      /* Already 7.13:1 on near-black — no darkening needed here. */
+      --rustink: #E88868;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, 'Courier New', monospace; }
+  .serif-italic { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; }
+
+  header.masthead {
+    border-bottom: 1px solid rgba(var(--ink-ch),0.12);
+    padding: 20px 6vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-badge {
+    width: 28px; height: 28px; background: #14150F;
+    display: flex; align-items: center; justify-content: center;
+    color: #C4F04C; font-size: 13px; font-weight: 500;
+  }
+  .brand-name { font-size: 12px; letter-spacing: 0.24em; font-weight: 500; }
+  .masthead-right { display: flex; align-items: center; gap: 20px; }
+  .masthead-meta { font-size: 11px; letter-spacing: 0.2em; color: rgba(var(--ink-ch),0.62); text-transform: uppercase; }
+
+  .export-btn {
+    font-family: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    background: var(--contrast); color: var(--on-contrast);
+    border: none; padding: 10px 16px; cursor: pointer;
+    transition: background 140ms ease;
+  }
+  .export-btn:hover { background: var(--rust); }
+  .export-btn:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
+
+  main { max-width: 900px; margin: 0 auto; padding: 64px 6vw 96px; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(var(--ink-ch),0.62);
+  }
+  .eyebrow::before { content: ""; width: 20px; height: 1px; background: rgba(var(--ink-ch),0.3); display: inline-block; }
+
+  h1.report-title {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    margin: 18px 0 14px;
+  }
+  .report-objective {
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    line-height: 1.5;
+    color: rgba(var(--ink-ch),0.75);
+    max-width: 62ch;
+    margin: 0 0 20px;
+  }
+  .report-sub { color: rgba(var(--ink-ch),0.65); font-size: 15px; max-width: 62ch; line-height: 1.6; }
+
+  .meta-row { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 36px; padding-top: 24px; border-top: 1px solid rgba(var(--ink-ch),0.12); }
+  .meta-item .label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(var(--ink-ch),0.62); margin-bottom: 4px; }
+  .meta-item .value { font-size: 14px; font-weight: 500; }
+
+  .exec-summary {
+    margin-top: 48px; background: var(--contrast); color: var(--on-contrast);
+    padding: 40px clamp(20px, 4vw, 48px);
+  }
+  .exec-summary .eyebrow { color: rgba(var(--on-contrast-ch),0.7); }
+  .exec-summary .eyebrow::before { background: rgba(var(--on-contrast-ch),0.3); }
+  .exec-summary .prose { color: var(--on-contrast); }
+  .exec-summary .prose h1 { color: var(--on-contrast); }
+  .exec-summary .prose h2, .exec-summary .prose h3 { color: var(--on-contrast); }
+  .exec-summary .prose table { border-color: rgba(var(--on-contrast-ch),0.18); }
+  .exec-summary .prose th, .exec-summary .prose td { border-color: rgba(var(--on-contrast-ch),0.18); }
+  .exec-summary .prose th { background: rgba(var(--on-contrast-ch),0.1); color: var(--on-contrast); }
+  .exec-summary .prose td { color: var(--on-contrast); }
+  .exec-summary .prose code { background: rgba(var(--on-contrast-ch),0.12); color: var(--on-contrast); }
+  .exec-summary .prose a { color: var(--peach); }
+
+  .toc { margin-top: 56px; }
+  .toc-link {
+    display: grid; grid-template-columns: 32px 1fr auto; gap: 16px; align-items: baseline;
+    padding: 16px 0; border-bottom: 1px solid rgba(var(--ink-ch),0.12);
+    text-decoration: none; color: var(--ink);
+  }
+  .toc-index { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--rustink); }
+  .toc-agent { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: rgba(var(--ink-ch),0.62); text-transform: uppercase; }
+
+  .phase-section { margin-top: 72px; padding-top: 40px; border-top: 1px solid rgba(var(--ink-ch),0.14); }
+  .phase-heading { display: flex; gap: 20px; align-items: baseline; margin-bottom: 24px; }
+  .phase-index { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--rustink); }
+  .agent-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em; margin: 4px 0 0; }
+  .phase-stamp {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(var(--ink-ch),0.62); margin: -14px 0 22px 40px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .prose h1 { font-size: 1.7rem; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.01em; }
+  .prose h2 { font-size: 1.25rem; font-weight: 700; margin: 32px 0 12px; }
+  .prose h3 { font-size: 1.05rem; font-weight: 700; margin: 24px 0 10px; }
+  .prose p { line-height: 1.7; margin: 0 0 14px; }
+  .prose ul, .prose ol { line-height: 1.7; margin: 0 0 14px; padding-left: 22px; }
+  .prose li { margin-bottom: 6px; }
+  .prose strong { font-weight: 700; }
+  .prose a { color: var(--rustink); }
+
+  /*
+    The scroll container, and the width floor that makes it necessary.
+
+    Auto layout keeps a table inside its column by compressing columns, which
+    works down to a point and then stops working: at phone width a 7-column
+    PERT table was giving each column ~28px, breaking "12.67" across two lines
+    and stacking a header one letter per row. Below 860px the table is allowed
+    to keep a readable width and the container scrolls instead — the prose
+    around it still reflows, and only the table moves sideways.
+  */
+  .prose .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 18px 0 24px;
+  }
+  .prose table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+
+  @media (max-width: 860px) {
+    /* The floor scales with column count — 680px is comfortable for four
+       columns and still cramped for seven. */
+    .prose table { min-width: 680px; }
+    .prose table:has(th:nth-child(7)) { min-width: 820px; }
+    .prose table:has(th:nth-child(10)) { min-width: 980px; }
+    /* Enough of an edge to read as "there is more this way", without a
+       scrollbar permanently parked under every table on desktop. */
+    .prose .table-scroll {
+      background:
+        linear-gradient(to right, var(--paper) 30%, rgba(var(--paper-ch),0)) left / 24px 100% no-repeat,
+        linear-gradient(to left, var(--paper) 30%, rgba(var(--paper-ch),0)) right / 24px 100% no-repeat;
+      background-attachment: local, local;
+    }
+  }
+  /*
+    The cell wrap rules are what keep a wide table the same width as a narrow
+    one. A table's minimum width is the sum of its columns' longest unbreakable
+    words, so a 7-column matrix carrying sentences and identifiers like
+    BAPI_INCOMINGINVOICE_PARK computes a minimum larger than the column and
+    spills past the page margin, while a 3-column table sits neatly inside it.
+    Allowing breaks inside words drops that minimum below the available width,
+    and auto layout then divides the space in proportion to content — so the
+    numeric columns stay narrow instead of being padded out to an equal share,
+    which is what table-layout: fixed would have done.
+  */
+  .prose th, .prose td {
+    border: 1px solid rgba(var(--ink-ch),0.16); padding: 8px 10px;
+    text-align: left; vertical-align: top;
+    /*
+       overflow-wrap: anywhere rather than break-word. Both break a word only
+       as a last resort, but anywhere also lowers the cell's minimum width,
+       which is what lets a 7-column table fit its column on desktop instead of
+       scrolling. word-break: break-word used to sit here too, and that is what
+       split "12.67" across two lines — it breaks eagerly rather than as a last
+       resort. The width floor below keeps columns wide enough that the last
+       resort is rarely reached.
+    */
+    overflow-wrap: anywhere;
+    hyphens: none;
+  }
+
+  /*
+    Headers wrap at spaces, never inside a word.
+
+    The rule above lets cells break anywhere, which is what keeps a wide table
+    inside its column. Headers are the one place that trade is wrong: they are
+    short labels set in uppercase mono with letter-spacing, so the same word is
+    far wider here than in body type while the column width is decided by the
+    body content underneath. On a real report that shattered 75 of 292 headers
+    into letter stacks — "SEVERITY" down four lines of a 42px column, "SCORE
+    (0-5)" down six — and a header a reader cannot read is a table they cannot
+    navigate. Restoring normal wrapping fixed 74 of the 75 and pushed no table
+    into its scroll container, because the width floor below already reserves
+    more room than the header words need.
+  */
+  .prose th {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.06em; text-transform: uppercase; background: var(--paper2);
+    overflow-wrap: normal; word-break: normal; text-wrap: balance;
+  }
+  /* Six or more columns leaves each one narrow enough that body size wraps to
+     one or two words per line; a step down buys back a couple of words. */
+  .prose table:has(th:nth-child(6)) { font-size: 12px; }
+  .prose table:has(th:nth-child(6)) th,
+  .prose table:has(th:nth-child(6)) td { padding: 6px 7px; }
+
+  .prose pre.code-block, .prose pre.mermaid {
+    background: var(--inksoft); color: var(--paper2);
+    padding: 16px; overflow-x: auto; font-size: 13px; margin: 16px 0;
+  }
+  .prose pre.mermaid {
+    background: var(--paper2); color: var(--ink);
+    display: flex; justify-content: center; align-items: center;
+  }
+  /*
+    Two bounds, and both matter. The upper one keeps a 26-node architecture
+    diagram inside the column. The lower one — --diagram-w, the diagram's own
+    layout width, stamped on by the render script — stops a 2-node flowchart
+    from being stretched to fill that same column, which blew its labels up to
+    twice the size of the surrounding headings. Without it, every diagram is
+    drawn at the column width regardless of how much is in it.
+  */
+  .prose pre.mermaid svg {
+    max-width: min(100%, var(--diagram-w, 100%)) !important;
+    max-height: 560px;
+    height: auto !important;
+    width: auto;
+    margin: 0 auto;
+  }
+  /*
+    Mermaid draws node labels as HTML inside a foreignObject whose height it
+    measured before the label was placed on this page. Our own prose rules then
+    apply to that HTML — .prose p's 14px bottom margin is enough to push a
+    three-line label past the height mermaid reserved, which is why the last
+    line of a label was being clipped by its own box. Labels opt out.
+  */
+  .prose pre.mermaid foreignObject div,
+  .prose pre.mermaid foreignObject p,
+  .prose pre.mermaid foreignObject span {
+    margin: 0; padding: 0; line-height: 1.5;
+  }
+
+  .prose .diagram-fallback { width: 100%; }
+  .prose .diagram-fallback-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--rustink); margin-bottom: 8px;
+  }
+  .prose code { font-family: 'JetBrains Mono', monospace; background: rgba(var(--ink-ch),0.06); padding: 1px 5px; font-size: 0.9em; }
+
+  footer.report-footer { border-top: 1px solid rgba(var(--ink-ch),0.12); padding: 32px 6vw; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  footer.report-footer .mono { font-size: 11px; letter-spacing: 0.14em; color: rgba(var(--ink-ch),0.62); text-transform: uppercase; }
+
+  @media print {
+    /*
+      Browsers drop backgrounds when printing. The executive summary is a dark
+      card with light text on it, so without this it prints cream-on-white and
+      the most important page in the document disappears.
+    */
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    @page { margin: 16mm 14mm; }
+
+    html, body { background: #fff; }
+    .export-btn { display: none; }
+    header.masthead { padding: 0 0 14px; border-bottom: 1px solid rgba(var(--ink-ch),0.2); }
+    main { max-width: none; padding: 20px 0 0; }
+
+    .exec-summary { break-inside: avoid; }
+    .phase-section { break-before: page; padding-top: 0; border-top: none; margin-top: 0; }
+
+    /* Nothing legible should be split across a page boundary. */
+    .prose .table-scroll { overflow: visible; background: none; }
+    .prose table { min-width: 0 !important; }
+
+    .prose table, .prose pre, .prose blockquote,
+    pre.mermaid, pre.code-block, .diagram-fallback { break-inside: avoid; }
+    .prose tr, .prose li { break-inside: avoid; }
+    .prose h1, .prose h2, .prose h3 { break-after: avoid; }
+    .prose img, .prose svg { max-width: 100% !important; height: auto !important; }
+  }

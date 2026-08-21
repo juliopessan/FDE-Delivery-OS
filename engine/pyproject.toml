@@ -1,0 +1,32 @@
+[project]
+name = "fde-engine"
+version = "0.1.0"
+description = "The FDE OS delivery engine: the nine-agent pipeline and the Enterprise Report renderer."
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.40",
+    "google-genai>=0.3",
+    "markdown-it-py>=3.0",
+    # gfm-like enables linkify, which marked also does with GFM on. Parity
+    # matters here: the skills tell agents to cite sources with a bare URL.
+    "linkify-it-py>=2.0",
+    # GFM task lists — the guardrails agent writes its pre-production
+    # checklist as "- [ ] item", which marked renders as a checkbox.
+    "mdit-py-plugins>=0.4",
+]
+
+[project.scripts]
+fde-engine = "fde_engine.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["fde_engine"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
