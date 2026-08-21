@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+- **Table headers in the report, both ways they were failing.** Cells are
+  allowed to break anywhere so a wide table stays inside its column; headers
+  inherited that and shattered — 75 of 292 on a real engagement, "SEVERITY"
+  down four lines of a 42px column. Headers now wrap at spaces only, which
+  fixed 74 of the 75 and pushed no table into its scroll container. Separately,
+  an agent that emits a whole table on one line produced a paragraph of literal
+  pipes with no header at all; the markdown sanitiser now splits it back into
+  rows and rebuilds the delimiter from the header, with cases in the report
+  test suite.
+
 - **Stated the value proposition as acceleration, not substitution.** FDE OS
   compresses the front of an engagement — assessment, discovery, blueprint —
   for the FDE team running it, solo or client-side, and replaces neither. The

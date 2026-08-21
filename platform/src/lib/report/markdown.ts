@@ -134,8 +134,76 @@ export function stripInlineLatex(markdown: string): string {
   return out.replaceAll(LITERAL_DOLLAR, "$");
 }
 
+/** Cells of one row, with the outer pipes stripped. */
+function splitRow(row: string): string[] {
+  return row.trim().replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+}
+
+/** A run of `|---|---|` cells, which is what marks a line as a table. */
+const DELIMITER_RUN = /\|(?:\s*:?-{3,}:?\s*\|)+/;
+
+/**
+ * Agents sometimes emit a whole table on a single line — header, delimiter and
+ * every body row run together as `| a | b | | c | d |`. Markdown needs one row
+ * per line, so `marked` renders the lot as a paragraph of literal pipes: the
+ * header never appears, and the reader gets a wall of `|` in a client
+ * deliverable. It happened to the retainer table on a real engagement.
+ *
+ * The header tells us how many columns there are, so the body can be split
+ * back into rows by counting cells. The blank fragment left between rows by
+ * the `| |` boundary is skipped rather than counted as a cell.
+ *
+ * The agent that crams a table onto one line also tends to miscount the
+ * delimiter — three headers over four dashes — which `marked` rejects on its
+ * own, so the delimiter is rebuilt from the header rather than trusted.
+ */
+export function normalizeInlineTables(markdown: string): string {
+  let inFence = false;
+
+  return markdown
+    .split("\n")
+    .map((line) => {
+      if (/^\s*```/.test(line)) {
+        inFence = !inFence;
+        return line;
+      }
+      if (inFence) return line;
+
+      const match = DELIMITER_RUN.exec(line);
+      // A delimiter at the start of its own line is a well-formed table.
+      if (!match || match.index === 0) return line;
+
+      const header = splitRow(line.slice(0, match.index));
+      if (header.length < 2) return line;
+
+      const rows: string[][] = [];
+      const fragments = line.slice(match.index + match[0].length).split("|");
+      // Text before the first pipe and after the last belongs to no cell.
+      if (!fragments[0]?.trim()) fragments.shift();
+      if (!fragments.at(-1)?.trim()) fragments.pop();
+
+      for (let i = 0; i < fragments.length; ) {
+        const row = fragments.slice(i, i + header.length).map((c) => c.trim());
+        if (!row.length) break;
+        rows.push(row);
+        i += header.length;
+        // The `| |` seam between two rows leaves one empty fragment behind.
+        if (i < fragments.length && !fragments[i].trim()) i += 1;
+      }
+
+      return [
+        `| ${header.join(" | ")} |`,
+        `|${header.map(() => "---").join("|")}|`,
+        ...rows.map((r) => `| ${r.join(" | ")} |`),
+      ].join("\n");
+    })
+    .join("\n");
+}
+
 export function markdownToHtml(markdown: string): string {
-  const html = marked.parse(stripInlineLatex(markdown), { async: false }) as string;
+  const html = marked.parse(normalizeInlineTables(stripInlineLatex(markdown)), {
+    async: false,
+  }) as string;
 
   /*
     Give every table its own scroll container. Below roughly 860px the agents'

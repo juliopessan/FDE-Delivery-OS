@@ -9,7 +9,7 @@
  *
  * Usage: npx tsx scripts/test-latex-strip.ts
  */
-import { stripInlineLatex } from "../src/lib/report/markdown";
+import { normalizeInlineTables, stripInlineLatex } from "../src/lib/report/markdown";
 
 const cases: [string, string][] = [
   // Maths becomes plain Unicode.
@@ -66,15 +66,59 @@ const cases: [string, string][] = [
   ["$1,794 $61,906 $35.00 $0.15", "$1,794 $61,906 $35.00 $0.15"],
 ];
 
+/**
+ * Tables the agents cram onto one line. Markdown needs a row per line, so
+ * `marked` renders the crammed form as a paragraph of literal pipes — the
+ * header never appears at all. This happened to the retainer table on a real
+ * engagement and reached a client deliverable.
+ */
+const tableCases: [string, string][] = [
+  // The shape the Scale agent actually emitted: rows run together by `| |`,
+  // and a delimiter with one more cell than the header has columns.
+  [
+    "| Workstream | Hours | Output | |---|---|---|---| | Prompt tuning | 10.0 | Refine extraction. | | Total | 30.0 | $6,000 / month |",
+    [
+      "| Workstream | Hours | Output |",
+      "|---|---|---|",
+      "| Prompt tuning | 10.0 | Refine extraction. |",
+      "| Total | 30.0 | $6,000 / month |",
+    ].join("\n"),
+  ],
+
+  // A well-formed table is left exactly as written.
+  [
+    ["| A | B |", "|---|---|", "| 1 | 2 |"].join("\n"),
+    ["| A | B |", "|---|---|", "| 1 | 2 |"].join("\n"),
+  ],
+
+  // A delimiter inside a fenced block is ASCII art, not a table.
+  [
+    ["```", "| a |---|---| b |", "```"].join("\n"),
+    ["```", "| a |---|---| b |", "```"].join("\n"),
+  ],
+
+  // Prose that merely contains a pipe is not a table.
+  ["Route A | Route B are both viable", "Route A | Route B are both viable"],
+];
+
 let failures = 0;
-for (const [input, expected] of cases) {
-  const actual = stripInlineLatex(input);
-  if (actual === expected) continue;
-  failures++;
-  console.error(`FAIL  in:       ${JSON.stringify(input)}`);
-  console.error(`      expected: ${JSON.stringify(expected)}`);
-  console.error(`      actual:   ${JSON.stringify(actual)}`);
+
+function run(name: string, suite: [string, string][], fn: (s: string) => string) {
+  let failed = 0;
+  for (const [input, expected] of suite) {
+    const actual = fn(input);
+    if (actual === expected) continue;
+    failed++;
+    console.error(`FAIL  ${name}`);
+    console.error(`      in:       ${JSON.stringify(input)}`);
+    console.error(`      expected: ${JSON.stringify(expected)}`);
+    console.error(`      actual:   ${JSON.stringify(actual)}`);
+  }
+  failures += failed;
+  console.log(`${name}: ${suite.length - failed}/${suite.length} passed`);
 }
 
-console.log(`${cases.length - failures}/${cases.length} passed`);
+run("latex", cases, stripInlineLatex);
+run("tables", tableCases, normalizeInlineTables);
+
 process.exit(failures === 0 ? 0 : 1);

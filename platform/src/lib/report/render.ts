@@ -304,7 +304,25 @@ export function renderConsolidatedReport({
     hyphens: none;
   }
 
-  .prose th { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; background: var(--paper2); }
+  /*
+    Headers wrap at spaces, never inside a word.
+
+    The rule above lets cells break anywhere, which is what keeps a wide table
+    inside its column. Headers are the one place that trade is wrong: they are
+    short labels set in uppercase mono with letter-spacing, so the same word is
+    far wider here than in body type while the column width is decided by the
+    body content underneath. On a real report that shattered 75 of 292 headers
+    into letter stacks — "SEVERITY" down four lines of a 42px column, "SCORE
+    (0-5)" down six — and a header a reader cannot read is a table they cannot
+    navigate. Restoring normal wrapping fixed 74 of the 75 and pushed no table
+    into its scroll container, because the width floor below already reserves
+    more room than the header words need.
+  */
+  .prose th {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    letter-spacing: 0.06em; text-transform: uppercase; background: var(--paper2);
+    overflow-wrap: normal; word-break: normal; text-wrap: balance;
+  }
   /* Six or more columns leaves each one narrow enough that body size wraps to
      one or two words per line; a step down buys back a couple of words. */
   .prose table:has(th:nth-child(6)) { font-size: 12px; }
