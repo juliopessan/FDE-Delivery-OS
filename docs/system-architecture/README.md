@@ -41,7 +41,7 @@ Layer 3 neither replaces nor alters layers 1 and 2. It documents the possible de
 
 ## Other artifacts in this layer
 
-- [`adrs/`](adrs) — Foundational Architecture Decision Records (state outside the chat, human accountability, versioned patterns, policy before tools)
+- [`adrs/`](adrs) — Architecture Decision Records, filed by lifecycle and class (`proposed/`, `implemented/`, `rejected/`). Four foundational records: state outside the chat, human accountability, versioned patterns, policy before tools. See [the convention](adrs/README.md)
 - [`schemas/`](schemas) — JSON Schemas for the core data contracts (`EngagementState`, `PatternManifest`, `ReleaseManifest`)
 - [`templates/`](templates) — ADR template, engagement one-pager and production readiness checklist, in the system's target format
 - [`examples/supplier-invoice-automation/`](examples/supplier-invoice-automation) — End-to-end reference use case (discovery → prototype → evaluation → production)
