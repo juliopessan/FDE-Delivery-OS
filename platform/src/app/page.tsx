@@ -509,6 +509,10 @@ export default function LandingPage() {
                 aligning the problem, the people, the systems, the controls, and
                 the economics.
               </p>
+              <p className="mt-6 text-body leading-relaxed text-ink/70 max-w-[44ch]">
+                FDE OS gives that team a faster first pass at assessment,
+                discovery and blueprint — the drafting, not the deciding.
+              </p>
             </div>
             <div className="lg:pt-14">
               <TickList items={AUDIENCES} />
