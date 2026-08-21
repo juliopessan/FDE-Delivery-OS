@@ -23,6 +23,17 @@
     --contrast: var(--ink);
     --on-contrast: var(--paper2);
     --on-contrast-ch: 237,234,224;
+
+    /* Anything a rule paints that could land on either surface.
+       The executive summary is a dark slab inside a cream page, so a rule
+       naming --ink or --paper directly is right in one place and invisible or
+       glaring in the other. These are redefined on that slab below; twice now
+       a hardcoded page colour has shipped a defect onto it. */
+    --scroll-edge: var(--paper);
+    --scroll-edge-ch: var(--paper-ch);
+    --rule: rgba(var(--ink-ch),0.16);
+    --rule-soft: rgba(var(--ink-ch),0.09);
+    --label-ink: rgba(var(--ink-ch),0.6);
   }
 
   /*
@@ -126,6 +137,13 @@
   .exec-summary .prose { color: var(--on-contrast); }
   .exec-summary .prose h1 { color: var(--on-contrast); }
   .exec-summary .prose h2, .exec-summary .prose h3 { color: var(--on-contrast); }
+  .exec-summary {
+    --scroll-edge: var(--contrast);
+    --scroll-edge-ch: var(--ink-ch);
+    --rule: rgba(var(--on-contrast-ch),0.18);
+    --rule-soft: rgba(var(--on-contrast-ch),0.10);
+    --label-ink: rgba(var(--on-contrast-ch),0.62);
+  }
   .exec-summary .prose table { border-color: rgba(var(--on-contrast-ch),0.18); }
   .exec-summary .prose th, .exec-summary .prose td { border-color: rgba(var(--on-contrast-ch),0.18); }
   .exec-summary .prose th { background: rgba(var(--on-contrast-ch),0.1); color: var(--on-contrast); }
@@ -188,8 +206,8 @@
        scrollbar permanently parked under every table on desktop. */
     .prose .table-scroll {
       background:
-        linear-gradient(to right, var(--paper) 30%, rgba(var(--paper-ch),0)) left / 24px 100% no-repeat,
-        linear-gradient(to left, var(--paper) 30%, rgba(var(--paper-ch),0)) right / 24px 100% no-repeat;
+        linear-gradient(to right, var(--scroll-edge) 30%, rgba(var(--scroll-edge-ch),0)) left / 24px 100% no-repeat,
+        linear-gradient(to left, var(--scroll-edge) 30%, rgba(var(--scroll-edge-ch),0)) right / 24px 100% no-repeat;
       background-attachment: local, local;
     }
   }
@@ -244,6 +262,59 @@
   .prose table:has(th:nth-child(6)) { font-size: 12px; }
   .prose table:has(th:nth-child(6)) th,
   .prose table:has(th:nth-child(6)) td { padding: 6px 7px; }
+
+  /*
+    Below 640px a narrow table stops being a grid and becomes labelled rows.
+
+    Horizontal scrolling saved these tables from being crushed, but scrolling
+    is a poor way to *read* one: on a phone you drag sideways and lose the row
+    you were on. Stacking each row into a block, with every cell carrying its
+    column name, reads straight down instead.
+
+    Only narrow tables. A wide one — the 25-case golden set, a seven-column
+    PERT estimate — exists so the reader can compare across columns, and
+    stacking destroys exactly that while turning one table into three screens
+    of scrolling. Those keep the horizontal scroll, which at least preserves
+    the grid. Five columns is where the line falls: four labelled rows are
+    still scannable, five start to read as a list.
+  */
+  @media screen and (max-width: 640px) {
+    .prose .table-scroll:not(.wide) table { min-width: 0; border-collapse: separate; }
+    .prose .table-scroll:not(.wide) table thead {
+      /* Hidden from sight, not from a screen reader: the cell labels below are
+         visual only, and the header still names the columns in the a11y tree. */
+      position: absolute; width: 1px; height: 1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+    }
+    .prose .table-scroll:not(.wide) table tr {
+      display: block;
+      border: 1px solid var(--rule);
+      margin-bottom: 10px;
+      padding: 4px 0;
+    }
+    .prose .table-scroll:not(.wide) table td {
+      display: grid;
+      grid-template-columns: minmax(88px, 34%) 1fr;
+      gap: 12px;
+      border: 0;
+      border-bottom: 1px solid var(--rule-soft);
+      padding: 8px 12px;
+    }
+    .prose .table-scroll:not(.wide) table tr td:last-child { border-bottom: 0; }
+    .prose .table-scroll:not(.wide) table td::before {
+      content: attr(data-label);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--label-ink);
+      align-self: start; padding-top: 2px;
+    }
+    /* A stacked table does not scroll, so the shadow that says "drag me"
+       is a lie — and one drawn over the first and last column at that. */
+    .prose .table-scroll:not(.wide) { background: none; }
+    /* An empty cell would collapse to a bare label and read as a missing
+       answer rather than a blank one. */
+    .prose .table-scroll:not(.wide) table td:empty::after { content: "—"; }
+  }
 
   .prose pre.code-block, .prose pre.mermaid {
     background: var(--inksoft); color: var(--paper2);

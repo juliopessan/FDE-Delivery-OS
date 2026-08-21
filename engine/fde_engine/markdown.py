@@ -230,8 +230,15 @@ def normalize_inline_tables(markdown: str) -> str:
 # ---------------------------------------------------------------------------
 
 _MERMAID_BREAK = re.compile(r"<br\s*/?>", re.IGNORECASE)
-_TABLE_OPEN = re.compile(r"<table>")
-_TABLE_CLOSE = re.compile(r"</table>")
+_TABLE = re.compile(r"<table>.*?</table>", re.DOTALL)
+_TH = re.compile(r"<th[^>]*>(.*?)</th>", re.DOTALL)
+_TD = re.compile(r"<td([^>]*)>")
+_TAG = re.compile(r"<[^>]+>")
+
+#: Where a table stops being scannable as stacked rows and starts reading as a
+#: list. Four labelled rows still scan; five do not — and a wide table exists so
+#: the reader can compare across columns, which stacking destroys.
+_WIDE_TABLE_COLUMNS = 5
 
 # "gfm-like" is the preset closest to the `marked` configuration the TypeScript
 # renderer used: CommonMark plus tables, strikethrough and autolinking.
@@ -261,6 +268,58 @@ def _render_fence(self, tokens, idx, options, env):  # noqa: ANN001, ARG001
 _md.add_render_rule("fence", _render_fence)
 
 
+def _label_cells(html: str) -> str:
+    """Carry each column's header onto its cells as a data-label.
+
+    A table is a grid because the header sits above the column. Take the grid
+    away — which is what a phone does — and every cell loses the one thing that
+    said what it was. The stylesheet stacks narrow tables into labelled rows
+    below 640px and reads the label from here; on any wider screen, and in
+    print, the attribute is inert.
+    """
+
+    def relabel(match: re.Match[str]) -> str:
+        table = match.group(0)
+        headers = [_TAG.sub("", h).strip() for h in _TH.findall(table)]
+        if not headers:
+            return table
+
+        column = 0
+
+        def stamp(cell: re.Match[str]) -> str:
+            nonlocal column
+            label = headers[column % len(headers)]
+            column += 1
+            escaped = label.replace("&", "&amp;").replace('"', "&quot;")
+            return f'<td{cell.group(1)} data-label="{escaped}">'
+
+        # Cells are numbered straight through the body: a row always has as
+        # many as the header does, so position modulo width gives the column
+        # without parsing rows.
+        return _TD.sub(stamp, table)
+
+    return _TABLE.sub(relabel, html)
+
+
+def _wrap_tables(html: str) -> str:
+    """Give every table a scroll container, tagged with how wide it is.
+
+    The column count decides two things — whether the table stacks on a phone
+    and whether it advertises horizontal scrolling — and the stylesheet cannot
+    ask for it: selecting a container by a property of its child needs :has(),
+    and the test itself needs a nested :has(), which CSS forbids. So the count
+    is settled here, where it is just arithmetic, and the class carries it.
+    """
+
+    def wrap(match: re.Match[str]) -> str:
+        table = match.group(0)
+        wide = len(_TH.findall(table)) >= _WIDE_TABLE_COLUMNS
+        cls = "table-scroll wide" if wide else "table-scroll"
+        return f'<div class="{cls}">{table}</div>'
+
+    return _TABLE.sub(wrap, html)
+
+
 def markdown_to_html(markdown: str) -> str:
     """Render an agent artifact, with every sanitiser applied first."""
     html = _md.render(normalize_inline_tables(strip_inline_latex(markdown)))
@@ -270,5 +329,4 @@ def markdown_to_html(markdown: str) -> str:
     # compressed until "12.67" broke across two lines and a header column read
     # one letter per row. Scrolling one table sideways costs the reader far less
     # than that, and the prose around it keeps reflowing normally.
-    html = _TABLE_OPEN.sub('<div class="table-scroll"><table>', html)
-    return _TABLE_CLOSE.sub("</table></div>", html)
+    return _wrap_tables(_label_cells(html))

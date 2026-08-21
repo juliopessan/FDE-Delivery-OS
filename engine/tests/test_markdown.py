@@ -84,7 +84,7 @@ def test_crammed_table_renders_with_a_header() -> None:
         "| Total | 30.0 | $6,000 / month |"
     )
     assert "<th>Workstream</th>" in html
-    assert "<td>Prompt tuning</td>" in html
+    assert ">Prompt tuning</td>" in html
     assert "$6,000 / month" in html, "an amount must survive the LaTeX pass"
     assert "|---" not in html, "no literal delimiter may reach the reader"
 
@@ -101,5 +101,34 @@ def test_mermaid_fence_keeps_its_label_on_one_line() -> None:
 
 def test_tables_are_wrapped_in_a_scroll_container() -> None:
     html = markdown_to_html("| A | B |\n|---|---|\n| 1 | 2 |")
-    assert '<div class="table-scroll"><table>' in html
+    assert '<div class="table-scroll">' in html
     assert "</table></div>" in html
+
+
+def test_cells_carry_their_column_name() -> None:
+    """A table is a grid because the header sits above the column.
+
+    Take the grid away — which is what a phone does — and every cell loses the
+    one thing that said what it was, so the header rides along on each cell for
+    the stylesheet to show when it stacks the rows.
+    """
+    html = markdown_to_html(
+        "| Criterion | Weight |\n|---|---|\n| Measurable Pain | High |"
+    )
+    assert '<td data-label="Criterion">Measurable Pain</td>' in html
+    assert '<td data-label="Weight">High</td>' in html
+
+
+def test_a_wide_table_is_marked_wide() -> None:
+    """Five columns or more keeps the grid and scrolls sideways instead.
+
+    Stacking a comparison matrix destroys the comparison and turns one table
+    into several screens. The count is decided here rather than in CSS, which
+    would need a :has() inside a :has() to ask — and that is not valid CSS.
+    """
+    narrow = markdown_to_html("| A | B | C | D |\n|---|---|---|---|\n| 1 | 2 | 3 | 4 |")
+    wide = markdown_to_html(
+        "| A | B | C | D | E |\n|---|---|---|---|---|\n| 1 | 2 | 3 | 4 | 5 |"
+    )
+    assert '<div class="table-scroll">' in narrow
+    assert '<div class="table-scroll wide">' in wide
