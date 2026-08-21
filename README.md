@@ -6,9 +6,9 @@
 
 **▶ [Watch the 4-minute demo](https://youtu.be/ZCILaPLkYBU)** — an engagement brief goes in, nine agents run, a consolidated Enterprise Report comes out.
 
-**Nine specialists. Three minutes. Under a dollar.** A full engagement — qualification, capacity, assessment, context, architecture, security, QA, scale and compound intelligence — runs end to end for about **$0.28** in model calls (measured across five engagements). Assembling the same set of artifacts by hand is days of work spread across several specialities. What the dollar buys you is the draft, not the judgment: the agents do the repetitive half of delivery, and you still own every decision in the report.
+**Assessment, discovery and blueprint in three minutes, for under a dollar.** FDE OS drafts the front of an engagement — qualification, capacity, assessment, context, architecture, security, QA, scale and compound intelligence — for about **$0.28** in model calls (measured across five engagements). It accelerates the FDE team running the engagement; it does not replace them. The dollar buys the first draft of work that otherwise takes days, so the engineers spend theirs on judgment, the client conversation, and the decisions a report can only propose.
 
-FDE OS is a repeatable 4-phase delivery method (Assessment → Context → Engineering → Scale) for mapping, architecting and shipping enterprise agentic automation in short, high-impact cycles, designed for **solo** operation (a single FDE acting as end-to-end technical consultant) — and **executed by a team of 9 specialist AI agents**, not merely documented. This repository holds both the method plus its execution agents for Claude Code, and a **working web platform** ([`platform/`](platform)) that runs those same 9 agents against an engagement brief and returns a consolidated Enterprise Report — see [`platform/README.md`](platform/README.md) for details.
+FDE OS is a repeatable 4-phase delivery method (Assessment → Context → Engineering → Scale) for mapping, architecting and shipping enterprise agentic automation in short, high-impact cycles, designed so **one** FDE can run it end to end — and equally usable by an FDE team at the client, since the phases are the same whoever staffs them — and **executed by a team of 9 specialist AI agents**, not merely documented. This repository holds both the method plus its execution agents for Claude Code, and a **working web platform** ([`platform/`](platform)) that runs those same 9 agents against an engagement brief and returns a consolidated Enterprise Report — see [`platform/README.md`](platform/README.md) for details.
 
 The framework is **agnostic to company size and sector**: the phases keep their shape and vary only in depth and formality according to the client profile — see [`docs/client-profile-adaptation.md`](docs/client-profile-adaptation.md).
 
@@ -17,6 +17,23 @@ Everything in this repository — documentation, agent prompts, templates and th
 ## Core principle
 
 > Automate the repetitive work of delivery, not engineering judgment. Keep the PoC architecture simple enough to prove value quickly, and add agentic complexity only where the business process genuinely demands it.
+
+### What it accelerates, and what it does not do
+
+FDE OS compresses the front of an engagement: **assessment, discovery and
+blueprint**. Those are the phases where a delivery team spends weeks producing
+documents whose structure barely changes between clients — a fit assessment, an
+effort estimate, a target architecture, a guardrails matrix, a value case. The
+pipeline drafts all of them in minutes, so the team starts arguing about the
+content on day one instead of week three.
+
+It is **not a replacement for a Forward Deployed Engineer or an FDE team**.
+Every artifact it produces is a proposal a human owns, corrects and defends in
+front of the client. The agents are not in the room where the sponsor
+hesitates, the architect pushes back, or the security lead names the constraint
+nobody wrote down — and that room is where an engagement is won or lost.
+Accelerating the phases is the whole claim; the judgment stays with the people
+running them.
 
 ## Four layers in this repository
 

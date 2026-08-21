@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+- **Stated the value proposition as acceleration, not substitution.** FDE OS
+  compresses the front of an engagement — assessment, discovery, blueprint —
+  for the FDE team running it, solo or client-side, and replaces neither. The
+  README hero led with "Nine specialists", which reads as replacement; it now
+  leads with the phases it shortens. A new section names the boundary
+  explicitly, the platform README carries the same paragraph, and the landing
+  page hero says it in one clause. Every artifact the pipeline produces is a
+  draft a human owns and defends.
+
 - **Token consumption and estimated cost per engagement.** The counts were
   already stored on every phase run; nothing surfaced them. The pipeline
   status row now carries input tokens, output tokens and an estimated cost

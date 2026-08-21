@@ -25,6 +25,15 @@ and names what should be promoted into the shared pattern library versus what
 must stay inside this client's boundary — the mechanism by which delivery
 compounds instead of resetting to zero on the next engagement.
 
+**What it accelerates, and what it does not do.** The pipeline covers the front
+of an engagement — assessment, discovery, blueprint. That is the part where the
+shape of the document is the same for every client and only the content
+changes, which is exactly what an agent is good at. It supports whoever is
+running the engagement, a solo FDE or a client-side FDE team, and replaces
+neither: every artifact is a draft a human owns and defends. Nothing here
+touches the part that actually decides an engagement, which is the conversation
+with the sponsor.
+
 ## What happens when you use it
 
 1. You paste the client's discovery document, or upload it as `.txt`, `.md`,

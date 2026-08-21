@@ -199,7 +199,9 @@ export default function LandingPage() {
                 decision-ready delivery path in days. Qualification, assessment,
                 architecture, security, value realization, capacity planning, and
                 next-step execution — orchestrated through one traceable
-                engagement state.
+                engagement state. It accelerates the FDE team running the
+                engagement rather than replacing it: every artifact is a draft a
+                human owns and defends.
               </p>
 
               <div className="mt-10 flex flex-wrap gap-4">
