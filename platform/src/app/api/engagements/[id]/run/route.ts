@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { runEngagementPipeline } from "@/lib/agents/run-pipeline";
+import { callEngine } from "@/lib/engine";
 
 export const maxDuration = 300;
 
@@ -8,14 +8,7 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  const result = await callEngine("run", id);
 
-  try {
-    const result = await runEngagementPipeline(id);
-    return NextResponse.json({ ok: true, ...result });
-  } catch (err) {
-    return NextResponse.json(
-      { ok: false, error: err instanceof Error ? err.message : String(err) },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json(result, { status: result.ok ? 200 : 500 });
 }

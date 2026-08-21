@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { regenerateReport } from "@/lib/agents/run-pipeline";
+import { callEngine } from "@/lib/engine";
 
 export const maxDuration = 60;
 
@@ -8,17 +8,7 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  const result = await callEngine("regenerate-report", id);
 
-  console.log(`[regenerate-report route] engagement=${id} received POST`);
-  try {
-    const result = await regenerateReport(id);
-    console.log(`[regenerate-report route] engagement=${id} success, summary length=${result.executiveSummary.length}`);
-    return NextResponse.json({ ok: true, ...result });
-  } catch (err) {
-    console.error(`[regenerate-report route] engagement=${id} failed:`, err);
-    return NextResponse.json(
-      { ok: false, error: err instanceof Error ? err.message : String(err) },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json(result, { status: result.ok ? 200 : 500 });
 }

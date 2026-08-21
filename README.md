@@ -130,6 +130,21 @@ cd FDE-OS/platform
 npm install
 ```
 
+The interface is a Node app; the nine agents and the report renderer are a
+Python package next to it. Install that too, or the pipeline will not run:
+
+```bash
+cd ../engine
+uv sync
+cd ../platform
+```
+
+`uv sync` builds an isolated environment — nothing lands in your system Python.
+If you do not have [uv](https://docs.astral.sh/uv/), install it first; the app
+falls back to `uv run` when the environment is missing, so it is the one tool
+that has to be there. Why the split, and what the engine can do on its own, is
+in [`engine/README.md`](engine/README.md).
+
 `npm install` ends with a vulnerability count and suggests `npm audit fix --force`. **Do not run it.** It upgrades Next, drizzle-orm and drizzle-kit across major versions, and the Next 16 line defaults to Turbopack, which fails against the `webpack` block in `next.config.mjs` — the build breaks. The advisories themselves are covered under [Common problems](#common-problems) below.
 
 ### 2. Add your API key
