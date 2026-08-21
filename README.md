@@ -6,6 +6,8 @@
 
 **▶ [Watch the 4-minute demo](https://youtu.be/ZCILaPLkYBU)** — an engagement brief goes in, nine agents run, a consolidated Enterprise Report comes out.
 
+**Nine specialists. Three minutes. Under a dollar.** A full engagement — qualification, capacity, assessment, context, architecture, security, QA, scale and compound intelligence — runs end to end for about **$0.28** in model calls (measured across five engagements). Assembling the same set of artifacts by hand is days of work spread across several specialities. What the dollar buys you is the draft, not the judgment: the agents do the repetitive half of delivery, and you still own every decision in the report.
+
 FDE OS is a repeatable 4-phase delivery method (Assessment → Context → Engineering → Scale) for mapping, architecting and shipping enterprise agentic automation in short, high-impact cycles, designed for **solo** operation (a single FDE acting as end-to-end technical consultant) — and **executed by a team of 9 specialist AI agents**, not merely documented. This repository holds both the method plus its execution agents for Claude Code, and a **working web platform** ([`platform/`](platform)) that runs those same 9 agents against an engagement brief and returns a consolidated Enterprise Report — see [`platform/README.md`](platform/README.md) for details.
 
 The framework is **agnostic to company size and sector**: the phases keep their shape and vary only in depth and formality according to the client profile — see [`docs/client-profile-adaptation.md`](docs/client-profile-adaptation.md).
