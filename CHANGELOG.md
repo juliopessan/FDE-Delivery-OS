@@ -2,6 +2,45 @@
 
 ## [Unreleased]
 
+- **The report stopped closing in the pipeline's voice.** Every phase artifact
+  ended with a Handoff table — a confidence score, blockers and a next step
+  written, per the style guide, for "the next agent in the pipeline" — and that
+  block reached the client nine times in a document a sponsor pays for. The
+  facts underneath were useful; the vantage and the addressee were not, and a
+  numeric confidence beside a GO verdict invites the one question a sponsor
+  should never have to ask. The closing section is now "Where This Leaves You",
+  addressed to the sponsor, and the Pipeline Overview loses its confidence
+  column. It was also being asked for twice — the style guide wanted a section
+  and a separate block wanted a table, so agents wrote both — and one
+  instruction now owns it.
+
+- **A feedback loop between a report defect and the prompt that caused it.**
+  Every artifact defect this month was repaired downstream: a sanitiser for
+  LaTeX, a normalizer for crammed tables, a CSS rule for shattered headers, a
+  flag for truncated output. The renderer kept getting better at cleaning up
+  and the agents kept producing the same artifacts. The new
+  `deliverable-review` skill makes both halves the definition of closed —
+  change the prompt, and record the case in an examples file that accumulates
+  instead of resetting. Seeded with nine real defects, including the two still
+  open: a single ROI figure carrying an unvalidated labour rate, and two phases
+  contradicting each other on data residency because no agent reads across
+  phases.
+
+- **Decisions are filed by lifecycle and class.** ADRs live at
+  `{lifecycle}/{class}/ADR-NNNN-title.md`, so a record's status is its
+  location. A rejected record survives only while its rationale still prevents
+  a tempting mistake; an implemented one is corrected in the same commit that
+  renames what it names. The convention also names the gap it cannot fix by
+  filing: all four existing records are a title and one line, and the template
+  has had Context, Alternatives, Evidence and Consequences from the start.
+  Filling them in is worth more than adding new ones.
+
+  The last two items adapt conventions from
+  [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) (MIT) —
+  its accumulating skill examples and its Agent Notes lifecycle. Its runtime
+  was deliberately left alone: 55 packages of dynamic tool routing, sandboxing
+  and sessions solve problems a fixed nine-call pipeline does not have.
+
 - **Table headers in the report, both ways they were failing.** Cells are
   allowed to break anywhere so a wide table stays inside its column; headers
   inherited that and shattered — 75 of 292 on a real engagement, "SEVERITY"
