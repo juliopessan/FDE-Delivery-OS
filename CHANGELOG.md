@@ -23,6 +23,15 @@
   a Fail quoting both statements. A constraint set in an earlier phase is a fact
   later phases inherit, not a choice they may re-make.
 
+  Verified on a full pipeline run against the same brief: nine of nine
+  artifacts close with "Where This Leaves You" and none carries a Handoff block
+  or a confidence score; the Pipeline Overview has no confidence column; the
+  assessment models three scenarios and states that released hours are a
+  capacity result rather than automatic cash savings; and the QA matrix tracks
+  eight shared constraints with quotes from both sides, data residency among
+  them. In the rendered report, 230 headers and none breaking mid-word — the
+  same document rendered 75 broken out of 292 before the header fix.
+
 - **The report stopped closing in the pipeline's voice.** Every phase artifact
   ended with a Handoff table — a confidence score, blockers and a next step
   written, per the style guide, for "the next agent in the pipeline" — and that
