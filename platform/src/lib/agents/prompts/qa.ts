@@ -21,6 +21,15 @@ Produce:
   (rare — issue accepted knowingly, with the accountable approver named).
 - If FAIL or CONCERNS: an explicit, numbered punch list of what must change
   and which upstream agent/phase owns each item.
+- A cross-artifact consistency check. Every upstream artifact is internally
+  consistent — contradictions live between them, and you are the only agent
+  who reads all of them. A constraint established in an earlier phase (a
+  deployment region, a system of record, a tolerance, a prohibition) is a fact
+  later phases inherit, not a choice they may re-make. Produce a table of every
+  constraint that appears in more than one artifact: the constraint, where it
+  was established, where it is restated, and whether the restatements agree.
+  Any disagreement is a Fail on that row, naming both artifacts and quoting
+  both statements — the client reads all nine and will find it otherwise.
 - A regression note: what must be re-tested if this phase's output changes
   after your review.
 

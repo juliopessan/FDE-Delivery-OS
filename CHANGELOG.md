@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+- **The two open deliverable defects are closed, and one of them was layer
+  drift.** The ROI section stated a single net benefit derived from an
+  unvalidated labour rate — but the method had required a range all along
+  (`roi-calculator`: "always report a range — never a single number") and the
+  platform prompt implementing it asked for "an estimated ROI". The prompt now
+  matches the method: three scenarios, naming which input moves between them,
+  with released capacity and money on separate lines because hours released
+  become a saving only if headcount changes or those hours are redeployed —
+  the client's decision, not the calculation's. That capacity-versus-cash rule
+  was missing from both layers and now lives in the skill, where the method
+  owns it.
+
+  The second defect — one phase anchoring the architecture in Azure UAE North
+  while another referenced West Europe — had no owner because every artifact is
+  internally consistent and no agent read across phases. QA is the only agent
+  that sees all nine, so it now produces a cross-artifact consistency table:
+  every constraint appearing in more than one artifact, where it was
+  established, where it is restated, and whether those agree. A disagreement is
+  a Fail quoting both statements. A constraint set in an earlier phase is a fact
+  later phases inherit, not a choice they may re-make.
+
 - **The report stopped closing in the pipeline's voice.** Every phase artifact
   ended with a Handoff table — a confidence score, blockers and a next step
   written, per the style guide, for "the next agent in the pipeline" — and that

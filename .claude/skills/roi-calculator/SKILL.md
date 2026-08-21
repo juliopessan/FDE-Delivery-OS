@@ -28,13 +28,16 @@ ROI (payback months) = Total engagement investment (Phases 1-3) / Monthly saving
 2. Estimate (Phase 1) or measure (Phase 4) the time with AI, the share of autonomous vs. HITL runs, and infrastructure and token cost.
 3. Apply the formula above.
 4. **Always report a range (optimistic/conservative)** in Phase 1 — never a single number. In Phase 4, report the real observed figure, but set it against the original range.
-5. If the realized figure (Phase 4) diverges from the estimate (Phase 1), document the cause — do not omit it.
+5. **Report released capacity and money as two separate lines**, and never let the first silently become the second. Hours released are a capacity result. They turn into a saving only if headcount changes, or if those hours are redeployed to work that earns — and which of the two is happening is the client's decision, not the calculation's. State the assumption you are making, and name which of the two the client is actually buying.
+6. If the realized figure (Phase 4) diverges from the estimate (Phase 1), document the cause — do not omit it.
 
 ## Common mistakes to avoid
 
 - Forgetting fixed infrastructure cost (VectorDB, observability) — it inflates ROI artificially.
 - Assuming 100% autonomous runs without accounting for the real HITL share set by the autonomy matrix (`fde-guardrails`).
 - Presenting a single payback number with no confidence range in Phase 1.
+- Converting released hours straight into money at a loaded rate and calling the result a saving — a CFO makes that distinction in the first meeting, and a report that blurs it loses the room.
+- Leaving the assumption that dominates the case in a footnote. If an unvalidated labour rate is carrying the business case, it belongs in the open.
 
 ## Fallback: market benchmarking (when there is no real shadowing yet)
 

@@ -147,11 +147,23 @@ with the assumption flagged but the figure stated flat.
 how much is the assumption. A figure that moves with an unvalidated input needs
 its range shown, not a footnote.
 
-**Write instead** three scenarios — conservative, medium, optimistic — and say
-plainly that released capacity is not the same thing as a hard saving until
-someone decides what happens to the freed hours.
+**Write instead** three scenarios — conservative, expected, optimistic —
+naming which input moves between them and holding the rest fixed, so the
+sponsor can see what the spread is made of. Report released capacity and money
+as two separate lines: hours released become a saving only if headcount changes
+or the hours are redeployed to work that earns, and which of the two happens is
+the client's decision, not the calculation's. Name the single assumption the
+case is most sensitive to in the open, not in a footnote.
 
-**Owned by** `prompts/assessor.ts`. **Open** — not yet applied.
+**Root cause** was drift between layers, not a missing idea. The method has
+required a range since it was written — `.claude/skills/roi-calculator/SKILL.md`
+says "always report a range (optimistic/conservative) — never a single number" —
+and the platform prompt that implements it asked for "an estimated ROI". When a
+platform prompt and its skill disagree, fix the prompt to match the method, and
+check whether the method is also missing something: the capacity-versus-cash
+rule was absent from both and now lives in the skill.
+
+**Owned by** `prompts/assessor.ts` and `roi-calculator/SKILL.md`.
 
 ### Two phases contradicting each other on the same constraint
 
@@ -161,8 +173,15 @@ data residency while another referenced West Europe.
 **Why it fails.** Each artifact is internally consistent, and no agent reads for
 contradiction *across* phases. The client reads all nine and finds it.
 
-**Write instead** — the QA agent's cross-artifact check is the right home for
-this: constraints named in an earlier phase are facts later phases inherit, not
-choices they re-make.
+**Write instead** — the QA agent now produces a cross-artifact consistency
+table: every constraint that appears in more than one artifact, where it was
+established, where it is restated, and whether the restatements agree. A
+disagreement is a Fail on that row, quoting both statements.
 
-**Owned by** `prompts/qa.ts`. **Open** — not yet applied.
+**Why it lands there.** QA is the only agent that reads all nine artifacts, so
+it is the only one that *can* see a contradiction between two of them. A
+constraint established in an earlier phase — a region, a system of record, a
+tolerance, a prohibition — is a fact later phases inherit, not a choice they
+may re-make.
+
+**Owned by** `prompts/qa.ts`.
