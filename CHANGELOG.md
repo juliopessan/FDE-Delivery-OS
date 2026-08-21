@@ -42,7 +42,11 @@
   the page margin, diagrams are capped at the width mermaid laid them out at
   instead of being stretched to the column, and truncated model output is
   detected rather than stored as complete.
-- Added the demo video to the README hero.
+- Added the demo video to the README hero, and a cost line beside it: nine
+  specialists, three minutes, under a dollar. Headlined as "under a dollar"
+  rather than the measured $0.28, which roughly doubles when the Gemini
+  promotional rate expires — the claim survives that, the exact figure would
+  not.
 
 - **Reframed the project as FDE OS.** The GitHub repository and project were renamed to `FDE-Delivery-OS`. The delivery method remains the system's kernel (phases unchanged); the product name now reflects the larger ambition: an agentic delivery operating system, not just a documented methodology.
 - Added **Layer 3 — System Architecture** (`docs/system-architecture/`): 20 target-architecture documents (product vision, system architecture, extended agent operating model, engagement brain, pattern library, evaluation engine, production control plane, security and governance, observability and FinOps, incident operations, value realization, data contracts, end-to-end flows, delivery dashboard, roadmap, implementation guide, test strategy, multi-tenant isolation, API and event contracts, definition of done), 4 foundational ADRs, 3 JSON Schemas for data contracts (`EngagementState`, `PatternManifest`, `ReleaseManifest`), templates (ADR, engagement one-pager, production readiness checklist) and a reference use case (`examples/supplier-invoice-automation/`). This layer is **aspirational** — it describes where the system could go if the solo operation moves from methodology plus agents to software with persisted state; nothing in it is implemented, and the current execution layer (`.claude/agents/`, `.claude/skills/`, `harness/`) is unchanged.
