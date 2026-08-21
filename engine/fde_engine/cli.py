@@ -19,7 +19,12 @@ import sys
 from pathlib import Path
 
 from . import db as store
-from .pipeline import regenerate_report, run_engagement_pipeline
+from .pipeline import (
+    extract_brief,
+    regenerate_report,
+    repair_phase,
+    run_engagement_pipeline,
+)
 from .roster import agent_roster
 
 
@@ -65,6 +70,22 @@ def main(argv: list[str] | None = None) -> int:
     )
     regen.add_argument("engagement_id")
 
+    repair = sub.add_parser(
+        "repair",
+        help="Re-run one agent and everything downstream of it.",
+    )
+    repair.add_argument("engagement_id")
+    repair.add_argument(
+        "agent_key",
+        help="The first agent to re-run. Later agents consumed its output, so "
+        "they are re-run too.",
+    )
+
+    sub.add_parser(
+        "extract-brief",
+        help="Read a discovery document on stdin, print the six intake fields.",
+    )
+
     sub.add_parser("roster", help="List the agents, in pipeline order.")
 
     args = parser.parse_args(argv)
@@ -94,6 +115,15 @@ def main(argv: list[str] | None = None) -> int:
                     for a in agent_roster()
                 ],
             }
+        elif args.command == "extract-brief":
+            # On stdin rather than an argument: a discovery document runs to
+            # tens of kilobytes, past what an argument list will carry.
+            payload = {"ok": True, "brief": extract_brief(sys.stdin.read())}
+        elif args.command == "repair":
+            conn = store.connect(db_path)
+            with conn:
+                repaired = repair_phase(conn, args.engagement_id, args.agent_key)
+            payload = {"ok": True, "repaired": repaired}
         else:
             conn = store.connect(db_path)
             with conn:

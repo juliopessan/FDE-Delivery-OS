@@ -37,6 +37,12 @@ def closing_section_instructions() -> str:
 
 
 @cache
+def extract_brief_prompt() -> str:
+    """Turns a client's discovery document into the six intake fields."""
+    return _read("extract_brief.md")
+
+
+@cache
 def master_synthesis_prompt() -> str:
     """The orchestrator that turns nine artifacts into one executive summary."""
     return _read("master.md")

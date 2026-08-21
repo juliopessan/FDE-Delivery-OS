@@ -23,6 +23,8 @@ const ENGINE_DIR = path.resolve(process.cwd(), "..", "engine");
 export interface EngineResult {
   ok: boolean;
   executiveSummary?: string;
+  brief?: Record<string, string>;
+  repaired?: string[];
   error?: string;
 }
 
@@ -43,10 +45,30 @@ export function callEngine(
   command: "run" | "regenerate-report",
   engagementId: string
 ): Promise<EngineResult> {
-  const { file, argv } = resolveCommand([command, engagementId]);
+  return invoke([command, engagementId]);
+}
+
+/**
+ * For commands whose input is a document rather than an id. A discovery intake
+ * runs to tens of kilobytes, past what an argument list will carry, so it goes
+ * down stdin.
+ */
+export function callEngineWithInput(
+  command: "extract-brief",
+  input: string
+): Promise<EngineResult> {
+  return invoke([command], input);
+}
+
+function invoke(args: string[], input?: string): Promise<EngineResult> {
+  const { file, argv } = resolveCommand(args);
 
   return new Promise((resolve) => {
     const child = spawn(file, argv, { cwd: ENGINE_DIR });
+
+    if (input !== undefined) {
+      child.stdin.end(input);
+    }
 
     let stdout = "";
     child.stdout.on("data", (chunk) => (stdout += chunk));

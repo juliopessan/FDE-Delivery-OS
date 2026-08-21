@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { engagements } from "@/lib/db/schema";
-import { getEngagementRuns, getLatestReport } from "@/lib/agents/run-pipeline";
+import { getEngagementRuns, getLatestReport } from "@/lib/db/queries";
 
 export async function GET(
   _req: Request,

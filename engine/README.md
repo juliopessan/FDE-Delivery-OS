@@ -40,7 +40,15 @@ dialog writes, so there is one place to set a key rather than two.
 uv run fde-engine roster                      # the nine agents, in pipeline order
 uv run fde-engine run <engagement-id>         # the full pipeline (~$0.28, 3–5 min)
 uv run fde-engine regenerate-report <id>      # re-render from artifacts already paid for
+uv run fde-engine repair <id> <agent-key>     # re-run one agent and everything after it
+uv run fde-engine extract-brief < intake.md   # a discovery document to the six fields
 ```
+
+`repair` re-runs the agents downstream of the one you name, not just that one:
+a later agent consumed the bad artifact as context, so repairing in isolation
+leaves eight artifacts quoting text that no longer exists. It does not
+re-render the report — that stays `regenerate-report`'s job, so a repair can be
+read before it is published.
 
 Every command prints one JSON object on stdout. Progress and tracebacks go to
 stderr, so the app can stream them into its log without touching the result.
@@ -78,9 +86,16 @@ arrays rather than retyping them, so both implementations are held to literally
 the same expectations. When you add a case on either side, add it on both — a
 divergence there is the port drifting.
 
-## What is not here yet
+## What stayed in TypeScript
 
-Brief extraction (`/api/extract-brief`) still runs in TypeScript, and
-`run-pipeline.ts` still hosts the query helpers two routes use. Until those
-move, the TypeScript engine files stay where they are rather than being
-deleted around a live app.
+The interface, and two things that belong to it. `format-elapsed.ts` formats
+durations for the dashboard, and `token-cost.ts` prices a run for the strip
+above the phase list — both are things the screen shows, not work the engine
+does. `db/queries.ts` reads the tables for those screens; the schema is still
+Drizzle's, migrated from the app.
+
+`roster.ts` imports `fde_engine/prompts/roster.json` directly rather than
+keeping a copy. What agents are *told* never crosses over — 52k characters of
+prompt have no business in a browser bundle — but the names, phases and verbs
+the dashboard draws come from the engine's own file, so renaming an agent
+cannot leave the two disagreeing.

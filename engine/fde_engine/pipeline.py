@@ -8,13 +8,20 @@ first agent to 39k at the ninth.
 
 from __future__ import annotations
 
+import json
 import logging
+import re
 import sqlite3
 
 from . import db as store
 from .llm_client import GenerateResult, generate_text
 from .render import PhaseReport, render_consolidated_report
-from .roster import AgentDefinition, agent_roster, master_synthesis_prompt
+from .roster import (
+    AgentDefinition,
+    agent_roster,
+    extract_brief_prompt,
+    master_synthesis_prompt,
+)
 
 log = logging.getLogger(__name__)
 
@@ -208,3 +215,109 @@ def regenerate_report(conn: sqlite3.Connection, engagement_id: str) -> str:
 
     version = store.next_report_version(conn, engagement_id)
     return _synthesize_and_render(conn, engagement, phase_reports, version)
+
+
+#: The brief is six short fields; anything longer is the model padding.
+EXTRACT_BRIEF_MAX_TOKENS = 1_000
+
+_FENCE = re.compile(r"^```(?:json)?\s*([\s\S]*?)\s*```$")
+
+
+def extract_brief(raw_intake: str) -> dict[str, str]:
+    """Turn a client's discovery document into the six intake fields.
+
+    Asked for JSON and usually given JSON, but models wrap it in a fence often
+    enough that unwrapping is cheaper than insisting.
+    """
+    if not raw_intake.strip():
+        raise ValueError("rawIntake is required.")
+
+    result = generate_text(
+        system=extract_brief_prompt(),
+        prompt=raw_intake,
+        max_tokens=EXTRACT_BRIEF_MAX_TOKENS,
+    )
+
+    text = result.text.strip()
+    if fenced := _FENCE.match(text):
+        text = fenced.group(1)
+
+    return json.loads(text)
+
+
+def repair_phase(
+    conn: sqlite3.Connection, engagement_id: str, from_agent_key: str
+) -> list[str]:
+    """Re-run one agent and everything downstream of it.
+
+    Downstream matters: a later agent consumed the bad artifact as context, so
+    repairing only the agent that failed leaves eight artifacts quoting text
+    that no longer exists. Returns the agent keys that were re-run.
+
+    The report is not re-rendered here — that is regenerate-report's job, and
+    keeping them apart means a repair can be inspected before it is published.
+    """
+    roster = agent_roster()
+    keys = [a.key for a in roster]
+    if from_agent_key not in keys:
+        raise LookupError(f"Unknown agent: {from_agent_key}. One of: {', '.join(keys)}")
+
+    engagement = store.get_engagement(conn, engagement_id)
+    brief = _engagement_brief(engagement)
+    start = keys.index(from_agent_key)
+
+    # Everything before the repair point is context and is reused as stored.
+    rows = store.completed_runs(conn, engagement_id)
+    prior: list[PhaseReport] = []
+    for agent in roster[:start]:
+        matches = [r for r in rows if r["agent_key"] == agent.key]
+        if not matches:
+            raise LookupError(f"Missing completed output for upstream agent {agent.key}")
+        run = max(matches, key=lambda r: r["completed_at"])
+        prior.append(
+            PhaseReport(
+                agent_name=agent.name,
+                phase_label=agent.phase_label,
+                output=run["output_markdown"],
+                started_at=run["started_at"],
+                completed_at=run["completed_at"],
+            )
+        )
+
+    repaired: list[str] = []
+    for agent in roster[start:]:
+        run_id, started_at = store.start_phase_run(
+            conn,
+            engagement_id=engagement_id,
+            phase_key=agent.phase_key,
+            agent_key=agent.key,
+            agent_name=agent.name,
+            model=agent.model,
+        )
+        try:
+            result = _run_agent(agent, brief, prior)
+        except Exception as err:
+            store.fail_phase_run(conn, run_id, str(err))
+            raise
+
+        completed_at = store.complete_phase_run(
+            conn,
+            run_id,
+            model=result.model,
+            output_markdown=result.text,
+            prompt_tokens=result.prompt_tokens,
+            completion_tokens=result.completion_tokens,
+        )
+        prior.append(
+            PhaseReport(
+                agent_name=agent.name,
+                phase_label=agent.phase_label,
+                output=result.text,
+                started_at=started_at,
+                completed_at=completed_at,
+            )
+        )
+        repaired.append(agent.key)
+        log.info("repaired %s", agent.key)
+
+    return repaired
