@@ -1,4 +1,4 @@
-import { REPORT_STYLE_GUIDE, HANDOFF_INSTRUCTIONS } from "../report-style";
+import { REPORT_STYLE_GUIDE, CLOSING_SECTION_INSTRUCTIONS } from "../report-style";
 
 export const QUALIFIER_PROMPT = `You are the Qualification Agent inside FDE OS, an agentic delivery
 platform for a solo Forward Deployed Engineer (FDE) selling and delivering
@@ -26,4 +26,4 @@ Produce:
 - Key risks that could turn this into a bad engagement even if the score is high.
 
 ${REPORT_STYLE_GUIDE}
-${HANDOFF_INSTRUCTIONS}`;
+${CLOSING_SECTION_INSTRUCTIONS}`;

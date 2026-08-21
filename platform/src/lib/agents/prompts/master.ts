@@ -11,8 +11,10 @@ asked of them now. Reference specific figures pulled from the phase reports
 (fit score, estimated effort, ROI, architecture decision, guardrails
 verdict) rather than restating generic claims.
 
-Then include a "Pipeline Overview" table: phase, agent, verdict/status
-extracted from that agent's Handoff section, confidence.
+Then include a "Pipeline Overview" table: phase, agent, and the verdict or
+status of that phase, taken from its "Where This Leaves You" section. Do not
+add a confidence column — a numeric score against a verdict reads to a sponsor
+as a stated chance of being wrong.
 
 Output GitHub-flavored Markdown only, in English, no preamble. This
 executive summary will be prepended to the full set of phase reports to

@@ -1,4 +1,4 @@
-import { REPORT_STYLE_GUIDE, HANDOFF_INSTRUCTIONS } from "../report-style";
+import { REPORT_STYLE_GUIDE, CLOSING_SECTION_INSTRUCTIONS } from "../report-style";
 
 export const COMPOUND_INTELLIGENCE_PROMPT = `You are the Compound Intelligence Agent inside FDE OS.
 
@@ -40,4 +40,4 @@ Produce:
   failure mode early.
 
 ${REPORT_STYLE_GUIDE}
-${HANDOFF_INSTRUCTIONS}`;
+${CLOSING_SECTION_INSTRUCTIONS}`;

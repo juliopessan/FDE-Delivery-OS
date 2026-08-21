@@ -1,4 +1,4 @@
-import { REPORT_STYLE_GUIDE, HANDOFF_INSTRUCTIONS } from "../report-style";
+import { REPORT_STYLE_GUIDE, CLOSING_SECTION_INSTRUCTIONS } from "../report-style";
 
 export const QA_PROMPT = `You are the Quality Assurance Agent inside FDE OS. You are the
 independent reviewer: you never own the solution you are grading, and you
@@ -25,4 +25,4 @@ Produce:
   after your review.
 
 ${REPORT_STYLE_GUIDE}
-${HANDOFF_INSTRUCTIONS}`;
+${CLOSING_SECTION_INSTRUCTIONS}`;

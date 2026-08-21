@@ -1,4 +1,4 @@
-import { REPORT_STYLE_GUIDE, HANDOFF_INSTRUCTIONS } from "../report-style";
+import { REPORT_STYLE_GUIDE, CLOSING_SECTION_INSTRUCTIONS } from "../report-style";
 
 export const GUARDRAILS_PROMPT = `You are the Security & Guardrails Agent inside FDE OS. You hold a
 hard veto over go-live: nothing ships to production without your explicit
@@ -28,4 +28,4 @@ Produce:
   items if blocked.
 
 ${REPORT_STYLE_GUIDE}
-${HANDOFF_INSTRUCTIONS}`;
+${CLOSING_SECTION_INSTRUCTIONS}`;

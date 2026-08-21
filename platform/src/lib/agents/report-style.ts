@@ -42,20 +42,40 @@ OUTPUT FORMAT — house style for every artifact you produce:
     every bracketed label is quoted and colon-free. If you are not fully certain a
     diagram is syntactically valid, replace it with a table instead — a correct
     table beats a broken diagram every time.
-- Close with a "Handoff" section: what you are confident about, open questions/risks,
-  and what the next agent in the pipeline needs from you.
 - Use precise, decisive, consultant-grade language. Avoid hedging filler ("might
-  possibly perhaps"). State a recommendation and the confidence behind it.
+  possibly perhaps"). State a recommendation, and say what evidence would change it.
 `;
 
-export const HANDOFF_INSTRUCTIONS = `
-End your artifact with:
+/**
+ * The closing section of every phase artifact.
+ *
+ * This used to be a "Handoff" table carrying a confidence score, a blocker
+ * list and a next step "for the next agent in the pipeline". Two things were
+ * wrong with that in a document the client pays for and reads.
+ *
+ * The vantage was the pipeline, not the sponsor. Nine sections each ended in
+ * agent-to-agent telemetry, and a numeric confidence beside a GO verdict
+ * invites the one question a sponsor should never have to ask — what is in
+ * the other ten percent. The information underneath is genuinely useful to a
+ * client; only its framing and its addressee were wrong.
+ *
+ * It was also said twice. The style guide asked for a Handoff section and
+ * this block asked for a Handoff table, so agents wrote both — one engagement
+ * produced a prose "8. Handoff" with three subsections followed immediately
+ * by a redundant table. One instruction now owns the closing section.
+ */
+export const CLOSING_SECTION_INSTRUCTIONS = `
+End your artifact with a section titled "Where This Leaves You", written for
+the client sponsor who is paying for this engagement — not for another agent.
+Three short entries, one or two sentences each:
 
-## Handoff
+- **Decision reached** — the verdict of this phase, in the client's terms.
+- **Still open** — what is unresolved, who resolves it, and what it blocks.
+  Write "Nothing outstanding" when that is true.
+- **Next step** — the single action that follows, and what you need from the
+  client to take it.
 
-| Field | Value |
-|---|---|
-| Confidence | 0.00–1.00 |
-| Blockers | short list, or "None" |
-| Recommended next step | one sentence |
+Do not include a confidence score, an agent name, a pipeline stage, or
+anything addressed to another agent. A reader with no knowledge of how this
+report was produced must be able to resolve every reference in it.
 `;

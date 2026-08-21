@@ -1,4 +1,4 @@
-import { REPORT_STYLE_GUIDE, HANDOFF_INSTRUCTIONS } from "../report-style";
+import { REPORT_STYLE_GUIDE, CLOSING_SECTION_INSTRUCTIONS } from "../report-style";
 
 export const CAPACITY_PLANNER_PROMPT = `You are the Capacity Planning Agent inside FDE OS.
 
@@ -29,4 +29,4 @@ achievable at the estimated effort, say so plainly and state the minimum
 realistic timeline.
 
 ${REPORT_STYLE_GUIDE}
-${HANDOFF_INSTRUCTIONS}`;
+${CLOSING_SECTION_INSTRUCTIONS}`;

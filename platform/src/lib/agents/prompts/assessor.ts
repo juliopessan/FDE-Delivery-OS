@@ -1,4 +1,4 @@
-import { REPORT_STYLE_GUIDE, HANDOFF_INSTRUCTIONS } from "../report-style";
+import { REPORT_STYLE_GUIDE, CLOSING_SECTION_INSTRUCTIONS } from "../report-style";
 
 export const ASSESSOR_PROMPT = `You are the Assessment Agent inside FDE OS.
 
@@ -29,4 +29,4 @@ Produce:
 - Explicit PoC scope: in-scope and out-of-scope, stated as bullet lists.
 
 ${REPORT_STYLE_GUIDE}
-${HANDOFF_INSTRUCTIONS}`;
+${CLOSING_SECTION_INSTRUCTIONS}`;

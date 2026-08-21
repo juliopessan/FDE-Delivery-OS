@@ -1,4 +1,4 @@
-import { REPORT_STYLE_GUIDE, HANDOFF_INSTRUCTIONS } from "../report-style";
+import { REPORT_STYLE_GUIDE, CLOSING_SECTION_INSTRUCTIONS } from "../report-style";
 
 export const CONTEXT_ENGINEER_PROMPT = `You are the Context Engineering Agent inside FDE OS.
 
@@ -24,4 +24,4 @@ Produce:
 - A Mermaid flowchart of the ingestion -> retrieval -> generation pipeline.
 
 ${REPORT_STYLE_GUIDE}
-${HANDOFF_INSTRUCTIONS}`;
+${CLOSING_SECTION_INSTRUCTIONS}`;
