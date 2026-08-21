@@ -6,7 +6,7 @@
 
 **▶ [Watch the 4-minute demo](https://youtu.be/ZCILaPLkYBU)** — an engagement brief goes in, nine agents run, a consolidated Enterprise Report comes out.
 
-**Assessment, discovery and blueprint in three minutes, for under a dollar.** FDE OS drafts the front of an engagement — qualification, capacity, assessment, context, architecture, security, QA, scale and compound intelligence — for about **$0.28** in model calls (measured across five engagements). It accelerates the FDE team running the engagement; it does not replace them. The dollar buys the first draft of work that otherwise takes days, so the engineers spend theirs on judgment, the client conversation, and the decisions a report can only propose.
+**Assessment, discovery and blueprint in three minutes, for under a dollar.** FDE OS drafts the front of an engagement — qualification, capacity, assessment, context, architecture, security, QA, scale and compound intelligence — end to end in model calls, measured across six engagements. It accelerates the FDE team running the engagement; it does not replace them. The dollar buys the first draft of work that otherwise takes days, so the engineers spend theirs on judgment, the client conversation, and the decisions a report can only propose.
 
 FDE OS is a repeatable 4-phase delivery method (Assessment → Context → Engineering → Scale) for mapping, architecting and shipping enterprise agentic automation in short, high-impact cycles, designed so **one** FDE can run it end to end — and equally usable by an FDE team at the client, since the phases are the same whoever staffs them — and **executed by a team of 9 specialist AI agents**, not merely documented. This repository holds both the method plus its execution agents for Claude Code, and a **working web platform** ([`platform/`](platform)) that runs those same 9 agents against an engagement brief and returns a consolidated Enterprise Report — see [`platform/README.md`](platform/README.md) for details.
 
@@ -184,7 +184,7 @@ Open **http://localhost:3000**.
 2. Paste a client discovery document into the intake box — or upload a `.txt`, `.md`, `.pdf` or `.docx` — and press **Extract brief from this text**. The six fields below fill themselves in; review and correct them, since the agents treat this as the source of truth.
 3. Press **Run agent pipeline** on the engagement page. Nine agents run in sequence, each reading everything the previous ones produced.
 
-   Budget **3–5 minutes**, **roughly 200k tokens** and **about $0.28** per full run (measured across five engagements: ~160k in, ~40k out). The input side dominates because context accumulates — the first agent sees a 1.5k-token prompt and the ninth sees 39k, since it reads all eight artifacts before it. Worth knowing before you point this at a free tier.
+   Budget **3–5 minutes**, **roughly 200k tokens** and **under $1** per full run (measured across six engagements: ~160k in, ~40k out). The input side dominates because context accumulates — the first agent sees a 1.5k-token prompt and the ninth sees 39k, since it reads all eight artifacts before it. Worth knowing before you point this at a free tier.
 
    The engagement page reports the exact figures for your own runs under **Pipeline status**. Treat the money as an estimate: it comes from published list rates, ignores prompt-cache discounts, and Gemini 3.7 Flash is on a promotional rate that doubles on 2027-01-01.
 4. When it finishes, open **View enterprise report**, and use **Export PDF** in the report header to hand it to a sponsor.

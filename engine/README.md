@@ -38,7 +38,7 @@ dialog writes, so there is one place to set a key rather than two.
 
 ```bash
 uv run fde-engine roster                      # the nine agents, in pipeline order
-uv run fde-engine run <engagement-id>         # the full pipeline (~$0.28, 3–5 min)
+uv run fde-engine run <engagement-id>         # the full pipeline (under $1, 3–5 min)
 uv run fde-engine regenerate-report <id>      # re-render from artifacts already paid for
 uv run fde-engine repair <id> <agent-key>     # re-run one agent and everything after it
 uv run fde-engine extract-brief < intake.md   # a discovery document to the six fields
